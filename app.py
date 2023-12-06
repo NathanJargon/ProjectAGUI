@@ -4,13 +4,11 @@ import sqlite3
 
 def calculate_bill():
     try:
-        # Get user input
         customer_name = entry_name.get()
         address = entry_address.get()
         email = entry_email.get()
         consumption = float(entry_consumption.get())
 
-        # New: Get metering information
         current_reading = float(entry_current_reading.get())
         previous_reading = float(entry_previous_reading.get())
         meter_consumption = current_reading - previous_reading
@@ -18,7 +16,6 @@ def calculate_bill():
         if not email.endswith("@gmail"):
             raise ValueError("Invalid email address")
         
-        # New: Calculate bill amount based on meter consumption
         bill_amount_php = meter_consumption * 2.5
 
         if consumption < 50:
@@ -28,7 +25,8 @@ def calculate_bill():
         else:
             message = "Please be mindful of your water usage. Consider implementing water-saving tips."
 
-        # Create a custom dialog to display the water bill and message
+        save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php)
+
         bill_details = f"Customer Name: {customer_name}\n"
         bill_details += f"Address: {address}\n"
         bill_details += f"Email: {email}\n"
@@ -40,46 +38,35 @@ def calculate_bill():
         bill_details += f"Billing Summary:\n"
         bill_details += f"Total Bill Amount (in PHP): ₱{bill_amount_php:.2f}\n\n"
         bill_details += f"Message: {message}"
-        
-                # Save data to the SQLite database
-        save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php)
 
-        # Create a custom dialog to display the water bill and message
         custom_dialog = tk.Toplevel(root)
         custom_dialog.title("Water Bill Details")
 
-        # New: Center the custom dialog
-        w = 800  # Width for the custom dialog
-        h = 300  # Height for the custom dialog
 
-        # Get the screen width and height
+        w = 800 
+        h = 300
+
         ws = custom_dialog.winfo_screenwidth()
         hs = custom_dialog.winfo_screenheight()
 
-        # Calculate x and y coordinates for the custom dialog window
         x = (ws/2) - (w/2)
         y = (hs/2) - (h/2)
 
         custom_dialog.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
 
-        # New: Change the font and style for the details label
         details_label = tk.Label(custom_dialog, text=bill_details, justify=tk.LEFT, font=("Helvetica", 12), padx=10, pady=10)
         details_label.pack()
 
     except ValueError as e:
-        # Handle invalid input (non-numeric consumption or invalid email)
         if str(e) == "Invalid email address":
             messagebox.showerror("Error", "Please enter a valid email address.")
         else:
             messagebox.showerror("Error", "Please enter valid numeric values for consumption and meter readings.")
 
-# Function to save data to the SQLite database
 def save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php):
-    # Connect to the SQLite database (create one if it doesn't exist)
     conn = sqlite3.connect("water_bill_database.db")
     cursor = conn.cursor()
 
-    # Create a table if it doesn't exist
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS water_bills (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -94,7 +81,6 @@ def save_to_database(customer_name, address, email, consumption, current_reading
         )
     ''')
 
-    # Insert data into the table
     cursor.execute('''
         INSERT INTO water_bills (
             customer_name,
@@ -108,55 +94,86 @@ def save_to_database(customer_name, address, email, consumption, current_reading
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ''', (customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php))
 
-    # Commit the changes and close the connection
     conn.commit()
     conn.close()
 
-# Function to display saved data from the SQLite database
 def display_saved_data():
-    # Connect to the SQLite database
     conn = sqlite3.connect("water_bill_database.db")
     cursor = conn.cursor()
 
-    # Retrieve data from the table
     cursor.execute('SELECT * FROM water_bills')
     data = cursor.fetchall()
 
-    # Close the connection
     conn.close()
 
-    # Display the data in a new window
     if data:
         display_window = tk.Toplevel(root)
         display_window.title("Saved Water Bill Data")
 
         for row in data:
-            row_text = ', '.join(str(value) for value in row)
-            label = tk.Label(display_window, text=row_text, justify=tk.LEFT)
-            label.pack(padx=10, pady=5)
+            button_text = f"Customer: {row[1]}, Date: {row[2]}"
+            button = tk.Button(display_window, text=button_text, command=lambda r=row: show_details(r))
+            button.pack(padx=10, pady=5)
+
+        w = 200 
+        h = 350 
+
+        # Get the screen width and height
+        ws = display_window.winfo_screenwidth()
+        hs = display_window.winfo_screenheight()
+
+        x = (ws/2) - (w/2)
+        y = (hs/2) - (h/2)
+
+        display_window.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
     else:
         messagebox.showinfo("No Data", "No water bill data found in the database.")
 
 
-# Create the main Tkinter window
+def show_details(row):
+    details_window = tk.Toplevel(root)
+    details_window.title("Water Bill Details")
+
+    bill_details = f"Customer Name: {row[1]}\n"
+    bill_details += f"Address: {row[2]}\n"
+    bill_details += f"Email: {row[3]}\n"
+    bill_details += f"Consumption: {row[4]} gallons\n\n"
+    bill_details += f"Metering Information:\n"
+    bill_details += f"Current Reading: {row[5]}\n"
+    bill_details += f"Previous Reading: {row[6]}\n"
+    bill_details += f"Meter Consumption: {row[7]} gallons\n\n"
+    bill_details += f"Billing Summary:\n"
+    bill_details += f"Total Bill Amount (in PHP): ₱{row[8]:.2f}"
+
+    details_label = tk.Label(details_window, text=bill_details, justify=tk.LEFT, font=("Helvetica", 12), padx=10, pady=10)
+    details_label.pack()
+
+    w = 800 
+    h = 300 
+
+    ws = details_window.winfo_screenwidth()
+    hs = details_window.winfo_screenheight()
+
+    x = (ws/2) - (w/2)
+    y = (hs/2) - (h/2)
+
+    details_window.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
+
+
 root = tk.Tk()
 root.title("Water Bill Calculator")
 
-# New: Center the main window
-w = 350  # Width for the main window
-h = 240  # Height for the main window
+w = 350 
+h = 240
 
-# Get the screen width and height
 ws = root.winfo_screenwidth()
 hs = root.winfo_screenheight()
 
-# Calculate x and y coordinates for the main window
 x = (ws/2) - (w/2)
 y = (hs/2) - (h/2)
 
 root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
 
-# Create and place widgets in the window
 label_name = tk.Label(root, text="Customer Name:")
 label_name.grid(row=0, column=0, padx=10, pady=5, sticky=tk.W)
 
@@ -194,7 +211,9 @@ entry_consumption = tk.Entry(root)
 entry_consumption.grid(row=5, column=1, padx=10, pady=5)
 
 calculate_button = tk.Button(root, text="Calculate Bill", command=calculate_bill)
-calculate_button.grid(row=6, column=0, columnspan=2, pady=10)
+calculate_button.grid(row=6, column=0, columnspan=2, pady=10, sticky=tk.E)
 
-# Start the Tkinter event loop
+histories_button = tk.Button(root, text="Histories", command=display_saved_data)
+histories_button.grid(row=6, column=1, pady=10, sticky=tk.W)
+
 root.mainloop()
