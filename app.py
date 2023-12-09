@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 import sqlite3
+from PIL import Image, ImageTk
+from customtkinter import *
 
 def calculate_bill():
     try:
@@ -163,8 +165,8 @@ def show_details(row):
 root = tk.Tk()
 root.title("Water Bill Calculator")
 
-w = 350 
-h = 240
+w = 450 
+h = 290
 
 ws = root.winfo_screenwidth()
 hs = root.winfo_screenheight()
