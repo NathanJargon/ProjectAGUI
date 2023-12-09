@@ -16,16 +16,17 @@ def login():
 
 
 def turn_gray(widget):
-    widget.config(fg="gray")
+    widget.config(fg="white")
 
 def on_space(event):
     event.widget.config(fg="red")
     root.after(500, turn_gray, event.widget)  # 500 milliseconds = 0.5 seconds
+    return "break"
     
 ############################################# Origin Screen
 
 root = CTk()
-root.title("Water Bill")
+root.title("Water Bill - Login")
 set_appearance_mode("dark")
 
 w = 854
@@ -39,28 +40,24 @@ y = (hs/2) - (h/2)
 
 root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
 
+
 ############################################# LOGIN
 
 title = CTkButton(root, text="LOG IN", font=("Montserrat", 45), corner_radius=32, fg_color="gray14", hover_color="gray14")
 title.place(relx=0.795, rely=0.2, anchor='center')
 
 
-# Create a Label for the username entry
 label_username = CTkLabel(root, text="Username")
 label_username.place(relx=0.8, rely=0.35, anchor='e')
 
-# Create an Entry widget for the username
 entry_username = CTkEntry(root, width=150, height=35, fg_color="black")
 entry_username.place(relx=0.885, rely=0.4, anchor='e')
 entry_username.bind('<space>', on_space)
 
-
-# Create a Label for the password entry
 label_password = CTkLabel(root, text="Password")
 label_password.place(relx=0.8, rely=0.55, anchor='e')
 
-# Create an Entry widget for the password
-entry_password = CTkEntry(root, show="*", width=150, height=35, fg_color="black")  # show="*" will hide the password
+entry_password = CTkEntry(root, show="*", width=150, height=35, fg_color="black") 
 entry_password.place(relx=0.885, rely=0.6, anchor='e')
 entry_password.bind('<space>', on_space)
 

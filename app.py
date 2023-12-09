@@ -41,9 +41,9 @@ def calculate_bill():
         bill_details += f"Total Bill Amount (in PHP): ₱{bill_amount_php:.2f}\n\n"
         bill_details += f"Message: {message}"
 
-        custom_dialog = tk.Toplevel(root)
-        custom_dialog.title("Water Bill Details")
-
+        custom_dialog = CTkToplevel(root)
+        custom_dialog.title("Water Bill - Details")
+        set_appearance_mode("dark")
 
         w = 800 
         h = 300
@@ -56,7 +56,7 @@ def calculate_bill():
 
         custom_dialog.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
 
-        details_label = tk.Label(custom_dialog, text=bill_details, justify=tk.LEFT, font=("Helvetica", 12), padx=10, pady=10)
+        details_label = CTkLabel(custom_dialog, text=bill_details, justify=tk.LEFT, font=("Helvetica", 12), padx=10, pady=10)
         details_label.pack()
 
     except ValueError as e:
@@ -109,12 +109,13 @@ def display_saved_data():
     conn.close()
 
     if data:
-        display_window = tk.Toplevel(root)
-        display_window.title("Saved Water Bill Data")
-
+        display_window = CTkToplevel(root)
+        display_window.title("Water Bill - Histories")
+        set_appearance_mode("dark")
+    
         for row in data:
-            button_text = f"Customer: {row[1]}, Date: {row[2]}"
-            button = tk.Button(display_window, text=button_text, command=lambda r=row: show_details(r))
+            button_text = f"Customer: {row[1]}"
+            button = CTkButton(display_window, text=button_text, command=lambda r=row: show_details(r))
             button.pack(padx=10, pady=5)
 
         w = 200 
@@ -127,15 +128,15 @@ def display_saved_data():
         x = (ws/2) - (w/2)
         y = (hs/2) - (h/2)
 
-        display_window.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
+        display_window.geometry(f"{w}x{h}+{int(x)+390}+{int(y)-160}")
     else:
         messagebox.showinfo("No Data", "No water bill data found in the database.")
 
 
 def show_details(row):
-    details_window = tk.Toplevel(root)
-    details_window.title("Water Bill Details")
-
+    details_window = CTkToplevel(root)
+    details_window.title("Water Bill - Details")
+    set_appearance_mode("dark")
     bill_details = f"Customer Name: {row[1]}\n"
     bill_details += f"Address: {row[2]}\n"
     bill_details += f"Email: {row[3]}\n"
@@ -147,10 +148,10 @@ def show_details(row):
     bill_details += f"Billing Summary:\n"
     bill_details += f"Total Bill Amount (in PHP): ₱{row[8]:.2f}"
 
-    details_label = tk.Label(details_window, text=bill_details, justify=tk.LEFT, font=("Helvetica", 12), padx=10, pady=10)
+    details_label = CTkLabel(details_window, text=bill_details, justify=tk.LEFT, font=("Helvetica", 15), padx=10, pady=10)
     details_label.pack()
 
-    w = 800 
+    w = 360
     h = 300 
 
     ws = details_window.winfo_screenwidth()
@@ -159,14 +160,15 @@ def show_details(row):
     x = (ws/2) - (w/2)
     y = (hs/2) - (h/2)
 
-    details_window.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
+    details_window.geometry(f"{w}x{h}+{int(x)}+{int(y)+200}")
 
 
-root = tk.Tk()
-root.title("Water Bill Calculator")
+root = CTk()
+root.title("Water Bill - Main")
+set_appearance_mode("dark")
 
-w = 450 
-h = 290
+w = 360
+h = 270
 
 ws = root.winfo_screenwidth()
 hs = root.winfo_screenheight()
@@ -174,48 +176,48 @@ hs = root.winfo_screenheight()
 x = (ws/2) - (w/2)
 y = (hs/2) - (h/2)
 
-root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
+root.geometry(f"{w}x{h}+{int(x)}+{int(y)-200}")
 
-label_name = tk.Label(root, text="Customer Name:")
+label_name = CTkLabel(root, text="Customer Name:")
 label_name.grid(row=0, column=0, padx=10, pady=5, sticky=tk.W)
 
-entry_name = tk.Entry(root)
+entry_name = CTkEntry(root)
 entry_name.grid(row=0, column=1, padx=10, pady=5)
 
-label_address = tk.Label(root, text="Address:")
+label_address = CTkLabel(root, text="Address:")
 label_address.grid(row=1, column=0, padx=10, pady=5, sticky=tk.W)
 
-entry_address = tk.Entry(root)
+entry_address = CTkEntry(root)
 entry_address.grid(row=1, column=1, padx=10, pady=5)
 
-label_email = tk.Label(root, text="Email (Must end with @gmail):")
+label_email = CTkLabel(root, text="Email (Must end with @gmail):")
 label_email.grid(row=2, column=0, padx=10, pady=5, sticky=tk.W)
 
-entry_email = tk.Entry(root)
+entry_email = CTkEntry(root)
 entry_email.grid(row=2, column=1, padx=10, pady=5)
 
-label_current_reading = tk.Label(root, text="Current Meter Reading:")
+label_current_reading = CTkLabel(root, text="Current Meter Reading (cms):")
 label_current_reading.grid(row=3, column=0, padx=10, pady=5, sticky=tk.W)
 
-entry_current_reading = tk.Entry(root)
+entry_current_reading = CTkEntry(root)
 entry_current_reading.grid(row=3, column=1, padx=10, pady=5)
 
-label_previous_reading = tk.Label(root, text="Previous Meter Reading:")
+label_previous_reading = CTkLabel(root, text="Previous Meter Reading (cms):")
 label_previous_reading.grid(row=4, column=0, padx=10, pady=5, sticky=tk.W)
 
-entry_previous_reading = tk.Entry(root)
+entry_previous_reading = CTkEntry(root)
 entry_previous_reading.grid(row=4, column=1, padx=10, pady=5)
 
-label_consumption = tk.Label(root, text="Consumption (gallons):")
+label_consumption = CTkLabel(root, text="Consumption (gal):")
 label_consumption.grid(row=5, column=0, padx=10, pady=5, sticky=tk.W)
 
-entry_consumption = tk.Entry(root)
+entry_consumption = CTkEntry(root)
 entry_consumption.grid(row=5, column=1, padx=10, pady=5)
 
-calculate_button = tk.Button(root, text="Calculate Bill", command=calculate_bill)
+calculate_button = CTkButton(root, text="Calculate Bill", command=calculate_bill)
 calculate_button.grid(row=6, column=0, columnspan=2, pady=10, sticky=tk.E)
 
-histories_button = tk.Button(root, text="Histories", command=display_saved_data)
-histories_button.grid(row=6, column=1, pady=10, sticky=tk.W)
+histories_button = CTkButton(root, text="Histories", command=display_saved_data)
+histories_button.grid(row=6, column=0, columnspan=1, pady=10, padx=5, sticky=tk.W)
 
 root.mainloop()
