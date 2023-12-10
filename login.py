@@ -1,4 +1,4 @@
-from tkinter import messagebox, PhotoImage
+from tkinter import messagebox, PhotoImage, Button
 import tkinter as tk
 from PIL import Image, ImageTk
 from customtkinter import *
@@ -46,7 +46,7 @@ root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
 background_frame = CTkFrame(root, fg_color="gray12")
 background_frame.place(relx=0.56, rely=0, relwidth=0.5, relheight=1, anchor='nw')
 
-title = CTkButton(root, text="Welcome!", font=("Oswald", 45), fg_color="gray12", hover_color="gray12")
+title = Button(root, text="Welcome!", font=("Oswald", 45), fg="white", bg="gray12", bd=0)
 title.place(relx=0.8, rely=0.2, anchor='center')
 
 label_username = CTkLabel(root, text="Username", fg_color="gray12", font=("Oswald", 15))

@@ -1,8 +1,44 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, Frame, Canvas, Button, Scrollbar
 import sqlite3
 from PIL import Image, ImageTk
 from customtkinter import *
+
+def save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php):
+    conn = sqlite3.connect("water_bill_database.db")
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS water_bills (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            customer_name TEXT,
+            address TEXT,
+            email TEXT,
+            consumption REAL,
+            current_reading REAL,
+            previous_reading REAL,
+            meter_consumption REAL,
+            bill_amount_php REAL
+        )
+    ''')
+
+    cursor.execute('''
+        INSERT INTO water_bills (
+            customer_name,
+            address,
+            email,
+            consumption,
+            current_reading,
+            previous_reading,
+            meter_consumption,
+            bill_amount_php
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php))
+
+    conn.commit()
+    conn.close()
+    
+############################################# Show Details
 
 def calculate_bill():
     try:
@@ -65,73 +101,6 @@ def calculate_bill():
         else:
             messagebox.showerror("Error", "Please enter valid numeric values for consumption and meter readings.")
 
-def save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php):
-    conn = sqlite3.connect("water_bill_database.db")
-    cursor = conn.cursor()
-
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS water_bills (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            customer_name TEXT,
-            address TEXT,
-            email TEXT,
-            consumption REAL,
-            current_reading REAL,
-            previous_reading REAL,
-            meter_consumption REAL,
-            bill_amount_php REAL
-        )
-    ''')
-
-    cursor.execute('''
-        INSERT INTO water_bills (
-            customer_name,
-            address,
-            email,
-            consumption,
-            current_reading,
-            previous_reading,
-            meter_consumption,
-            bill_amount_php
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php))
-
-    conn.commit()
-    conn.close()
-
-def display_saved_data():
-    conn = sqlite3.connect("water_bill_database.db")
-    cursor = conn.cursor()
-
-    cursor.execute('SELECT * FROM water_bills')
-    data = cursor.fetchall()
-
-    conn.close()
-
-    if data:
-        display_window = CTkToplevel(root)
-        display_window.title("Water Bill - Histories")
-        set_appearance_mode("dark")
-    
-        for row in data:
-            button_text = f"Customer: {row[1]}"
-            button = CTkButton(display_window, text=button_text, command=lambda r=row: show_details(r))
-            button.pack(padx=10, pady=5)
-
-        w = 200 
-        h = 350 
-
-        # Get the screen width and height
-        ws = display_window.winfo_screenwidth()
-        hs = display_window.winfo_screenheight()
-
-        x = (ws/2) - (w/2)
-        y = (hs/2) - (h/2)
-
-        display_window.geometry(f"{w}x{h}+{int(x)+390}+{int(y)-160}")
-    else:
-        messagebox.showinfo("No Data", "No water bill data found in the database.")
-
 
 def show_details(row):
     details_window = CTkToplevel(root)
@@ -167,8 +136,8 @@ root = CTk()
 root.title("Water Bill - Main")
 set_appearance_mode("dark")
 
-w = 360
-h = 270
+w = 854
+h = 480
 
 ws = root.winfo_screenwidth()
 hs = root.winfo_screenheight()
@@ -176,48 +145,130 @@ hs = root.winfo_screenheight()
 x = (ws/2) - (w/2)
 y = (hs/2) - (h/2)
 
-root.geometry(f"{w}x{h}+{int(x)}+{int(y)-200}")
+root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
 
-label_name = CTkLabel(root, text="Customer Name:")
-label_name.grid(row=0, column=0, padx=10, pady=5, sticky=tk.W)
+#############################################
 
-entry_name = CTkEntry(root)
+############################################# CSV Histories
+
+conn = sqlite3.connect("water_bill_database.db")
+cursor = conn.cursor()
+
+cursor.execute('SELECT * FROM water_bills')
+data = cursor.fetchall()
+
+conn.close()
+
+background_frame = CTkFrame(root, fg_color="gray11", corner_radius=0)
+background_frame.place(relx=.5, rely=0, relwidth=0.2, relheight=1, anchor='nw')
+
+title_frame = CTkFrame(background_frame, fg_color="gray11")
+title_frame.pack(padx=10, pady=5)
+
+label_name = CTkLabel(title_frame, text="Histories", font=("Oswald", 25))
+label_name.grid(row=0, column=0, padx=0, pady=10)
+
+canvas = Canvas(background_frame, bg="gray11", highlightthickness=0)
+scrollbar = Scrollbar(background_frame, orient="vertical", command=canvas.yview)
+canvas.configure(yscrollcommand=scrollbar.set)
+
+button_frame = Frame(canvas, bg="gray11")
+
+if data:
+    for row in data:
+        button_text = f"Customer: {row[1]}"
+        button = CTkButton(button_frame, text=button_text, command=lambda r=row: show_details(r), font=("Oswald", 15))
+        button.pack(padx=(15, 10), pady=5)
+else:
+    messagebox.showinfo("No Data", "No water bill data found in the database.")
+
+canvas.create_window((0, 0), window=button_frame, anchor='nw')
+
+
+button_frame.update_idletasks()
+canvas.config(scrollregion=canvas.bbox('all'))
+
+canvas.pack(side='left', fill='both', expand=True)
+scrollbar.pack(side='right', fill='y')
+
+def show_details(row):
+    details_window = CTkToplevel(root, bg="gray11")
+
+
+#############################################
+
+############################################# Register Information
+
+background_frame = CTkFrame(root, fg_color="gray12", corner_radius=0)
+background_frame.place(relx=0, rely=0, relwidth=0.5, relheight=1, anchor='nw')
+
+title_frame = CTkFrame(background_frame, fg_color="gray13")
+title_frame.pack(padx=10, pady=5)
+
+label_name = CTkLabel(title_frame, text="Register Information", font=("Oswald", 25))
+label_name.grid(row=0, column=0, padx=0, pady=10)
+
+name_frame = CTkFrame(background_frame)
+name_frame.pack(padx=10, pady=5)
+
+label_name = CTkLabel(name_frame, text="Customer Name:", font=("Oswald", 15))
+label_name.grid(row=0, column=0, padx=53, pady=5)
+
+entry_name = CTkEntry(name_frame, width=150)
 entry_name.grid(row=0, column=1, padx=10, pady=5)
 
-label_address = CTkLabel(root, text="Address:")
-label_address.grid(row=1, column=0, padx=10, pady=5, sticky=tk.W)
+address_frame = CTkFrame(background_frame)
+address_frame.pack(padx=10, pady=5)
 
-entry_address = CTkEntry(root)
-entry_address.grid(row=1, column=1, padx=10, pady=5)
+label_address = CTkLabel(address_frame, text="Address:", font=("Oswald", 15))
+label_address.grid(row=0, column=0, padx=75, pady=5)
 
-label_email = CTkLabel(root, text="Email (Must end with @gmail):")
-label_email.grid(row=2, column=0, padx=10, pady=5, sticky=tk.W)
+entry_address = CTkEntry(address_frame, width=150)
+entry_address.grid(row=0, column=1, padx=10, pady=5)
 
-entry_email = CTkEntry(root)
-entry_email.grid(row=2, column=1, padx=10, pady=5)
+email_frame = CTkFrame(background_frame)
+email_frame.pack(padx=10, pady=5)
 
-label_current_reading = CTkLabel(root, text="Current Meter Reading (cms):")
-label_current_reading.grid(row=3, column=0, padx=10, pady=5, sticky=tk.W)
+label_email = CTkLabel(email_frame, text="Email:", font=("Oswald", 15))
+label_email.grid(row=0, column=0, padx=80, pady=5)
 
-entry_current_reading = CTkEntry(root)
-entry_current_reading.grid(row=3, column=1, padx=10, pady=5)
+entry_email = CTkEntry(email_frame, width=150)
+entry_email.grid(row=0, column=1, padx=10, pady=5)
+entry_email.insert(0, "must end with @gmail")
 
-label_previous_reading = CTkLabel(root, text="Previous Meter Reading (cms):")
-label_previous_reading.grid(row=4, column=0, padx=10, pady=5, sticky=tk.W)
+label_current_reading_frame = CTkFrame(background_frame)
+label_current_reading_frame.pack(padx=10, pady=5)
 
-entry_previous_reading = CTkEntry(root)
-entry_previous_reading.grid(row=4, column=1, padx=10, pady=5)
+label_current_reading = CTkLabel(label_current_reading_frame, text="Current Meter Reading (cms):", font=("Oswald", 15))
+label_current_reading.grid(row=0, column=0, padx=15, pady=5)
 
-label_consumption = CTkLabel(root, text="Consumption (gal):")
-label_consumption.grid(row=5, column=0, padx=10, pady=5, sticky=tk.W)
+entry_current_reading = CTkEntry(label_current_reading_frame, width=150)
+entry_current_reading.grid(row=0, column=1, padx=10, pady=5)
 
-entry_consumption = CTkEntry(root)
-entry_consumption.grid(row=5, column=1, padx=10, pady=5)
+label_previous_reading_frame = CTkFrame(background_frame)
+label_previous_reading_frame.pack(padx=10, pady=5)
 
-calculate_button = CTkButton(root, text="Calculate Bill", command=calculate_bill)
-calculate_button.grid(row=6, column=0, columnspan=2, pady=10, sticky=tk.E)
+label_previous_reading = CTkLabel(label_previous_reading_frame, text="Previous Meter Reading (cms):", font=("Oswald", 15))
+label_previous_reading.grid(row=0, column=0, padx=10, pady=5)
 
-histories_button = CTkButton(root, text="Histories", command=display_saved_data)
-histories_button.grid(row=6, column=0, columnspan=1, pady=10, padx=5, sticky=tk.W)
+entry_previous_reading = CTkEntry(label_previous_reading_frame, width=150)
+entry_previous_reading.grid(row=0, column=1, padx=10, pady=5)
+
+label_consumption_frame = CTkFrame(background_frame)
+label_consumption_frame.pack(padx=10, pady=5)
+
+label_consumption = CTkLabel(label_consumption_frame, text="Consumption (gal):", font=("Oswald", 15))
+label_consumption.grid(row=0, column=0, padx=43, pady=5)
+
+entry_consumption = CTkEntry(label_consumption_frame, width=150)
+entry_consumption.grid(row=0, column=1, padx=10, pady=5)
+
+buttom_frame = CTkFrame(background_frame, fg_color="gray13")
+buttom_frame.pack(padx=10, pady=5)
+
+calculate_button = CTkButton(buttom_frame, text="Calculate Bill", command=calculate_bill, font=("Oswald", 15))
+calculate_button.grid(row=0, column=0, padx=10, pady=5)
+
+#############################################
 
 root.mainloop()
