@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox, Frame, Canvas, Button, Scrollbar
+from tkinter import messagebox, Frame, Canvas, Button, Scrollbar, StringVar
 import sqlite3
 from PIL import Image, ImageTk
 from customtkinter import *
@@ -38,7 +38,34 @@ def save_to_database(customer_name, address, email, consumption, current_reading
     conn.commit()
     conn.close()
     
+
+root = CTk()
+root.title("Water Bill - Main")
+set_appearance_mode("dark")
+
+w = 854
+h = 480
+
+ws = root.winfo_screenwidth()
+hs = root.winfo_screenheight()
+
+x = (ws/2) - (w/2)
+y = (hs/2) - (h/2)
+
+root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
+
 ############################################# Show Details
+
+bill_details_var = StringVar()
+
+details_frame = CTkFrame(root, fg_color="gray10", corner_radius=0)
+details_frame.place(relx=.7, rely=0, relwidth=0.3, relheight=1, anchor='nw')
+
+bill_details_label = CTkLabel(details_frame, textvariable=bill_details_var, justify=tk.LEFT, font=("Helvetica", 15), 
+                              bg_color="gray10", 
+                              fg_color="gray10",
+                              wraplength=220)
+bill_details_label.pack(padx=10, pady=10)
 
 def calculate_bill():
     try:
@@ -76,25 +103,9 @@ def calculate_bill():
         bill_details += f"Billing Summary:\n"
         bill_details += f"Total Bill Amount (in PHP): ₱{bill_amount_php:.2f}\n\n"
         bill_details += f"Message: {message}"
-
-        custom_dialog = CTkToplevel(root)
-        custom_dialog.title("Water Bill - Details")
-        set_appearance_mode("dark")
-
-        w = 800 
-        h = 300
-
-        ws = custom_dialog.winfo_screenwidth()
-        hs = custom_dialog.winfo_screenheight()
-
-        x = (ws/2) - (w/2)
-        y = (hs/2) - (h/2)
-
-        custom_dialog.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
-
-        details_label = CTkLabel(custom_dialog, text=bill_details, justify=tk.LEFT, font=("Helvetica", 12), padx=10, pady=10)
-        details_label.pack()
-
+        
+        bill_details_var.set(bill_details)
+        
     except ValueError as e:
         if str(e) == "Invalid email address":
             messagebox.showerror("Error", "Please enter a valid email address.")
@@ -103,9 +114,6 @@ def calculate_bill():
 
 
 def show_details(row):
-    details_window = CTkToplevel(root)
-    details_window.title("Water Bill - Details")
-    set_appearance_mode("dark")
     bill_details = f"Customer Name: {row[1]}\n"
     bill_details += f"Address: {row[2]}\n"
     bill_details += f"Email: {row[3]}\n"
@@ -117,35 +125,7 @@ def show_details(row):
     bill_details += f"Billing Summary:\n"
     bill_details += f"Total Bill Amount (in PHP): ₱{row[8]:.2f}"
 
-    details_label = CTkLabel(details_window, text=bill_details, justify=tk.LEFT, font=("Helvetica", 15), padx=10, pady=10)
-    details_label.pack()
-
-    w = 360
-    h = 300 
-
-    ws = details_window.winfo_screenwidth()
-    hs = details_window.winfo_screenheight()
-
-    x = (ws/2) - (w/2)
-    y = (hs/2) - (h/2)
-
-    details_window.geometry(f"{w}x{h}+{int(x)}+{int(y)+200}")
-
-
-root = CTk()
-root.title("Water Bill - Main")
-set_appearance_mode("dark")
-
-w = 854
-h = 480
-
-ws = root.winfo_screenwidth()
-hs = root.winfo_screenheight()
-
-x = (ws/2) - (w/2)
-y = (hs/2) - (h/2)
-
-root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
+    bill_details_var.set(bill_details)
 
 #############################################
 
@@ -190,10 +170,6 @@ canvas.config(scrollregion=canvas.bbox('all'))
 
 canvas.pack(side='left', fill='both', expand=True)
 scrollbar.pack(side='right', fill='y')
-
-def show_details(row):
-    details_window = CTkToplevel(root, bg="gray11")
-
 
 #############################################
 
