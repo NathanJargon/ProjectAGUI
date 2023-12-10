@@ -45,8 +45,33 @@ def save_to_database(customer_name, address, email, consumption, current_reading
 
     conn.commit()
     conn.close()
-    
 
+def delete_and_clear(id):
+    delete_data(id)
+    bill_details_var.set("")
+    
+def fetch_data():
+    for widget in button_frame.winfo_children():
+        widget.destroy()
+
+    conn = sqlite3.connect("water_bill_database.db")
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM water_bills')
+    data = cursor.fetchall()
+    conn.close()
+    
+    for row in data:
+        bill_button = CTkButton(button_frame, text=f"Customer: {row[1]}", command=lambda row=row: show_details(row))
+        bill_button.pack(padx=10, pady=5)
+        
+def delete_data(id):
+    conn = sqlite3.connect("water_bill_database.db")
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM water_bills WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+    fetch_data()
+    
 root = CTk()
 root.title("Water Bill - Main")
 set_appearance_mode("dark")
@@ -107,19 +132,8 @@ def calculate_bill():
 
         save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php, message)
         
-        for widget in button_frame.winfo_children():
-            widget.destroy()
-
-        conn = sqlite3.connect("water_bill_database.db")
-        cursor = conn.cursor()
-        cursor.execute('SELECT * FROM water_bills')
-        data = cursor.fetchall()
-        conn.close()
+        fetch_data()
         
-        for row in data:
-            bill_button = CTkButton(button_frame, text=f"Customer: {row[1]}", command=lambda row=row: show_details(row))
-            bill_button.pack(padx=10, pady=5)
-            
         bill_details = f"Customer Name: {customer_name}\n"
         bill_details += f"Address: {address}\n"
         bill_details += f"Email: {email}\n"
@@ -155,7 +169,13 @@ def show_details(row):
     bill_details += f"Message: {row[9]}"
     
     bill_details_var.set(bill_details)
+    for widget in details_frame.winfo_children():
+        if isinstance(widget, CTkButton):
+            widget.destroy()
 
+    delete_button = CTkButton(details_frame, text="Delete", command=lambda id=row[0]: delete_and_clear(id))
+    delete_button.pack(padx=10, pady=5)
+    
 #############################################
 
 ############################################# CSV Histories
