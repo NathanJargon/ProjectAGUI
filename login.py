@@ -43,22 +43,26 @@ root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
 
 ############################################# LOGIN
 
-title = CTkButton(root, text="LOG IN", font=("Montserrat", 45), corner_radius=32, fg_color="gray14", hover_color="gray14")
-title.place(relx=0.795, rely=0.2, anchor='center')
+background_frame = CTkFrame(root, fg_color="gray12")
+background_frame.place(relx=0.56, rely=0, relwidth=0.5, relheight=1, anchor='nw')
 
+title = CTkButton(root, text="Welcome!", font=("Oswald", 45), fg_color="gray12", hover_color="gray12")
+title.place(relx=0.8, rely=0.2, anchor='center')
 
-label_username = CTkLabel(root, text="Username")
-label_username.place(relx=0.8, rely=0.35, anchor='e')
+label_username = CTkLabel(root, text="Username", fg_color="gray12", font=("Oswald", 15))
+label_username.place(relx=0.76, rely=0.32, anchor='e')
+label_password = CTkLabel(root, text="Password", fg_color="gray12", font=("Oswald", 15))
+label_password.place(relx=0.76, rely=0.52, anchor='e')
 
-entry_username = CTkEntry(root, width=150, height=35, fg_color="black")
+# Create the Entry widgets
+entry_username = CTkEntry(root, width=150, height=35, fg_color="gray12", font=("Oswald", 12))
 entry_username.place(relx=0.885, rely=0.4, anchor='e')
+entry_username.insert(0, "admin")
 entry_username.bind('<space>', on_space)
 
-label_password = CTkLabel(root, text="Password")
-label_password.place(relx=0.8, rely=0.55, anchor='e')
-
-entry_password = CTkEntry(root, show="*", width=150, height=35, fg_color="black") 
+entry_password = CTkEntry(root, show="*", width=150, height=35, fg_color="gray12", font=("Oswald", 12))
 entry_password.place(relx=0.885, rely=0.6, anchor='e')
+entry_password.insert(0, "admin")
 entry_password.bind('<space>', on_space)
 
 ############################################# Main Image and Label
@@ -73,17 +77,17 @@ photo = ImageTk.PhotoImage(image)
 
 # Create a Label to display the image
 image_label = CTkLabel(root, image=photo, text="")
-image_label.place(relx=0.4, rely=0.5, anchor='center')
+image_label.place(relx=0.30, rely=0.5, anchor='center')
 
 image_label.image = photo
 
-label = CTkLabel(root, text="Synochrina © 2023", font=("Montserrat", 15))
-label.place(relx=0.10, rely=.96, anchor='center')
+label = CTkLabel(root, text="Synochrina © 2023", font=("Nanum Pen", 15))
+label.place(relx=0.09, rely=.96, anchor='center')
 
 #############################################
 
 
-histories_button = CTkButton(root, text="START!", command=login, corner_radius=32, fg_color="#008000",
+histories_button = CTkButton(root, text="Access", font=("Oswald", 15), command=login, corner_radius=32, fg_color="#008000",
                              hover_color="#4158D0",)
 histories_button.place(relx=0.88, rely=0.75, anchor="e")
 
