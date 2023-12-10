@@ -4,7 +4,7 @@ import sqlite3
 from PIL import Image, ImageTk
 from customtkinter import *
 
-def save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php):
+def save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php, messages):
     conn = sqlite3.connect("water_bill_database.db")
     cursor = conn.cursor()
 
@@ -18,9 +18,16 @@ def save_to_database(customer_name, address, email, consumption, current_reading
             current_reading REAL,
             previous_reading REAL,
             meter_consumption REAL,
-            bill_amount_php REAL
+            bill_amount_php REAL,
+            messages TEXT
         )
     ''')
+
+    cursor.execute("PRAGMA table_info(water_bills)")
+    columns = [column[1] for column in cursor.fetchall()]
+    if 'messages' not in columns:
+        cursor.execute("ALTER TABLE water_bills ADD COLUMN messages TEXT")
+
 
     cursor.execute('''
         INSERT INTO water_bills (
@@ -31,9 +38,10 @@ def save_to_database(customer_name, address, email, consumption, current_reading
             current_reading,
             previous_reading,
             meter_consumption,
-            bill_amount_php
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php))
+            bill_amount_php,
+            messages
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php, messages))
 
     conn.commit()
     conn.close()
@@ -83,7 +91,8 @@ def calculate_bill():
         current_reading = float(entry_current_reading.get())
         previous_reading = float(entry_previous_reading.get())
         meter_consumption = current_reading - previous_reading
-
+        message = ""
+        
         if not email.endswith("@gmail"):
             raise ValueError("Invalid email address")
         
@@ -96,8 +105,21 @@ def calculate_bill():
         else:
             message = "Please be mindful of your water usage. Consider implementing water-saving tips."
 
-        save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php)
+        save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php, message)
+        
+        for widget in button_frame.winfo_children():
+            widget.destroy()
 
+        conn = sqlite3.connect("water_bill_database.db")
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM water_bills')
+        data = cursor.fetchall()
+        conn.close()
+        
+        for row in data:
+            bill_button = CTkButton(button_frame, text=f"Customer: {row[1]}", command=lambda row=row: show_details(row))
+            bill_button.pack(padx=10, pady=5)
+            
         bill_details = f"Customer Name: {customer_name}\n"
         bill_details += f"Address: {address}\n"
         bill_details += f"Email: {email}\n"
@@ -129,8 +151,9 @@ def show_details(row):
     bill_details += f"Previous Reading: {row[6]}\n"
     bill_details += f"Meter Consumption: {row[7]} gallons\n\n"
     bill_details += f"Billing Summary:\n"
-    bill_details += f"Total Bill Amount (in PHP): ₱{row[8]:.2f}"
-
+    bill_details += f"Total Bill Amount (in PHP): ₱{row[8]:.2f}\n"
+    bill_details += f"Message: {row[9]}"
+    
     bill_details_var.set(bill_details)
 
 #############################################
