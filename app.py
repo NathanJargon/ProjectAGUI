@@ -61,6 +61,12 @@ bill_details_var = StringVar()
 details_frame = CTkFrame(root, fg_color="gray10", corner_radius=0)
 details_frame.place(relx=.7, rely=0, relwidth=0.3, relheight=1, anchor='nw')
 
+title_frame = CTkFrame(details_frame, fg_color="gray10")
+title_frame.pack(padx=10, pady=5)
+
+label_name = CTkLabel(title_frame, text="Results", font=("Oswald", 25))
+label_name.grid(row=0, column=0, padx=0, pady=10)
+
 bill_details_label = CTkLabel(details_frame, textvariable=bill_details_var, justify=tk.LEFT, font=("Helvetica", 15), 
                               bg_color="gray10", 
                               fg_color="gray10",
