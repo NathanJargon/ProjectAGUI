@@ -5,7 +5,7 @@ from PIL import Image, ImageTk
 from customtkinter import *
 
 def save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php, messages):
-    conn = sqlite3.connect("db/water_bill_database.db")
+    conn = sqlite3.connect("_internal/db/water_bill_database.db")
     cursor = conn.cursor()
 
     cursor.execute('''
@@ -54,7 +54,7 @@ def fetch_data():
     for widget in button_frame.winfo_children():
         widget.destroy()
 
-    conn = sqlite3.connect("db/water_bill_database.db")
+    conn = sqlite3.connect("_internal/db/water_bill_database.db")
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM water_bills')
     data = cursor.fetchall()
@@ -65,7 +65,7 @@ def fetch_data():
         bill_button.pack(padx=10, pady=5)
         
 def delete_data(id):
-    conn = sqlite3.connect("db/water_bill_database.db")
+    conn = sqlite3.connect("_internal/db/water_bill_database.db")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM water_bills WHERE id = ?", (id,))
     conn.commit()
@@ -180,7 +180,7 @@ def show_details(row):
 
 ############################################# CSV Histories
 
-conn = sqlite3.connect("db/water_bill_database.db")
+conn = sqlite3.connect("_internal/db/water_bill_database.db")
 cursor = conn.cursor()
 
 cursor.execute('SELECT * FROM water_bills')
