@@ -108,7 +108,7 @@ bill_details_label.pack(padx=10, pady=10)
 
 def calculate_bill():
     try:
-        customer_name = entry_name.get()
+        customer_name = entry_name.get()[:11] if ' ' not in entry_name.get() else entry_name.get().split(' ')[0]
         address = entry_address.get()
         email = entry_email.get()
         consumption = float(entry_consumption.get())
@@ -165,7 +165,7 @@ def show_details(row):
     bill_details += f"Previous Reading: {row[6]}\n"
     bill_details += f"Meter Consumption: {row[7]} gallons\n\n"
     bill_details += f"Billing Summary:\n"
-    bill_details += f"Total Bill Amount (in PHP): ₱{row[8]:.2f}\n"
+    bill_details += f"Total Bill Amount (in PHP): ₱{row[8]:.2f}\n\n"
     bill_details += f"Message: {row[9]}"
     
     bill_details_var.set(bill_details)
@@ -207,7 +207,7 @@ if data:
     for row in data:
         button_text = f"Customer: {row[1]}"
         button = CTkButton(button_frame, text=button_text, command=lambda r=row: show_details(r), font=("Oswald", 15))
-        button.pack(padx=(15, 10), pady=5)
+        button.pack(padx=(15,10), pady=5)
 else:
     messagebox.showinfo("No Data", "No water bill data found in the database.")
 
@@ -255,7 +255,7 @@ email_frame = CTkFrame(background_frame)
 email_frame.pack(padx=10, pady=5)
 
 label_email = CTkLabel(email_frame, text="Email:", font=("Oswald", 15))
-label_email.grid(row=0, column=0, padx=80, pady=5)
+label_email.grid(row=0, column=0, padx=82, pady=5)
 
 entry_email = CTkEntry(email_frame, width=150)
 entry_email.grid(row=0, column=1, padx=10, pady=5)
@@ -265,7 +265,7 @@ label_current_reading_frame = CTkFrame(background_frame)
 label_current_reading_frame.pack(padx=10, pady=5)
 
 label_current_reading = CTkLabel(label_current_reading_frame, text="Current Meter Reading (cms):", font=("Oswald", 15))
-label_current_reading.grid(row=0, column=0, padx=15, pady=5)
+label_current_reading.grid(row=0, column=0, padx=18.5, pady=5)
 
 entry_current_reading = CTkEntry(label_current_reading_frame, width=150)
 entry_current_reading.grid(row=0, column=1, padx=10, pady=5)
@@ -274,7 +274,7 @@ label_previous_reading_frame = CTkFrame(background_frame)
 label_previous_reading_frame.pack(padx=10, pady=5)
 
 label_previous_reading = CTkLabel(label_previous_reading_frame, text="Previous Meter Reading (cms):", font=("Oswald", 15))
-label_previous_reading.grid(row=0, column=0, padx=10, pady=5)
+label_previous_reading.grid(row=0, column=0, padx=17, pady=5)
 
 entry_previous_reading = CTkEntry(label_previous_reading_frame, width=150)
 entry_previous_reading.grid(row=0, column=1, padx=10, pady=5)
@@ -283,7 +283,7 @@ label_consumption_frame = CTkFrame(background_frame)
 label_consumption_frame.pack(padx=10, pady=5)
 
 label_consumption = CTkLabel(label_consumption_frame, text="Consumption (gal):", font=("Oswald", 15))
-label_consumption.grid(row=0, column=0, padx=43, pady=5)
+label_consumption.grid(row=0, column=0, padx=49, pady=5)
 
 entry_consumption = CTkEntry(label_consumption_frame, width=150)
 entry_consumption.grid(row=0, column=1, padx=10, pady=5)
