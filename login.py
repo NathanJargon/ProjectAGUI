@@ -68,7 +68,8 @@ if __name__ == '__main__':
 
     ############################################# Main Image and Label
 
-    image = Image.open("_internal/img/img1.png")
+    #image = Image.open("_internal/img/img1.png")
+    image = Image.open("img/img1.png")
 
     # Resize the image
     new_size = (550, 550)

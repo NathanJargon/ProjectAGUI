@@ -3,58 +3,34 @@ from tkinter import messagebox, Frame, Canvas, Button, Scrollbar, StringVar
 import sqlite3
 from PIL import Image, ImageTk
 from customtkinter import *
+from database import WaterBillDatabase
+
+db = WaterBillDatabase()
 
 def save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php, messages):
-    conn = sqlite3.connect("_internal/db/water_bill_database.db")
-    cursor = conn.cursor()
+    db.save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php, messages)
 
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS water_bills (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            customer_name TEXT,
-            address TEXT,
-            email TEXT,
-            consumption REAL,
-            current_reading REAL,
-            previous_reading REAL,
-            meter_consumption REAL,
-            bill_amount_php REAL,
-            messages TEXT
-        )
-    ''')
+def fetch_data():
+    for widget in button_frame.winfo_children():
+        widget.destroy()
 
-    cursor.execute("PRAGMA table_info(water_bills)")
-    columns = [column[1] for column in cursor.fetchall()]
-    if 'messages' not in columns:
-        cursor.execute("ALTER TABLE water_bills ADD COLUMN messages TEXT")
+    data = db.fetch_data()
+    
+    for row in data:
+        bill_button = CTkButton(button_frame, text=f"Customer: {row[1]}", command=lambda row=row: show_details(row))
+        bill_button.pack(padx=10, pady=5)
 
-
-    cursor.execute('''
-        INSERT INTO water_bills (
-            customer_name,
-            address,
-            email,
-            consumption,
-            current_reading,
-            previous_reading,
-            meter_consumption,
-            bill_amount_php,
-            messages
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php, messages))
-
-    conn.commit()
-    conn.close()
-
-def delete_and_clear(id):
-    delete_data(id)
-    bill_details_var.set("")
+def delete_data(id):
+    db.delete_data(id)
+    fetch_data()
     
 def fetch_data():
     for widget in button_frame.winfo_children():
         widget.destroy()
 
-    conn = sqlite3.connect("_internal/db/water_bill_database.db")
+    #conn = sqlite3.connect("_internal/db/water_bill_database.db")
+    conn = sqlite3.connect("db/water_bill_database.db")
+    
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM water_bills')
     data = cursor.fetchall()
@@ -64,8 +40,10 @@ def fetch_data():
         bill_button = CTkButton(button_frame, text=f"Customer: {row[1]}", command=lambda row=row: show_details(row))
         bill_button.pack(padx=10, pady=5)
         
-def delete_data(id):
-    conn = sqlite3.connect("_internal/db/water_bill_database.db")
+def delete_and_clear(id):
+    #conn = sqlite3.connect("_internal/db/water_bill_database.db")
+    conn = sqlite3.connect("db/water_bill_database.db")
+    
     cursor = conn.cursor()
     cursor.execute("DELETE FROM water_bills WHERE id = ?", (id,))
     conn.commit()
@@ -180,7 +158,9 @@ def show_details(row):
 
 ############################################# CSV Histories
 
-conn = sqlite3.connect("_internal/db/water_bill_database.db")
+#conn = sqlite3.connect("_internal/db/water_bill_database.db")
+conn = sqlite3.connect("db/water_bill_database.db")
+
 cursor = conn.cursor()
 
 cursor.execute('SELECT * FROM water_bills')
