@@ -3,6 +3,8 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from customtkinter import *
 import time
+import sys
+import os
 
 def login():
     username = entry_username.get()
@@ -10,6 +12,7 @@ def login():
 
     if username == "admin" and password == "admin":
         root.destroy()
+        sys.path.append(os.path.abspath('dist'))
         import app
     else:
         messagebox.showerror("Login Failed", "Invalid username or password")
