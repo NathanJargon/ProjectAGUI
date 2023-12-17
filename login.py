@@ -5,15 +5,17 @@ from customtkinter import *
 import time
 import sys
 import os
+import subprocess
 
 def login():
     username = entry_username.get()
     password = entry_password.get()
 
     if username == "admin" and password == "admin":
-        root.destroy()
-        sys.path.append(os.path.abspath('dist'))
-        import app
+        root.withdraw()
+        #app_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '_internal', 'dist', 'app.py')
+        app_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dist', 'app.py')
+        subprocess.run(['python', app_path])
     else:
         messagebox.showerror("Login Failed", "Invalid username or password")
 
@@ -58,7 +60,6 @@ if __name__ == '__main__':
     label_password = CTkLabel(root, text="Password", fg_color="gray12", font=("Oswald", 15))
     label_password.place(relx=0.76, rely=0.52, anchor='e')
 
-    # Create the Entry widgets
     entry_username = CTkEntry(root, width=150, height=35, fg_color="gray12", font=("Oswald", 12))
     entry_username.place(relx=0.885, rely=0.4, anchor='e')
     entry_username.insert(0, "admin")
@@ -74,13 +75,11 @@ if __name__ == '__main__':
     #image = Image.open("_internal/img/img1.png")
     image = Image.open("img/img1.png")
 
-    # Resize the image
     new_size = (550, 550)
     image = image.resize(new_size, Image.LANCZOS)
 
     photo = ImageTk.PhotoImage(image)
 
-    # Create a Label to display the image
     image_label = CTkLabel(root, image=photo, text="")
     image_label.place(relx=0.30, rely=0.5, anchor='center')
 

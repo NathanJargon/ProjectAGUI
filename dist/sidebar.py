@@ -1,9 +1,13 @@
+import sys
+import os
+import importlib
 import tkinter as tk
 import customtkinter as ctk
 from tkinter import PhotoImage
 from database import WaterBillDatabase
 import history
 import register
+import subprocess
 
 class Sidebar(ctk.CTkFrame):
     def __init__(self, root, master=None, **kwargs):
@@ -28,16 +32,16 @@ class Sidebar(ctk.CTkFrame):
         button_frame = ctk.CTkFrame(self, bg_color="gray12", fg_color="gray12")
         button_frame.pack(fill=tk.BOTH, expand=True)
 
-        button1 = ctk.CTkButton(button_frame, text="Register Input", command=self.on_button1_click, bg_color="gray12", fg_color="gray12")
+        button1 = ctk.CTkButton(button_frame, text="Input Data", command=self.on_button1_click, bg_color="gray12", fg_color="gray12")
         button1.pack(pady=(20,5), padx=10)
 
         button2 = ctk.CTkButton(button_frame, text="Histories", command=self.on_button2_click, bg_color="gray12", fg_color="gray12")
         button2.pack(pady=(20,5), padx=10)
 
-        button3 = ctk.CTkButton(button_frame, text="Results", command=self.on_button3_click, bg_color="gray12", fg_color="gray12")
+        button3 = ctk.CTkButton(button_frame, text="Graphical Presentation", command=self.on_button3_click, bg_color="gray12", fg_color="gray12")
         button3.pack(pady=(20,5), padx=10)
 
-        button4 = ctk.CTkButton(button_frame, text="Log out", command=self.on_button3_click, bg_color="gray12", fg_color="gray12")
+        button4 = ctk.CTkButton(button_frame, text="Log out", command=self.on_button4_click, bg_color="gray12", fg_color="gray12")
         button4.pack(pady=(95,5), padx=10)
         
     def on_button1_click(self):
@@ -48,7 +52,12 @@ class Sidebar(ctk.CTkFrame):
 
     def on_button3_click(self):
         pass
-            
+
+    def on_button4_click(self):
+        self.root.destroy()
+        login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'login.py')
+        subprocess.run(['python', login_path])
+
 class MainApplication(ctk.CTkFrame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)

@@ -4,8 +4,9 @@ import sqlite3
 from PIL import Image, ImageTk
 from customtkinter import *
 from database import WaterBillDatabase
+import result
 
-class Register:
+class Register(result.Result):
     def __init__(self, root):
         self.root = root
         self.db = WaterBillDatabase()
@@ -122,7 +123,13 @@ class Register:
             bill_details += f"Total Bill Amount (in PHP): ₱{bill_amount_php:.2f}\n\n"
             bill_details += f"Message: {message}"
             
+            for widget in self.background_frame.winfo_children():
+                widget.destroy()
+
             self.bill_details_var.set(bill_details)
+            result_screen = result.Result(self.background_frame, self.bill_details_var)
+
+            result_screen.details_frame.pack()
             
         except ValueError as e:
             if str(e) == "Invalid email address":

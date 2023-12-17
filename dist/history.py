@@ -37,10 +37,10 @@ class History(result.Result):
 
         data = self.db.fetch_data()
 
-        for row in data:
+        for i, row in enumerate(data):
             bill_button = CTkButton(self.button_frame, text=f"Customer: {row[1]}", command=lambda row=row: self.show_details(row))
-            bill_button.pack(padx=10, pady=5)
-
+            bill_button.grid(row=0, column=i, padx=10, pady=5)
+        
     def delete_and_clear(self, id):
         self.db.delete_and_clear(id)
         self.fetch_data()

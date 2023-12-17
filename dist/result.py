@@ -4,7 +4,6 @@ import sqlite3
 from PIL import Image, ImageTk
 from customtkinter import *
 from database import WaterBillDatabase
-from register import Register
 
 class Result:
     def __init__(self, root, bill_details_var):
