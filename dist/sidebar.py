@@ -21,8 +21,8 @@ class Sidebar(ctk.CTkFrame):
         title_frame = ctk.CTkFrame(self, bg_color="gray12", fg_color="gray12", height=50)
         title_frame.pack(fill=tk.X)
 
-        #image = PhotoImage(file="_internal/img/logo.png")
-        image = PhotoImage(file="img/logo.png")
+        image = PhotoImage(file="_internal/img/logo.png")
+        #image = PhotoImage(file="img/logo.png")
         image = image.subsample(3, 3)
         title_label = ctk.CTkButton(title_frame, image=image, text="", bg_color="gray12", 
                                     fg_color="gray12", hover_color="gray12")
@@ -56,6 +56,7 @@ class Sidebar(ctk.CTkFrame):
     def on_button4_click(self):
         self.root.destroy()
         login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'login.py')
+        #login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'login.py')
         subprocess.run(['python', login_path])
 
 class MainApplication(ctk.CTkFrame):

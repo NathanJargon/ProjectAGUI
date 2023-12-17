@@ -7,14 +7,18 @@ import sys
 import os
 import subprocess
 
+if getattr(sys, 'frozen', False):
+    import pyi_splash
+        
 def login():
     username = entry_username.get()
     password = entry_password.get()
 
     if username == "admin" and password == "admin":
-        root.withdraw()
-        #app_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '_internal', 'dist', 'app.py')
+        root.destroy()
+        #app_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dist', 'app.py')
         app_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dist', 'app.py')
+        #subprocess.run(['python', app_path])
         subprocess.run(['python', app_path])
     else:
         messagebox.showerror("Login Failed", "Invalid username or password")
@@ -91,9 +95,17 @@ if __name__ == '__main__':
     #############################################
 
 
-    histories_button = CTkButton(root, text="Access", font=("Oswald", 15), command=login, corner_radius=32, fg_color="#008000",
+    def login_with_error_handling():
+        try:
+            login()
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            input("Press Enter to exit...")
+
+    histories_button = CTkButton(root, text="Access", font=("Oswald", 15), command=login_with_error_handling, corner_radius=32, fg_color="#008000",
                                 hover_color="#4158D0",)
     histories_button.place(relx=0.88, rely=0.75, anchor="e")
 
-
+    if getattr(sys, 'frozen', False):
+        pyi_splash.close()
     root.mainloop()
