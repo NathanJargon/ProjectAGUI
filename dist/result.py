@@ -8,7 +8,10 @@ from history import History
 from register import Register
 
 class Result:
-    def __init__(self):
+    def __init__(self, root, bill_details_var):
+        self.root = root
+        self.bill_details_var = bill_details_var
+
         self.details_frame = CTkFrame(self.root, fg_color="gray10", corner_radius=0)
         self.details_frame.place(relx=.7, rely=0, relwidth=0.3, relheight=1, anchor='nw')
 
@@ -23,3 +26,22 @@ class Result:
                                     fg_color="gray10",
                                     wraplength=220)
         self.bill_details_label.pack(padx=10, pady=10)
+        
+if __name__ == "__main__":
+    root = CTk()
+    set_appearance_mode("dark")
+
+    w = 854
+    h = 480
+
+    ws = root.winfo_screenwidth()
+    hs = root.winfo_screenheight()
+
+    x = (ws/2) - (w/2)
+    y = (hs/2) - (h/2)
+
+    root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
+
+    bill_details_var = tk.StringVar()
+    result = Result(root, bill_details_var)
+    root.mainloop()

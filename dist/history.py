@@ -11,7 +11,6 @@ class History:
         self.root = root
         self.bill_details_var = StringVar()
         self.db = WaterBillDatabase()
-        self.r = Register()
         self.background_frame = CTkFrame(self.root, fg_color="gray11", corner_radius=0)
         self.background_frame.place(relx=.5, rely=0, relwidth=0.2, relheight=1, anchor='nw')
         self.title_frame = CTkFrame(self.background_frame, fg_color="gray11")
@@ -67,6 +66,19 @@ class History:
     
 
 if __name__ == "__main__":
-    root = tk.Tk()
+    root = CTk()
+    set_appearance_mode("dark")
+
+    w = 854
+    h = 480
+
+    ws = root.winfo_screenwidth()
+    hs = root.winfo_screenheight()
+
+    x = (ws/2) - (w/2)
+    y = (hs/2) - (h/2)
+
+    root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
+
     history = History(root)
     root.mainloop()
