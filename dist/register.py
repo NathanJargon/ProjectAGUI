@@ -12,7 +12,7 @@ class Register:
         self.bill_details_var = StringVar()
 
         self.background_frame = CTkFrame(root, fg_color="gray12", corner_radius=0)
-        self.background_frame.place(relx=0, rely=0, relwidth=0.5, relheight=1, anchor='nw')
+        self.background_frame.place(relx=.18, rely=0, relwidth=.9, relheight=1, anchor='nw')
 
         self.title_frame = CTkFrame(self.background_frame, fg_color="gray12")
         self.title_frame.pack(padx=10, pady=5)

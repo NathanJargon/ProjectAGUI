@@ -1,12 +1,18 @@
 import tkinter as tk
 import customtkinter as ctk
 from tkinter import PhotoImage
+from database import WaterBillDatabase
+import history
+import register
 
 class Sidebar(ctk.CTkFrame):
-    def __init__(self, master=None, **kwargs):
+    def __init__(self, root, master=None, **kwargs):
         super().__init__(master, **kwargs)
         self.create_widgets()
-
+        self.root = root
+        self.details_frame = ctk.CTkFrame(root, fg_color="gray12", corner_radius=0)
+        self.bill_details_var = tk.StringVar()
+        
     def create_widgets(self):
         title_frame = ctk.CTkFrame(self, bg_color="gray12", fg_color="gray12", height=50)
         title_frame.pack(fill=tk.X)
@@ -35,14 +41,14 @@ class Sidebar(ctk.CTkFrame):
         button4.pack(pady=(95,5), padx=10)
         
     def on_button1_click(self):
-        print("Button 1 clicked")
+        register_window = register.Register(self.root)
 
     def on_button2_click(self):
-        print("Button 2 clicked")
+        history_window = history.History(self.root, self.details_frame)
 
     def on_button3_click(self):
-        print("Button 3 clicked")
-
+        pass
+            
 class MainApplication(ctk.CTkFrame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
@@ -53,8 +59,9 @@ class MainApplication(ctk.CTkFrame):
         main_label.pack(pady=20)
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    root.title("CustomTkinter Sidebar Example")
+    root = ctk.CTk()
+    root.title("Sidebar")
+    ctk.set_appearance_mode("dark")
     
     w = 854
     h = 480

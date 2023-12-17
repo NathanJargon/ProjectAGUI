@@ -5,9 +5,11 @@ from PIL import Image, ImageTk
 from customtkinter import *
 from database import WaterBillDatabase
 from sidebar import Sidebar
+import history
+from register import Register
 
 root = CTk()
-root.title("Water Bill - Main")
+root.title("Water Bill")
 set_appearance_mode("dark")
 
 w = 854

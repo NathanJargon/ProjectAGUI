@@ -5,22 +5,24 @@ from PIL import Image, ImageTk
 from customtkinter import *
 from database import WaterBillDatabase
 from register import Register
+import result
 
-class History:
-    def __init__(self, root):
+class History(result.Result):
+    def __init__(self, root, details_frame):
         self.root = root
+        self.details_frame = details_frame
         self.bill_details_var = StringVar()
         self.db = WaterBillDatabase()
-        self.background_frame = CTkFrame(self.root, fg_color="gray11", corner_radius=0)
-        self.background_frame.place(relx=.5, rely=0, relwidth=0.2, relheight=1, anchor='nw')
-        self.title_frame = CTkFrame(self.background_frame, fg_color="gray11")
+        self.background_frame = CTkFrame(self.root, fg_color="gray12", corner_radius=0)
+        self.background_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
+        self.title_frame = CTkFrame(self.background_frame, fg_color="gray12")
         self.title_frame.pack(padx=10, pady=5)
         self.label_name = CTkLabel(self.title_frame, text="Histories", font=("Oswald", 25))
         self.label_name.grid(row=0, column=0, padx=0, pady=10)
-        self.canvas = Canvas(self.background_frame, bg="gray11", highlightthickness=0)
+        self.canvas = Canvas(self.background_frame, bg="gray12", highlightthickness=0)
         self.scrollbar = Scrollbar(self.background_frame, orient="vertical", command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
-        self.button_frame = Frame(self.canvas, bg="gray11")
+        self.button_frame = Frame(self.canvas, bg="gray12")
         self.canvas.create_window((0, 0), window=self.button_frame, anchor='nw')
         self.canvas.pack(side='left', fill='both', expand=True)
         self.scrollbar.pack(side='right', fill='y')
@@ -56,14 +58,14 @@ class History:
         bill_details += f"Total Bill Amount (in PHP): ₱{row[8]:.2f}\n\n"
         bill_details += f"Message: {row[9]}"
         
-        self.bill_details_var.set(bill_details)
-        for widget in self.details_frame.winfo_children():
-            if isinstance(widget, CTkButton):
-                widget.destroy()
+        for widget in self.background_frame.winfo_children():
+            widget.destroy()
 
-        delete_button = CTkButton(self.details_frame, text="Delete", command=lambda id=row[0]: self.delete_and_clear(id))
-        delete_button.pack(padx=10, pady=5)
-    
+        self.bill_details_var.set(bill_details)
+        result_screen = result.Result(self.background_frame, self.bill_details_var)
+
+        result_screen.details_frame.pack()
+            
 
 if __name__ == "__main__":
     root = CTk()
@@ -80,5 +82,6 @@ if __name__ == "__main__":
 
     root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
 
-    history = History(root)
+    details_frame = CTkFrame(root, fg_color="gray12", corner_radius=0)
+    history = History(root, details_frame)
     root.mainloop()
