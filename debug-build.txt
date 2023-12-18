@@ -4,4 +4,4 @@ login.py (img, sidebar)
 
 auto-py-to-exe
 
-pyinstaller --noconfirm --onedir --windowed --icon "C:/Nash/Projects Folder/water-bill/img/Huh!.ico" --name "AGUI" --splash "C:/Nash/Projects Folder/water-bill/img/splash.png" --add-data "C:/Nash/Projects Folder/water-bill/db;db/" --add-data "C:/Nash/Projects Folder/water-bill/dist;dist/" --add-data "C:/Nash/Projects Folder/water-bill/img;img/" --add-data "C:/Nash/Projects Folder/water-bill/__pycache__;__pycache__/"  "C:/Nash/Projects Folder/water-bill/login.py"
+pyinstaller --noconfirm --onedir --windowed --icon "C:/Nash/Projects Folder/water-bill/img/Huh!.ico" --name "AGUI" --hide-console "minimize-early" --add-data "C:/Nash/Projects Folder/water-bill/db;db/" --add-data "C:/Nash/Projects Folder/water-bill/dist;dist/" --add-data "C:/Nash/Projects Folder/water-bill/img;img/"  "C:/Nash/Projects Folder/water-bill/main.py"

@@ -55,8 +55,8 @@ class Sidebar(ctk.CTkFrame):
 
     def on_button4_click(self):
         self.root.destroy()
-        login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'login.py')
-        #subprocess.run(['python', login_path])
+        login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'login.py')
+        #login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'login.py')
         subprocess.run(['python', login_path])
 
 class MainApplication(ctk.CTkFrame):
