@@ -16,7 +16,7 @@ class Result:
         self.title_frame = CTkFrame(self.details_frame, fg_color="gray12")
         self.title_frame.pack(padx=10, pady=5)
 
-        self.label_name = CTkLabel(self.title_frame, text="Results", font=("Oswald", 25))
+        self.label_name = CTkLabel(self.title_frame, text="Service Information", font=("Oswald", 25))
         self.label_name.grid(row=0, column=0, padx=0, pady=10)
 
         self.bill_details_label = CTkLabel(self.details_frame, textvariable=self.bill_details_var, justify=tk.LEFT, font=("Helvetica", 15), 
