@@ -1,12 +1,12 @@
 # Water Bill Calculator
 
-This is a simple water bill calculator application with a Tkinter GUI and SQLite database integration.
+This is a straightforward water bill calculator application with a Tkinter GUI and SQLite database integration.
 
-## Classes and Associations
+## Overview
 
 ### WaterBill Class
 
-The `WaterBill` class represents the main application logic for calculating water bills and interacting with the database.
+The `WaterBill` class encapsulates the core application logic for calculating water bills and managing interactions with the SQLite database.
 
 #### Attributes
 
@@ -21,18 +21,18 @@ The `WaterBill` class represents the main application logic for calculating wate
 
 #### Methods
 
-- `calculate_bill()`: Calculates the water bill based on user input.
-- `save_to_database()`: Saves data to the SQLite database.
+- `calculate_bill()`: Computes the water bill based on user input.
+- `save_to_database()`: Persists data to the SQLite database.
 - `display_saved_data()`: Retrieves and displays saved data from the database.
-- `show_details(row: Tuple)`: Displays details of a specific entry.
+- `show_details(row: Tuple)`: Presents details of a specific entry.
 
 ### Tkinter Class
 
-The `Tkinter` class represents the graphical user interface using the Tkinter library.
+The `Tkinter` class manages the graphical user interface using the Tkinter library.
 
 #### Components
 
-- `root`: The main Tkinter window.
+- `root`: The primary Tkinter window.
 - Labels, Entries, and Buttons: Various Tkinter widgets for user input and interaction.
 
 #### Associations
@@ -42,11 +42,11 @@ The `Tkinter` class represents the graphical user interface using the Tkinter li
 
 ## UML Diagram
 
-```plaintext
+```
 +------------------+          +-----------------+
-|   WaterBill     |          |     Tkinter     |
+|   WaterBill      |          |     Tkinter     |
 +------------------+          +-----------------+
-| - customer_name |          |                 |
+| - customer_name  |          |                 |
 | - address        |          |                 |
 | - email          |          |                 |
 | - consumption    |          | +--------+      |
@@ -55,16 +55,16 @@ The `Tkinter` class represents the graphical user interface using the Tkinter li
 | - meter_consumpti|          | | Labels |      |
 | - bill_amount_php|          | | Entries|      |
 +------------------+          | | Buttons|      |
-| + calculate_bill| -------->| +--------+      |
-| + save_to_databa| -------->| |   ...  |      |
+| + calculate_bill | -------->| +--------+      |
+| + save_to_databa | -------->| |   ...  |      |
 | + display_saved_ | -------->| +--------+      |
-| + show_details(r |          |                 |
+| + show_details(r)|          |                 |
 +------------------+          +-----------------+
 
-
 ## How to Use
-- Ensure you have Python installed on your machine.
-- Run the water_bill_calculator.py script.
-- Input customer details, meter readings, and consumption.
-- Click "Calculate Bill" to see the calculated water bill.
-- Click "Histories" to view saved water bill data.
+
+1. Ensure you have Python installed on your machine.
+2. Run the water_bill_calculator.py script.
+3. Input customer details, meter readings, and consumption.
+4. Click "Calculate Bill" to see the calculated water bill.
+5. Click "Histories" to view saved water bill data.
