@@ -6,9 +6,10 @@ from customtkinter import *
 from database import WaterBillDatabase
 
 class Result:
-    def __init__(self, root, bill_details_var):
+    def __init__(self, root, service_info_var, billing_summary_var):
         self.root = root
-        self.bill_details_var = bill_details_var
+        self.service_info_var = service_info_var
+        self.billing_summary_var = billing_summary_var
 
         self.details_frame = CTkFrame(self.root, fg_color="gray12", corner_radius=0)
         self.details_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
@@ -16,14 +17,28 @@ class Result:
         self.title_frame = CTkFrame(self.details_frame, fg_color="gray12")
         self.title_frame.pack(padx=10, pady=5)
 
-        self.label_name = CTkLabel(self.title_frame, text="Results", font=("Oswald", 25))
+        self.label_name = CTkLabel(self.title_frame, text="Information", font=("Oswald", 25))
         self.label_name.grid(row=0, column=0, padx=0, pady=10)
 
-        self.bill_details_label = CTkLabel(self.details_frame, textvariable=self.bill_details_var, justify=tk.LEFT, font=("Helvetica", 15), 
-                                    bg_color="gray12", 
-                                    fg_color="gray12",
-                                    wraplength=220)
-        self.bill_details_label.pack(padx=10, pady=10)
+        # Create two frames for service and billing information
+        self.service_frame = CTkFrame(self.details_frame, fg_color="gray12")
+        self.billing_frame = CTkFrame(self.details_frame, fg_color="gray12")
+
+        # Place the frames side by side
+        self.service_frame.pack(side=tk.LEFT, padx=100, pady=10)
+        self.billing_frame.pack(side=tk.LEFT, padx=10, pady=10)
+
+        # Create labels for service and billing information
+        self.service_info_label = CTkLabel(self.service_frame, textvariable=self.service_info_var, justify=tk.LEFT, font=("Oswald", 15), 
+                                           bg_color="gray12", 
+                                           fg_color="gray12")
+        self.billing_info_label = CTkLabel(self.billing_frame, textvariable=self.billing_summary_var, justify=tk.LEFT, font=("Oswald", 12), 
+                                           bg_color="gray12", 
+                                           fg_color="gray12", wraplength=250)
+
+        # Pack the labels into their respective frames
+        self.service_info_label.pack(padx=10, pady=10)
+        self.billing_info_label.pack(padx=10, pady=10)
         
 if __name__ == "__main__":
     root = CTk()

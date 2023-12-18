@@ -9,7 +9,7 @@ import history
 from register import Register
 
 root = CTk()
-root.title("AGUI Water Bill v28")
+root.title("AGUI")
 set_appearance_mode("dark")
 
 w = 854

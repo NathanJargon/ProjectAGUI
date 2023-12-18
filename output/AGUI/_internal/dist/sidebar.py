@@ -31,17 +31,17 @@ class Sidebar(ctk.CTkFrame):
 
         button_frame = ctk.CTkFrame(self, bg_color="gray12", fg_color="gray12")
         button_frame.pack(fill=tk.BOTH, expand=True)
-
-        button1 = ctk.CTkButton(button_frame, text="Input Data", command=self.on_button1_click, bg_color="gray12", fg_color="gray12")
+                
+        button1 = ctk.CTkButton(button_frame, text="Register\nInformation", command=self.on_button1_click, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button1.pack(pady=(20,5), padx=10)
 
-        button2 = ctk.CTkButton(button_frame, text="Histories", command=self.on_button2_click, bg_color="gray12", fg_color="gray12")
+        button2 = ctk.CTkButton(button_frame, text="Histories\nRegistered", command=self.on_button2_click, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button2.pack(pady=(20,5), padx=10)
 
-        button3 = ctk.CTkButton(button_frame, text="Graphical Presentation", command=self.on_button3_click, bg_color="gray12", fg_color="gray12")
+        button3 = ctk.CTkButton(button_frame, text="Graphical\nPresentation", command=self.on_button3_click, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button3.pack(pady=(20,5), padx=10)
 
-        button4 = ctk.CTkButton(button_frame, text="Log out", command=self.on_button4_click, bg_color="gray12", fg_color="gray12")
+        button4 = ctk.CTkButton(button_frame, text="Log out", command=self.on_button4_click, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button4.pack(pady=(95,5), padx=10)
         
     def on_button1_click(self):
