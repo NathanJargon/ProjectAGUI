@@ -9,127 +9,231 @@ import result
 class Register(result.Result):
     def __init__(self, root):
         self.root = root
-        self.db = WaterBillDatabase()
-        self.bill_details_var = StringVar()
+        #self.db_path = "db/water_bill_database.db"
+        self.db_path = "_internal/db/water_bill_database.db"
+        self.db = WaterBillDatabase(self.db_path)
 
+        self.service_info_var = StringVar()
+        self.billing_summary_var = StringVar()
+        
         self.background_frame = CTkFrame(root, fg_color="gray12", corner_radius=0)
         self.background_frame.place(relx=.18, rely=0, relwidth=.9, relheight=1, anchor='nw')
 
+        # Service Information
+        # Problem #1: Grid and pack will conflict each other.
+        # Solution: Use grid instead of pack.
+        
+        self.service_frame = CTkFrame(self.background_frame, fg_color="gray12")
+        self.service_frame.grid(row=0, column=0, sticky='w', padx=(10, 10), pady=55)
+
         self.title_frame = CTkFrame(self.background_frame, fg_color="gray12")
-        self.title_frame.pack(padx=10, pady=5)
+        self.title_frame.grid(row=1, column=0, padx=0, pady=5)
 
-        self.label_name = CTkLabel(self.title_frame, text="Register Information", font=("Oswald", 25))
-        self.label_name.grid(row=0, column=0, padx=0, pady=10)
+        self.label_name1 = CTkLabel(self.service_frame, text="Service Information", font=("Oswald", 25))
+        self.label_name1.grid(row=0, column=0, padx=0, pady=(0, 10))
 
-        self.name_frame = CTkFrame(self.background_frame)
-        self.name_frame.pack(padx=10, pady=5)
+        self.name_frame = CTkFrame(self.service_frame)
+        self.name_frame.grid(row=1, column=0, padx=10, pady=5)
 
         self.label_name = CTkLabel(self.name_frame, text="Customer Name:", font=("Oswald", 15))
-        self.label_name.grid(row=0, column=0, padx=53, pady=5)
+        self.label_name.grid(row=0, column=0, padx=(10, 40), pady=5)
 
         self.entry_name = CTkEntry(self.name_frame, width=150)
         self.entry_name.grid(row=0, column=1, padx=10, pady=5)
 
-        self.address_frame = CTkFrame(self.background_frame)
-        self.address_frame.pack(padx=10, pady=5)
+        self.address_frame = CTkFrame(self.service_frame)
+        self.address_frame.grid(row=2, column=0, padx=5, pady=5)
 
         self.label_address = CTkLabel(self.address_frame, text="Address:", font=("Oswald", 15))
-        self.label_address.grid(row=0, column=0, padx=75, pady=5)
+        self.label_address.grid(row=0, column=0, padx=(10, 85), pady=5)
 
         self.entry_address = CTkEntry(self.address_frame, width=150)
         self.entry_address.grid(row=0, column=1, padx=10, pady=5)
+        
+        self.account_frame = CTkFrame(self.service_frame)
+        self.account_frame.grid(row=3, column=0, padx=10, pady=5)
 
-        self.email_frame = CTkFrame(self.background_frame)
-        self.email_frame.pack(padx=10, pady=5)
+        self.label_account = CTkLabel(self.account_frame, text="Account Number:", font=("Oswald", 15))
+        self.label_account.grid(row=0, column=0, padx=(10, 38), pady=5)
 
-        self.label_email = CTkLabel(self.email_frame, text="Email:", font=("Oswald", 15))
-        self.label_email.grid(row=0, column=0, padx=82, pady=5)
+        self.entry_account = CTkEntry(self.account_frame, width=150)
+        self.entry_account.grid(row=0, column=1, padx=10, pady=5)
 
-        self.entry_email = CTkEntry(self.email_frame, width=150)
-        self.entry_email.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_email.insert(0, "must end with @gmail")
+        self.meter_frame = CTkFrame(self.service_frame)
+        self.meter_frame.grid(row=4, column=0, padx=10, pady=5)
 
-        self.label_current_reading_frame = CTkFrame(self.background_frame)
-        self.label_current_reading_frame.pack(padx=10, pady=5)
+        self.label_meter = CTkLabel(self.meter_frame, text="Meter Number:", font=("Oswald", 15))
+        self.label_meter.grid(row=0, column=0, padx=(10, 48), pady=5)
 
-        self.label_current_reading = CTkLabel(self.label_current_reading_frame, text="Current Meter Reading (cms):", font=("Oswald", 15))
-        self.label_current_reading.grid(row=0, column=0, padx=18.5, pady=5)
+        self.entry_meter = CTkEntry(self.meter_frame, width=150)
+        self.entry_meter.grid(row=0, column=1, padx=10, pady=5)
 
-        self.entry_current_reading = CTkEntry(self.label_current_reading_frame, width=150)
-        self.entry_current_reading.grid(row=0, column=1, padx=10, pady=5)
+        self.reference_frame = CTkFrame(self.service_frame)
+        self.reference_frame.grid(row=5, column=0, padx=10, pady=5)
 
-        self.label_previous_reading_frame = CTkFrame(self.background_frame)
-        self.label_previous_reading_frame.pack(padx=10, pady=5)
+        self.label_reference = CTkLabel(self.reference_frame, text="Reference Number:", font=("Oswald", 15))
+        self.label_reference.grid(row=0, column=0, padx=(10, 25), pady=5)
 
-        self.label_previous_reading = CTkLabel(self.label_previous_reading_frame, text="Previous Meter Reading (cms):", font=("Oswald", 15))
-        self.label_previous_reading.grid(row=0, column=0, padx=17, pady=5)
+        self.entry_reference = CTkEntry(self.reference_frame, width=150)
+        self.entry_reference.grid(row=0, column=1, padx=10, pady=5)
 
-        self.entry_previous_reading = CTkEntry(self.label_previous_reading_frame, width=150)
-        self.entry_previous_reading.grid(row=0, column=1, padx=10, pady=5)
+        self.rate_frame = CTkFrame(self.service_frame)
+        self.rate_frame.grid(row=6, column=0, padx=10, pady=5)
 
-        self.label_consumption_frame = CTkFrame(self.background_frame)
-        self.label_consumption_frame.pack(padx=10, pady=5)
+        self.label_rate = CTkLabel(self.rate_frame, text="Rate Per Cubic Meter:", font=("Oswald", 15))
+        self.label_rate.grid(row=0, column=0, padx=10, pady=5)
 
-        self.label_consumption = CTkLabel(self.label_consumption_frame, text="Consumption (gal):", font=("Oswald", 15))
-        self.label_consumption.grid(row=0, column=0, padx=49, pady=5)
-
-        self.entry_consumption = CTkEntry(self.label_consumption_frame, width=150)
-        self.entry_consumption.grid(row=0, column=1, padx=10, pady=5)
-
-        self.buttom_frame = CTkFrame(self.background_frame, fg_color="gray13")
-        self.buttom_frame.pack(padx=10, pady=5)
+        self.entry_rate = CTkEntry(self.rate_frame, width=150)
+        self.entry_rate.grid(row=0, column=1, padx=10, pady=5)
+        
+        # BUTTON
+        
+        self.buttom_frame = CTkFrame(self.service_frame, fg_color="gray12")
+        self.buttom_frame.grid(row=7, column=0, padx=0, pady=15)
 
         self.calculate_button = CTkButton(self.buttom_frame, text="Calculate Bill", command=self.calculate_bill, font=("Oswald", 15))
         self.calculate_button.grid(row=0, column=0, padx=10, pady=5)
 
 
+        # Billing Summary
+        
+        self.billing_frame = CTkFrame(self.background_frame, fg_color="gray12")
+        self.billing_frame.grid(row=0, column=1, sticky='w', pady=(10, 47))
+
+        self.label_name2 = CTkLabel(self.billing_frame, text="Billing Summary", font=("Oswald", 25))
+        self.label_name2.grid(row=0, column=0, padx=0, pady=(10, 10))
+    
+        self.billdate_frame = CTkFrame(self.billing_frame)
+        self.billdate_frame.grid(row=2, column=0, padx=5, pady=5)
+
+        self.label_billdate = CTkLabel(self.billdate_frame, text="Billing Date:", font=("Oswald", 15))
+        self.label_billdate.grid(row=0, column=0, padx=(10, 68), pady=5)
+
+        self.entry_billdate = CTkEntry(self.billdate_frame, width=150)
+        self.entry_billdate.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_billdate.insert(0, "YYYY-MM-DD")
+
+        self.billperiod_frame = CTkFrame(self.billing_frame)
+        self.billperiod_frame.grid(row=3, column=0, padx=5, pady=5)
+
+        self.label_billperiod= CTkLabel(self.billperiod_frame, text="Billing Period:", font=("Oswald", 15))
+        self.label_billperiod.grid(row=0, column=0, padx=10, pady=5)
+
+        self.entry_billperiod = CTkEntry(self.billperiod_frame, width=200)
+        self.entry_billperiod.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_billperiod.insert(0, "YYYY-MM-DD to YYYY-MM-DD")
+
+        self.soa_frame = CTkFrame(self.billing_frame)
+        self.soa_frame.grid(row=5, column=0, padx=5, pady=5)
+
+        self.label_soa= CTkLabel(self.soa_frame, text="SOA Number:", font=("Oswald", 15))
+        self.label_soa.grid(row=0, column=0, padx=(10, 63), pady=5)
+
+        self.entry_soa = CTkEntry(self.soa_frame, width=150)
+        self.entry_soa.grid(row=0, column=1, padx=10, pady=5)
+
+        self.bill_frame = CTkFrame(self.billing_frame)
+        self.bill_frame.grid(row=6, column=0, padx=5, pady=5)
+
+        self.label_bill= CTkLabel(self.bill_frame, text="Bill Number:", font=("Oswald", 15))
+        self.label_bill.grid(row=0, column=0, padx=(10, 68), pady=5)
+
+        self.entry_bill = CTkEntry(self.bill_frame, width=150)
+        self.entry_bill.grid(row=0, column=1, padx=10, pady=5)
+
+        self.rdg_frame = CTkFrame(self.billing_frame)
+        self.rdg_frame.grid(row=7, column=0, padx=5, pady=5)
+
+        self.label_rdg = CTkLabel(self.rdg_frame, text="Rdg Date/Time:", font=("Oswald", 15))
+        self.label_rdg.grid(row=0, column=0, padx=(10, 20), pady=5)
+
+        self.entry_rdg = CTkEntry(self.rdg_frame, width=180)
+        self.entry_rdg.grid(row=0, column=1, padx=10, pady=5) 
+        self.entry_rdg.insert(0, "YYYY-MM-DD 00:00:00 UTC")
+        
+        self.label_current_reading_frame = CTkFrame(self.billing_frame)
+        self.label_current_reading_frame.grid(row=8, column=0, padx=5, pady=5)
+
+        self.label_current_reading = CTkLabel(self.label_current_reading_frame, text="Pres Reading (cms):", font=("Oswald", 15))
+        self.label_current_reading.grid(row=0, column=0, padx=(10, 76), pady=5)
+
+        self.entry_current_reading = CTkEntry(self.label_current_reading_frame, width=100)
+        self.entry_current_reading.grid(row=0, column=1, padx=10, pady=5)
+
+        self.label_previous_reading_frame = CTkFrame(self.billing_frame)
+        self.label_previous_reading_frame.grid(row=9, column=0, padx=5, pady=5)
+
+        self.label_previous_reading = CTkLabel(self.label_previous_reading_frame, text="Prev Reading (cms):", font=("Oswald", 15))
+        self.label_previous_reading.grid(row=0, column=0, padx=(10, 76), pady=5)
+
+        self.entry_previous_reading = CTkEntry(self.label_previous_reading_frame, width=100)
+        self.entry_previous_reading.grid(row=0, column=1, padx=10, pady=5)
+
     def calculate_bill(self):
         try:
             customer_name = self.entry_name.get()[:11] if ' ' not in self.entry_name.get() else self.entry_name.get().split(' ')[0]
             address = self.entry_address.get()
-            email = self.entry_email.get()
-            consumption = float(self.entry_consumption.get())
+            account = self.entry_account.get()
+            meter = self.entry_meter.get()
+            reference = self.entry_reference.get()
+            rate = float(self.entry_rate.get())
 
+            bill_date = self.entry_bill.get()
+            bill_period = self.entry_billperiod.get()
+            rdg_date_time = self.entry_rdg.get()
             current_reading = float(self.entry_current_reading.get())
             previous_reading = float(self.entry_previous_reading.get())
             meter_consumption = current_reading - previous_reading
             message = ""
             
-            if not email.endswith("@gmail"):
-                raise ValueError("Invalid email address")
-            
             bill_amount_php = meter_consumption * 2.5
 
-            if consumption < 50:
+            if meter_consumption < 50:
                 message = "Great job on conserving water! Keep it up."
-            elif consumption < 100:
+            elif meter_consumption < 100:
                 message = "You're using a moderate amount of water. Consider more water-saving habits."
             else:
                 message = "Please be mindful of your water usage. Consider implementing water-saving tips."
 
-            self.db.save_to_database(customer_name, address, email, consumption, current_reading, previous_reading, meter_consumption, bill_amount_php, message)
+            #print(customer_name, address, account, meter, reference, rate, consumption, bill_date, bill_period, rdg_date_time, current_reading, previous_reading, meter_consumption, bill_amount_php, message)
+
+            self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
+                                     bill_period, rdg_date_time,
+                                     current_reading, previous_reading, meter_consumption, bill_amount_php, message)
             
             self.db.fetch_data()
             
-            bill_details = f"Customer Name: {customer_name}\n"
-            bill_details += f"Address: {address}\n"
-            bill_details += f"Email: {email}\n"
-            bill_details += f"Consumption: {consumption} gallons\n\n"
-            bill_details += f"Metering Information:\n"
-            bill_details += f"Current Reading: {current_reading}\n"
-            bill_details += f"Previous Reading: {previous_reading}\n"
-            bill_details += f"Meter Consumption: {meter_consumption} gallons\n\n"
-            bill_details += f"Billing Summary:\n"
-            bill_details += f"Total Bill Amount (in PHP): ₱{bill_amount_php:.2f}\n\n"
-            bill_details += f"Message: {message}"
+            service_info = ""
+            service_info += f"SERVICE INFORMATION\n"
+            service_info += f"________________________\n"
+            service_info += f"Customer Name: {customer_name}\n"
+            service_info += f"Address: {address}\n"
+            service_info += f"Account Number: {account}\n"
+            service_info += f"Meter Number: {meter}\n"
+            service_info += f"Reference Number: {reference}\n"
+            service_info += f"Rate per Cubic Meter: {rate}"
+            
+            billing_summary = ""
+            billing_summary += f"BILLING SUMMARY:\n"
+            billing_summary += f"________________________\n"     
+            billing_summary += f"Billing Date: {bill_date}\n"
+            billing_summary += f"Billing Period: {bill_period}\n"
+            billing_summary += f"Reading Date/Time: {rdg_date_time}\n"
+            billing_summary += f"Current Reading: {current_reading}\n"
+            billing_summary += f"Previous Reading: {previous_reading}\n"
+            billing_summary += f"Meter Consumption: {meter_consumption} gallons\n\n"
+            billing_summary += f"TOTAL AMOUNT\n"
+            billing_summary += f"________________________\n" 
+            billing_summary += f"Total Bill Amount (in PHP): ₱{bill_amount_php:.2f}\n\n"
+            billing_summary += f"Message: {message}"
             
             for widget in self.background_frame.winfo_children():
                 widget.destroy()
 
-            self.bill_details_var.set(bill_details)
-            result_screen = result.Result(self.background_frame, self.bill_details_var)
+            self.service_info_var.set(service_info)
+            self.billing_summary_var.set(billing_summary)
 
-            result_screen.details_frame.pack()
+            result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var)
             
         except ValueError as e:
             if str(e) == "Invalid email address":
