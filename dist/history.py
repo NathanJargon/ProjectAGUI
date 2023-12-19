@@ -12,7 +12,9 @@ class History(result.Result):
         self.root = root
         self.details_frame = details_frame
         self.bill_details_var = StringVar()
-        self.db = WaterBillDatabase()
+        #self.db_path = "db/water_bill_database.db"
+        self.db_path = "_internal/db/water_bill_database.db"
+        self.db = WaterBillDatabase(self.db_path)
         self.background_frame = CTkFrame(self.root, fg_color="gray12", corner_radius=0)
         self.background_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
         self.title_frame = CTkFrame(self.background_frame, fg_color="gray12")
@@ -30,10 +32,10 @@ class History(result.Result):
         self.billing_summary_var = StringVar()
         self.fetch_data()
 
-    def save_to_database(self, customer_name, address, account, meter, reference, rate, consumption, bill_date, 
+    def save_to_database(self, customer_name, address, account, meter, reference, rate, bill_date, 
                             bill_period, rdg_date_time,
                             current_reading, previous_reading, meter_consumption, bill_amount_php, message):
-        self.db.save_to_database(customer_name, address, account, meter, reference, rate, consumption, bill_date, 
+        self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
                             bill_period, rdg_date_time,
                             current_reading, previous_reading, meter_consumption, bill_amount_php, message)
 
@@ -83,26 +85,28 @@ class History(result.Result):
         """
         
         service_info = ""
-        service_info += f"SERVICE INFORMATION\n\n"
+        service_info += f"SERVICE INFORMATION\n"
+        service_info += f"________________________\n"
         service_info += f"Customer Name: {row[1]}\n"
         service_info += f"Address: {row[2]}\n"
         service_info += f"Account Number: {row[3]}\n"
         service_info += f"Meter Number: {row[4]}\n"
         service_info += f"Reference Number: {row[5]}\n"
-        service_info += f"Rate per Cubic Meter: {row[6]}\n\n"
+        service_info += f"Rate per Cubic Meter: {row[6]}"
 
         billing_summary = ""
-        billing_summary += f"BILLING SUMMARY\n\n"
-        billing_summary += f"Consumption: {row[7]} gallons\n"
-        billing_summary += f"Billing Date: {row[8]}\n"
-        billing_summary += f"Billing Period: {row[9]}\n"
-        billing_summary += f"Reading Date/Time: {row[10]}\n"
-        billing_summary += f"Current Reading: {row[11]}\n"
-        billing_summary += f"Previous Reading: {row[12]}\n"
-        billing_summary += f"Meter Consumption: {row[13]} gallons\n\n"
+        billing_summary += f"BILLING SUMMARY\n"
+        billing_summary += f"________________________\n"        
+        billing_summary += f"Billing Date: {row[7]}\n"
+        billing_summary += f"Billing Period: {row[8]}\n"
+        billing_summary += f"Reading Date/Time: {row[9]}\n"
+        billing_summary += f"Current Reading: {row[10]}\n"
+        billing_summary += f"Previous Reading: {row[11]}\n"
+        billing_summary += f"Meter Consumption: {row[12]} gallons\n\n"
         billing_summary += f"TOTAL AMOUNT\n"
-        billing_summary += f"Total Bill Amount (in PHP): ₱{row[14]:.2f}\n\n"
-        billing_summary += f"Message: {row[15]}"
+        billing_summary += f"________________________\n"     
+        billing_summary += f"Total Bill Amount (in PHP): ₱{row[13]:.2f}\n\n"
+        billing_summary += f"Message: {row[14]}"
 
         for widget in self.background_frame.winfo_children():
             widget.destroy()

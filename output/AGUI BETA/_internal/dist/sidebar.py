@@ -13,10 +13,11 @@ import graph
 class Sidebar(ctk.CTkFrame):
     def __init__(self, root, master=None, **kwargs):
         super().__init__(master, **kwargs)
-        self.create_widgets()
         self.root = root
+        self.create_widgets()
         self.details_frame = ctk.CTkFrame(root, fg_color="gray12", corner_radius=0)
         self.bill_details_var = tk.StringVar()
+        register_window = register.Register(self.root)
         
     def create_widgets(self):
         title_frame = ctk.CTkFrame(self, bg_color="gray12", fg_color="gray12", height=50)
@@ -33,35 +34,30 @@ class Sidebar(ctk.CTkFrame):
         button_frame = ctk.CTkFrame(self, bg_color="gray12", fg_color="gray12")
         button_frame.pack(fill=tk.BOTH, expand=True)
                 
-        button1 = ctk.CTkButton(button_frame, text="Register\nInformation", command=self.on_button1_click, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button1 = ctk.CTkButton(button_frame, text="Register\nInformation", command=self.register_information, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button1.pack(pady=(20,5), padx=10)
 
-        button2 = ctk.CTkButton(button_frame, text="Histories\nRegistered", command=self.on_button2_click, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button2 = ctk.CTkButton(button_frame, text="Histories\nRegistered", command=self.histories_registered, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button2.pack(pady=(20,5), padx=10)
 
-        button3 = ctk.CTkButton(button_frame, text="Graphical\nPresentation", command=self.on_button3_click, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button3 = ctk.CTkButton(button_frame, text="Graphical\nPresentation", command=self.graphical_presentation, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button3.pack(pady=(20,5), padx=10)
 
-        button4 = ctk.CTkButton(button_frame, text="Log out", command=self.on_button4_click, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button4 = ctk.CTkButton(button_frame, text="Log out", command=self.login_button, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button4.pack(pady=(95,5), padx=10)
         
-    def on_button1_click(self):
+    def register_information(self):
         register_window = register.Register(self.root)
 
-    def on_button2_click(self):
+    def histories_registered(self):
         history_window = history.History(self.root, self.details_frame)
 
-    def on_button3_click(self):
-        # Check if the graph frame already exists
-        if hasattr(self, 'graph_frame'):
-            # If it does, destroy it
-            self.graph_frame.graph_frame.destroy()
-
+    def graphical_presentation(self):
         # Now create a new graph frame
-        self.graph_frame = graph.GraphGenerator(self.root)
-        self.graph_frame.create_graph()
+        self.background_frame = graph.GraphGenerator(self.root)
+        self.background_frame.create_graph()
 
-    def on_button4_click(self):
+    def login_button(self):
         self.root.destroy()
         login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'login.py')
         #login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'login.py')
@@ -73,8 +69,8 @@ class MainApplication(ctk.CTkFrame):
         self.create_widgets()
 
     def create_widgets(self):
-        main_label = ctk.CTkLabel(self, text="Main Content", font=("Arial", 16), bg_color="gray12", fg_color="white")
-        main_label.pack(pady=20)
+        main_label = ctk.CTkLabel(self, text="You have accessed\nthe application!", font=("Arial", 40), bg_color="gray12", fg_color="gray12")
+        main_label.pack(pady=150)
 
 if __name__ == "__main__":
     root = ctk.CTk()
@@ -94,8 +90,5 @@ if __name__ == "__main__":
 
     sidebar = Sidebar(root, width=200, bg_color="gray12", fg_color="gray12")
     sidebar.pack(side=tk.LEFT, fill=tk.Y)
-
-    main_app = MainApplication(root, bg_color="gray12")
-    main_app.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
     root.mainloop()

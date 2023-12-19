@@ -9,7 +9,9 @@ import result
 class Register(result.Result):
     def __init__(self, root):
         self.root = root
-        self.db = WaterBillDatabase()
+        #self.db_path = "db/water_bill_database.db"
+        self.db_path = "_internal/db/water_bill_database.db"
+        self.db = WaterBillDatabase(self.db_path)
 
         self.service_info_var = StringVar()
         self.billing_summary_var = StringVar()
@@ -22,7 +24,7 @@ class Register(result.Result):
         # Solution: Use grid instead of pack.
         
         self.service_frame = CTkFrame(self.background_frame, fg_color="gray12")
-        self.service_frame.grid(row=0, column=0, sticky='w', padx=(10, 10), pady=5)
+        self.service_frame.grid(row=0, column=0, sticky='w', padx=(10, 10), pady=55)
 
         self.title_frame = CTkFrame(self.background_frame, fg_color="gray12")
         self.title_frame.grid(row=1, column=0, padx=0, pady=5)
@@ -96,7 +98,7 @@ class Register(result.Result):
         # Billing Summary
         
         self.billing_frame = CTkFrame(self.background_frame, fg_color="gray12")
-        self.billing_frame.grid(row=0, column=1, sticky='w')
+        self.billing_frame.grid(row=0, column=1, sticky='w', pady=(10, 47))
 
         self.label_name2 = CTkLabel(self.billing_frame, text="Billing Summary", font=("Oswald", 25))
         self.label_name2.grid(row=0, column=0, padx=0, pady=(10, 10))
@@ -167,15 +169,6 @@ class Register(result.Result):
         self.entry_previous_reading = CTkEntry(self.label_previous_reading_frame, width=100)
         self.entry_previous_reading.grid(row=0, column=1, padx=10, pady=5)
 
-        self.label_consumption_frame = CTkFrame(self.billing_frame)
-        self.label_consumption_frame.grid(row=10, column=0, padx=5, pady=5)
-
-        self.label_consumption = CTkLabel(self.label_consumption_frame, text="Consumption (gal):", font=("Oswald", 15))
-        self.label_consumption.grid(row=0, column=0, padx=(10, 83), pady=5)
-
-        self.entry_consumption = CTkEntry(self.label_consumption_frame, width=100)
-        self.entry_consumption.grid(row=0, column=1, padx=10, pady=5)
-
     def calculate_bill(self):
         try:
             customer_name = self.entry_name.get()[:11] if ' ' not in self.entry_name.get() else self.entry_name.get().split(' ')[0]
@@ -183,7 +176,6 @@ class Register(result.Result):
             account = self.entry_account.get()
             meter = self.entry_meter.get()
             reference = self.entry_reference.get()
-            consumption = float(self.entry_consumption.get())
             rate = float(self.entry_rate.get())
 
             bill_date = self.entry_bill.get()
@@ -196,40 +188,42 @@ class Register(result.Result):
             
             bill_amount_php = meter_consumption * 2.5
 
-            if consumption < 50:
+            if meter_consumption < 50:
                 message = "Great job on conserving water! Keep it up."
-            elif consumption < 100:
+            elif meter_consumption < 100:
                 message = "You're using a moderate amount of water. Consider more water-saving habits."
             else:
                 message = "Please be mindful of your water usage. Consider implementing water-saving tips."
 
             #print(customer_name, address, account, meter, reference, rate, consumption, bill_date, bill_period, rdg_date_time, current_reading, previous_reading, meter_consumption, bill_amount_php, message)
 
-            self.db.save_to_database(customer_name, address, account, meter, reference, rate, consumption, bill_date, 
+            self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
                                      bill_period, rdg_date_time,
                                      current_reading, previous_reading, meter_consumption, bill_amount_php, message)
             
             self.db.fetch_data()
             
             service_info = ""
-            service_info += f"SERVICE INFORMATION\n\n"
+            service_info += f"SERVICE INFORMATION\n"
+            service_info += f"________________________\n"
             service_info += f"Customer Name: {customer_name}\n"
             service_info += f"Address: {address}\n"
             service_info += f"Account Number: {account}\n"
             service_info += f"Meter Number: {meter}\n"
             service_info += f"Reference Number: {reference}\n"
-            service_info += f"Rate per Cubic Meter: {rate}\n\n"
+            service_info += f"Rate per Cubic Meter: {rate}"
             
             billing_summary = ""
-            billing_summary += f"BILLING SUMMARY:\n\n"
-            billing_summary += f"Consumption: {consumption} gallons\n"
+            billing_summary += f"BILLING SUMMARY:\n"
+            billing_summary += f"________________________\n"     
             billing_summary += f"Billing Date: {bill_date}\n"
             billing_summary += f"Billing Period: {bill_period}\n"
             billing_summary += f"Reading Date/Time: {rdg_date_time}\n"
             billing_summary += f"Current Reading: {current_reading}\n"
             billing_summary += f"Previous Reading: {previous_reading}\n"
             billing_summary += f"Meter Consumption: {meter_consumption} gallons\n\n"
-            billing_summary += f"BILLING SUMMARY\n"
+            billing_summary += f"TOTAL AMOUNT\n"
+            billing_summary += f"________________________\n" 
             billing_summary += f"Total Bill Amount (in PHP): ₱{bill_amount_php:.2f}\n\n"
             billing_summary += f"Message: {message}"
             

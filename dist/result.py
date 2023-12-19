@@ -11,12 +11,10 @@ class Result:
         self.root = root
         self.service_info_var = service_info_var
         self.billing_summary_var = billing_summary_var
-        self.service_info_string = self.service_info_var.get()
-        self.billing_info_string = self.billing_summary_var.get()
-        #self.service_info_list = self.service_info_string.split()
-        #self.billing_info_list = self.billing_info_list.split()
-        #print(self.service_info_list)
-        #print(self.billing_info_list)
+
+        #ToDo: customize each label of the informations
+        #print(self.service_info_var)
+        #print(self.billing_summary_var)
         
         self.details_frame = CTkFrame(self.root, fg_color="gray12", corner_radius=0)
         self.details_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
@@ -32,11 +30,11 @@ class Result:
         self.billing_frame = CTkFrame(self.details_frame, fg_color="gray12")
 
         # Place the frames side by side
-        self.service_frame.pack(side=tk.LEFT, padx=100, pady=10)
+        self.service_frame.pack(side=tk.LEFT, padx=100, pady=(10, 150))
         self.billing_frame.pack(side=tk.LEFT, padx=10, pady=10)
 
         # Create labels for service and billing information
-        self.service_info_label = CTkLabel(self.service_frame, textvariable=self.service_info_var, justify=tk.LEFT, font=("Oswald", 15), 
+        self.service_info_label = CTkLabel(self.service_frame, textvariable=self.service_info_var, justify=tk.LEFT, font=("Oswald", 12), 
                                            bg_color="gray12", 
                                            fg_color="gray12")
         self.billing_info_label = CTkLabel(self.billing_frame, textvariable=self.billing_summary_var, justify=tk.LEFT, font=("Oswald", 12), 
