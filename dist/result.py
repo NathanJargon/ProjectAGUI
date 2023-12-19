@@ -4,13 +4,20 @@ import sqlite3
 from PIL import Image, ImageTk
 from customtkinter import *
 from database import WaterBillDatabase
+import ast
 
 class Result:
     def __init__(self, root, service_info_var, billing_summary_var):
         self.root = root
         self.service_info_var = service_info_var
         self.billing_summary_var = billing_summary_var
-
+        self.service_info_string = self.service_info_var.get()
+        self.billing_info_string = self.billing_summary_var.get()
+        #self.service_info_list = self.service_info_string.split()
+        #self.billing_info_list = self.billing_info_list.split()
+        #print(self.service_info_list)
+        #print(self.billing_info_list)
+        
         self.details_frame = CTkFrame(self.root, fg_color="gray12", corner_radius=0)
         self.details_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
 

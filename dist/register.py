@@ -34,7 +34,7 @@ class Register(result.Result):
         self.name_frame.grid(row=1, column=0, padx=10, pady=5)
 
         self.label_name = CTkLabel(self.name_frame, text="Customer Name:", font=("Oswald", 15))
-        self.label_name.grid(row=0, column=0, padx=10, pady=5)
+        self.label_name.grid(row=0, column=0, padx=(10, 40), pady=5)
 
         self.entry_name = CTkEntry(self.name_frame, width=150)
         self.entry_name.grid(row=0, column=1, padx=10, pady=5)
@@ -43,7 +43,7 @@ class Register(result.Result):
         self.address_frame.grid(row=2, column=0, padx=5, pady=5)
 
         self.label_address = CTkLabel(self.address_frame, text="Address:", font=("Oswald", 15))
-        self.label_address.grid(row=0, column=0, padx=(10, 50), pady=5)
+        self.label_address.grid(row=0, column=0, padx=(10, 85), pady=5)
 
         self.entry_address = CTkEntry(self.address_frame, width=150)
         self.entry_address.grid(row=0, column=1, padx=10, pady=5)
@@ -52,7 +52,7 @@ class Register(result.Result):
         self.account_frame.grid(row=3, column=0, padx=10, pady=5)
 
         self.label_account = CTkLabel(self.account_frame, text="Account Number:", font=("Oswald", 15))
-        self.label_account.grid(row=0, column=0, padx=10, pady=5)
+        self.label_account.grid(row=0, column=0, padx=(10, 38), pady=5)
 
         self.entry_account = CTkEntry(self.account_frame, width=150)
         self.entry_account.grid(row=0, column=1, padx=10, pady=5)
@@ -61,7 +61,7 @@ class Register(result.Result):
         self.meter_frame.grid(row=4, column=0, padx=10, pady=5)
 
         self.label_meter = CTkLabel(self.meter_frame, text="Meter Number:", font=("Oswald", 15))
-        self.label_meter.grid(row=0, column=0, padx=10, pady=5)
+        self.label_meter.grid(row=0, column=0, padx=(10, 48), pady=5)
 
         self.entry_meter = CTkEntry(self.meter_frame, width=150)
         self.entry_meter.grid(row=0, column=1, padx=10, pady=5)
@@ -70,7 +70,7 @@ class Register(result.Result):
         self.reference_frame.grid(row=5, column=0, padx=10, pady=5)
 
         self.label_reference = CTkLabel(self.reference_frame, text="Reference Number:", font=("Oswald", 15))
-        self.label_reference.grid(row=0, column=0, padx=10, pady=5)
+        self.label_reference.grid(row=0, column=0, padx=(10, 25), pady=5)
 
         self.entry_reference = CTkEntry(self.reference_frame, width=150)
         self.entry_reference.grid(row=0, column=1, padx=10, pady=5)
@@ -105,7 +105,7 @@ class Register(result.Result):
         self.billdate_frame.grid(row=2, column=0, padx=5, pady=5)
 
         self.label_billdate = CTkLabel(self.billdate_frame, text="Billing Date:", font=("Oswald", 15))
-        self.label_billdate.grid(row=0, column=0, padx=10, pady=5)
+        self.label_billdate.grid(row=0, column=0, padx=(10, 68), pady=5)
 
         self.entry_billdate = CTkEntry(self.billdate_frame, width=150)
         self.entry_billdate.grid(row=0, column=1, padx=10, pady=5)
@@ -125,7 +125,7 @@ class Register(result.Result):
         self.soa_frame.grid(row=5, column=0, padx=5, pady=5)
 
         self.label_soa= CTkLabel(self.soa_frame, text="SOA Number:", font=("Oswald", 15))
-        self.label_soa.grid(row=0, column=0, padx=10, pady=5)
+        self.label_soa.grid(row=0, column=0, padx=(10, 63), pady=5)
 
         self.entry_soa = CTkEntry(self.soa_frame, width=150)
         self.entry_soa.grid(row=0, column=1, padx=10, pady=5)
@@ -134,7 +134,7 @@ class Register(result.Result):
         self.bill_frame.grid(row=6, column=0, padx=5, pady=5)
 
         self.label_bill= CTkLabel(self.bill_frame, text="Bill Number:", font=("Oswald", 15))
-        self.label_bill.grid(row=0, column=0, padx=10, pady=5)
+        self.label_bill.grid(row=0, column=0, padx=(10, 68), pady=5)
 
         self.entry_bill = CTkEntry(self.bill_frame, width=150)
         self.entry_bill.grid(row=0, column=1, padx=10, pady=5)
@@ -143,7 +143,7 @@ class Register(result.Result):
         self.rdg_frame.grid(row=7, column=0, padx=5, pady=5)
 
         self.label_rdg = CTkLabel(self.rdg_frame, text="Rdg Date/Time:", font=("Oswald", 15))
-        self.label_rdg.grid(row=0, column=0, padx=10, pady=5)
+        self.label_rdg.grid(row=0, column=0, padx=(10, 20), pady=5)
 
         self.entry_rdg = CTkEntry(self.rdg_frame, width=180)
         self.entry_rdg.grid(row=0, column=1, padx=10, pady=5) 
@@ -153,7 +153,7 @@ class Register(result.Result):
         self.label_current_reading_frame.grid(row=8, column=0, padx=5, pady=5)
 
         self.label_current_reading = CTkLabel(self.label_current_reading_frame, text="Pres Reading (cms):", font=("Oswald", 15))
-        self.label_current_reading.grid(row=0, column=0, padx=10, pady=5)
+        self.label_current_reading.grid(row=0, column=0, padx=(10, 76), pady=5)
 
         self.entry_current_reading = CTkEntry(self.label_current_reading_frame, width=100)
         self.entry_current_reading.grid(row=0, column=1, padx=10, pady=5)
@@ -162,7 +162,7 @@ class Register(result.Result):
         self.label_previous_reading_frame.grid(row=9, column=0, padx=5, pady=5)
 
         self.label_previous_reading = CTkLabel(self.label_previous_reading_frame, text="Prev Reading (cms):", font=("Oswald", 15))
-        self.label_previous_reading.grid(row=0, column=0, padx=10, pady=5)
+        self.label_previous_reading.grid(row=0, column=0, padx=(10, 76), pady=5)
 
         self.entry_previous_reading = CTkEntry(self.label_previous_reading_frame, width=100)
         self.entry_previous_reading.grid(row=0, column=1, padx=10, pady=5)
@@ -171,7 +171,7 @@ class Register(result.Result):
         self.label_consumption_frame.grid(row=10, column=0, padx=5, pady=5)
 
         self.label_consumption = CTkLabel(self.label_consumption_frame, text="Consumption (gal):", font=("Oswald", 15))
-        self.label_consumption.grid(row=0, column=0, padx=10, pady=5)
+        self.label_consumption.grid(row=0, column=0, padx=(10, 83), pady=5)
 
         self.entry_consumption = CTkEntry(self.label_consumption_frame, width=100)
         self.entry_consumption.grid(row=0, column=1, padx=10, pady=5)

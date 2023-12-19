@@ -8,6 +8,7 @@ from database import WaterBillDatabase
 import history
 import register
 import subprocess
+import graph
 
 class Sidebar(ctk.CTkFrame):
     def __init__(self, root, master=None, **kwargs):
@@ -51,7 +52,14 @@ class Sidebar(ctk.CTkFrame):
         history_window = history.History(self.root, self.details_frame)
 
     def on_button3_click(self):
-        pass
+        # Check if the graph frame already exists
+        if hasattr(self, 'graph_frame'):
+            # If it does, destroy it
+            self.graph_frame.graph_frame.destroy()
+
+        # Now create a new graph frame
+        self.graph_frame = graph.GraphGenerator(self.root)
+        self.graph_frame.create_graph()
 
     def on_button4_click(self):
         self.root.destroy()
