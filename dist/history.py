@@ -1,10 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, Frame, Canvas, Button, Scrollbar, StringVar
-import sqlite3
-from PIL import Image, ImageTk
 from customtkinter import *
 from database import WaterBillDatabase
-from register import Register
 import result
 
 class History(result.Result):
@@ -32,12 +29,12 @@ class History(result.Result):
         self.billing_summary_var = StringVar()
         self.fetch_data()
 
-    def save_to_database(self, customer_name, address, account, meter, reference, rate, bill_date, 
-                            bill_period, rdg_date_time,
-                            current_reading, previous_reading, meter_consumption, bill_amount_php, message):
-        self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
-                            bill_period, rdg_date_time,
-                            current_reading, previous_reading, meter_consumption, bill_amount_php, message)
+    def save_to_database(self, customer_name, address, account, meter, reference, rate, charges, bill_date, 
+                bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
+                consumption, meter_consumption, bill_amount_php, message):
+        self.db.save_to_database(customer_name, address, account, meter, reference, rate, charges, bill_date, 
+                bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
+                consumption, meter_consumption, bill_amount_php, message)
 
     def fetch_data(self):
         for widget in self.button_frame.winfo_children():
@@ -92,21 +89,25 @@ class History(result.Result):
         service_info += f"Account Number: {row[3]}\n"
         service_info += f"Meter Number: {row[4]}\n"
         service_info += f"Reference Number: {row[5]}\n"
-        service_info += f"Rate per Cubic Meter: {row[6]}"
+        service_info += f"Rate per Cubic Meter: {row[6]}\n"
+        service_info += f"Charges/Dues: {row[7]}"
 
         billing_summary = ""
         billing_summary += f"BILLING SUMMARY\n"
         billing_summary += f"________________________\n"        
-        billing_summary += f"Billing Date: {row[7]}\n"
-        billing_summary += f"Billing Period: {row[8]}\n"
-        billing_summary += f"Reading Date/Time: {row[9]}\n"
-        billing_summary += f"Current Reading: {row[10]}\n"
-        billing_summary += f"Previous Reading: {row[11]}\n"
-        billing_summary += f"Meter Consumption: {row[12]} gallons\n\n"
+        billing_summary += f"Billing Date: {row[8]}\n"
+        billing_summary += f"Billing Period: {row[9]}\n"
+        billing_summary += f"SOA Number: {row[10]}\n"
+        billing_summary += f"Billing Number: {row[11]}\n"
+        billing_summary += f"Reading Date/Time: {row[12]}\n"
+        billing_summary += f"Current Reading: {row[13]}\n"
+        billing_summary += f"Previous Reading: {row[14]}\n"
+        billing_summary += f"Consumption: {row[15]}\n"
+        billing_summary += f"Meter Consumption: {row[16]} gallons\n\n"
         billing_summary += f"TOTAL AMOUNT\n"
         billing_summary += f"________________________\n"     
-        billing_summary += f"Total Bill Amount (in PHP): ₱{row[13]:.2f}\n\n"
-        billing_summary += f"Message: {row[14]}"
+        billing_summary += f"Total Bill Amount (in PHP): ₱{row[17]:.2f}\n\n"
+        billing_summary += f"Message: {row[18]}"
 
         for widget in self.background_frame.winfo_children():
             widget.destroy()

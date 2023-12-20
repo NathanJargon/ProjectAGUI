@@ -1,12 +1,6 @@
 import tkinter as tk
-from tkinter import messagebox, Frame, Canvas, Button, Scrollbar, StringVar
-import sqlite3
-from PIL import Image, ImageTk
 from customtkinter import *
-from database import WaterBillDatabase
 from sidebar import Sidebar
-import history
-from register import Register
 
 root = CTk()
 root.title("AGUI")
@@ -22,6 +16,7 @@ x = (ws/2) - (w/2)
 y = (hs/2) - (h/2)
 
 root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
+root.resizable(False, False)
 
 ############################################# Sidebar
 

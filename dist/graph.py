@@ -17,7 +17,6 @@ class GraphGenerator:
         self.label_name.grid(row=0, column=0, padx=0, pady=10)
 
     def create_graph(self):
-        # If the background_frame of graph.py exist, then destroy it
         if hasattr(self, 'background_frame') and self.background_frame.winfo_exists():
             for widget in self.background_frame.winfo_children():
                 widget.destroy()
@@ -27,12 +26,11 @@ class GraphGenerator:
             for widget in self.root.winfo_children():
                 widget.destroy()
 
-        # Recreate the sidebar widget
+        # Recreate the sidebar widget and background frame after destroying it.
         self.sidebar = sidebar.Sidebar(self.root)
-        self.sidebar.pack(side='left', fill='y')  # Adjust the side and fill parameters as needed
+        self.sidebar.pack(side='left', fill='y') 
 
         
-        # Recreate self.background_frame
         self.background_frame = CTkFrame(self.root, fg_color="black", corner_radius=0)
         self.background_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
         self.title_frame = CTkFrame(self.background_frame, fg_color="black")
@@ -58,7 +56,7 @@ class GraphGenerator:
             rows = cursor.fetchall()
 
             x_data = [row[1] for row in rows]
-            y_data = [row[13] for row in rows]
+            y_data = [row[17] for row in rows]
 
             ax.bar(x_data, y_data, label=f'{customer_name}')
 

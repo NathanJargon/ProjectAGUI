@@ -4,7 +4,6 @@ import importlib
 import tkinter as tk
 import customtkinter as ctk
 from tkinter import PhotoImage
-from database import WaterBillDatabase
 import history
 import register
 import subprocess
@@ -12,7 +11,7 @@ import graph
 
 class Sidebar(ctk.CTkFrame):
     def __init__(self, root, master=None, **kwargs):
-        super().__init__(master, **kwargs)
+        super().__init__(master, **kwargs) # Takes all attributes from CTkFrame
         self.root = root
         self.create_widgets()
         self.details_frame = ctk.CTkFrame(root, fg_color="gray12", corner_radius=0)

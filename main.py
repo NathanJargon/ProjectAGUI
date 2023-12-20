@@ -8,7 +8,6 @@ import subprocess
 
 w=Tk()
 
-#Using piece of code from old splash screen
 width_of_window = 427
 height_of_window = 250
 screen_width = w.winfo_screenwidth()
@@ -19,7 +18,7 @@ w.geometry("%dx%d+%d+%d" %(width_of_window,height_of_window,x_coordinate,y_coord
 #w.configure(bg='#ED1B76')
 w.overrideredirect(1) #for hiding titlebar
 
-#new window to open
+# 3. After No.2
 def new_win():
     app_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dist', 'login.py')
     subprocess.run(['python', app_path])
@@ -33,7 +32,7 @@ label2=Label(w, text='Loading...', fg='white', bg='#272727') #decorate it
 label2.configure(font=("Calibri", 11))
 label2.place(x=10,y=215)
 
-#making animation
+# 2. Animation Window
 
 #image_a=ImageTk.PhotoImage(Image.open('img/c2.png'))
 #image_b=ImageTk.PhotoImage(Image.open('img/c1.png'))
@@ -41,7 +40,7 @@ image_a=ImageTk.PhotoImage(Image.open('_internal/img/c2.png'))
 image_b=ImageTk.PhotoImage(Image.open('_internal/img/c1.png'))
 
 
-for i in range(3): #4loops
+for i in range(3): # 3 Loops at 0.3 delay
     l1=Label(w, image=image_a, border=0, relief=SUNKEN).place(x=180, y=145)
     l2=Label(w, image=image_b, border=0, relief=SUNKEN).place(x=200, y=145)
     l3=Label(w, image=image_b, border=0, relief=SUNKEN).place(x=220, y=145)

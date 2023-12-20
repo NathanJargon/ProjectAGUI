@@ -17,11 +17,15 @@ class WaterBillDatabase:
                 meter TEXT,
                 reference TEXT,
                 rate REAL,
+                charges REAL,
                 bill_date TEXT,
                 bill_period TEXT,
+                soa TEXT,
+                bill TEXT,
                 rdg_date_time TEXT,
                 current_reading REAL,
                 previous_reading REAL,
+                consumption REAL,
                 meter_consumption REAL,
                 bill_amount_php REAL,
                 message TEXT
@@ -35,9 +39,9 @@ class WaterBillDatabase:
 
         self.conn.commit()
 
-    def save_to_database(self, customer_name, address, account, meter, reference, rate, bill_date, 
-                            bill_period, rdg_date_time,
-                            current_reading, previous_reading, meter_consumption, bill_amount_php, message):
+    def save_to_database(self, customer_name, address, account, meter, reference, rate, charges, bill_date, 
+                bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
+                consumption, meter_consumption, bill_amount_php, message):
         self.cursor.execute('''
             INSERT INTO water_bills (
                 customer_name,
@@ -46,17 +50,22 @@ class WaterBillDatabase:
                 meter,
                 reference,
                 rate,
+                charges,
                 bill_date,
                 bill_period,
+                soa,
+                bill,
                 rdg_date_time,
                 current_reading,
                 previous_reading,
+                consumption,
                 meter_consumption,
                 bill_amount_php,
                 message
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (customer_name, address, account, meter, reference, rate, bill_date, 
-                bill_period, rdg_date_time, current_reading, previous_reading, meter_consumption, bill_amount_php, message))
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (customer_name, address, account, meter, reference, rate, charges, bill_date, 
+                bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
+                consumption, meter_consumption, bill_amount_php, message))
 
         self.conn.commit()
 
