@@ -68,3 +68,18 @@ The `Tkinter` class manages the graphical user interface using the Tkinter libra
 3. Input customer details, meter readings, and consumption.
 4. Click "Calculate Bill" to see the calculated water bill.
 5. Click "Histories" to view saved water bill data.
+
+## Copyleft License
+
+This work is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This work is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
