@@ -4,8 +4,8 @@ This is a straightforward water bill calculator application with a Tkinter GUI a
 
 ## Images
 
-![Image 1](img/a/image1.png)
-![Image 2](img/a1/image2.png)
+![Image 1](img/a.png)
+![Image 2](img/a1.png)
 
 ## Overview
 
