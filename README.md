@@ -2,6 +2,11 @@
 
 This is a straightforward water bill calculator application with a Tkinter GUI and SQLite database integration.
 
+## Images
+
+![Image 1](img/a/image1.png)
+![Image 2](img/a1/image2.png)
+
 ## Overview
 
 ### WaterBill Class
@@ -72,8 +77,6 @@ The `Tkinter` class manages the graphical user interface using the Tkinter libra
 +------------------------------------+
 | - background_frame: GraphGenerator |
 +------------------------------------+
-
-
 ```
 
 ## How to Use
