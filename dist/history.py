@@ -16,7 +16,7 @@ class History(result.Result):
         self.background_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
         self.title_frame = CTkFrame(self.background_frame, fg_color="gray12")
         self.title_frame.pack(padx=10, pady=5)
-        self.label_name = CTkLabel(self.title_frame, text="Histories", font=("Oswald", 25))
+        self.label_name = CTkLabel(self.title_frame, text="Histories", font=("Oswald", 25, "underline"))
         self.label_name.grid(row=0, column=0, padx=0, pady=10)
         self.canvas = Canvas(self.background_frame, bg="gray12", highlightthickness=0)
         self.scrollbar = Scrollbar(self.background_frame, orient="vertical", command=self.canvas.yview)
@@ -27,6 +27,8 @@ class History(result.Result):
         self.scrollbar.pack(side='right', fill='y')
         self.service_info_var = StringVar()
         self.billing_summary_var = StringVar()
+        self.title_service = StringVar()
+        self.title_billing = StringVar()
         self.fetch_data()
 
     def save_to_database(self, customer_name, address, account, meter, reference, rate, charges, bill_date, 
@@ -81,9 +83,10 @@ class History(result.Result):
         result_screen.details_frame.pack()
         """
         
+        title1 = ""
+        title1 += f"SERVICE INFORMATION\n"
+        
         service_info = ""
-        service_info += f"SERVICE INFORMATION\n"
-        service_info += f"________________________\n"
         service_info += f"Customer Name: {row[1]}\n"
         service_info += f"Address: {row[2]}\n"
         service_info += f"Account Number: {row[3]}\n"
@@ -92,30 +95,32 @@ class History(result.Result):
         service_info += f"Rate per Cubic Meter: {row[6]}\n"
         service_info += f"Charges/Dues: {row[7]}"
 
-        billing_summary = ""
-        billing_summary += f"BILLING SUMMARY\n"
-        billing_summary += f"________________________\n"        
+        title2 = ""
+        title2 += f"BILLING SUMMARY\n"
+                
+        billing_summary = ""      
         billing_summary += f"Billing Date: {row[8]}\n"
         billing_summary += f"Billing Period: {row[9]}\n"
         billing_summary += f"SOA Number: {row[10]}\n"
         billing_summary += f"Billing Number: {row[11]}\n"
-        billing_summary += f"Reading Date/Time: {row[12]}\n"
+        billing_summary += f"Rdg Date/Time: {row[12]}\n"
         billing_summary += f"Current Reading: {row[13]}\n"
         billing_summary += f"Previous Reading: {row[14]}\n"
         billing_summary += f"Consumption: {row[15]}\n"
         billing_summary += f"Meter Consumption: {row[16]} gallons\n\n"
-        billing_summary += f"TOTAL AMOUNT\n"
-        billing_summary += f"________________________\n"     
-        billing_summary += f"Total Bill Amount (in PHP): ₱{row[17]:.2f}\n\n"
+        billing_summary += f"Total Bill Amount (in PHP): ₱{row[17]:.2f}\n"
         billing_summary += f"Message: {row[18]}"
 
         for widget in self.background_frame.winfo_children():
             widget.destroy()
+            
+        self.title_service.set(title1)
+        self.title_billing.set(title2)
 
         self.service_info_var.set(service_info)
         self.billing_summary_var.set(billing_summary)
 
-        result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var)
+        result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var, self.title_service, self.title_billing)
 
 
 if __name__ == "__main__":

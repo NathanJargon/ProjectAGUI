@@ -3,10 +3,12 @@ from customtkinter import *
 import ast
 
 class Result:
-    def __init__(self, root, service_info_var, billing_summary_var):
+    def __init__(self, root, service_info_var, billing_summary_var, title_service, title_billing):
         self.root = root
         self.service_info_var = service_info_var
         self.billing_summary_var = billing_summary_var
+        self.title_service = title_service
+        self.title_billing = title_billing
 
         #ToDo: customize each label of the informations
         """
@@ -27,30 +29,42 @@ class Result:
         self.details_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
 
         self.title_frame = CTkFrame(self.details_frame, fg_color="gray12")
-        self.title_frame.pack(padx=10, pady=5)
+        self.title_frame.pack(padx=10, pady=(20, 0))
 
-        self.label_name = CTkLabel(self.title_frame, text="Information", font=("Oswald", 25))
-        self.label_name.grid(row=0, column=0, padx=0, pady=10)
+        #self.label_name = CTkLabel(self.title_frame, text="Information", font=("Oswald", 25))
+        #self.label_name.grid(row=0, column=0, padx=0, pady=10)
 
-        # Create two frames for service and billing information
-        self.service_frame = CTkFrame(self.details_frame, fg_color="gray12")
-        self.billing_frame = CTkFrame(self.details_frame, fg_color="gray12")
+        # Create the frames with a specified width and height
+        self.service_frame = tk.Frame(self.root, width=500, height=300, bg="gray12")
+        self.billing_frame = tk.Frame(self.root, width=500, height=300, bg="gray12")
 
         # Place the frames side by side
-        self.service_frame.pack(side=tk.LEFT, padx=100, pady=(10, 196))
-        self.billing_frame.pack(side=tk.LEFT, padx=50, pady=10)
-
+        self.service_frame.place(x=255, y=90, width=300, height=300)
+        self.billing_frame.place(x=575, y=90, width=500, height=700)
+        
         # Create labels for service and billing information
-        self.service_info_label = CTkLabel(self.service_frame, textvariable=self.service_info_var, justify=tk.LEFT, font=("Oswald", 12), 
+        self.service_info_label = CTkLabel(self.service_frame, textvariable=self.service_info_var, justify=tk.LEFT, font=("Oswald", 15), 
                                            bg_color="gray12", 
                                            fg_color="gray12")
-        self.billing_info_label = CTkLabel(self.billing_frame, textvariable=self.billing_summary_var, justify=tk.LEFT, font=("Oswald", 12), 
+        self.billing_info_label = CTkLabel(self.billing_frame, textvariable=self.billing_summary_var, justify=tk.LEFT, font=("Oswald", 15), 
                                            bg_color="gray12", 
                                            fg_color="gray12", wraplength=250)
-
+        self.title_service_label = CTkLabel(self.title_frame, textvariable=self.title_service, justify=tk.LEFT, font=("Oswald", 25, "underline"), 
+                                           bg_color="gray12", 
+                                           fg_color="gray12")
+        self.title_billing_label = CTkLabel(self.title_frame, textvariable=self.title_billing, justify=tk.LEFT, font=("Oswald", 25, "underline"), 
+                                           bg_color="gray12", 
+                                           fg_color="gray12")
         # Pack the labels into their respective frames
         self.service_info_label.pack(padx=10, pady=10)
         self.billing_info_label.pack(padx=10, pady=10)
+        # Use grid instead of pack for title_service_label and title_billing_label
+        # Pack the title_frame with fill and expand parameters
+        self.title_frame.pack(fill=tk.BOTH, expand=True)
+
+        # Use grid instead of pack for title_service_label and title_billing_label
+        self.title_service_label.grid(row=0, column=0, padx=65, pady=0, sticky="w")
+        self.title_billing_label.grid(row=0, column=1, padx=(45, 0), pady=0, sticky="e")
         
 if __name__ == "__main__":
     root = CTk()

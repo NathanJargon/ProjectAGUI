@@ -1,0 +1,4 @@
+tkinter==8.6
+customtkinter==1.0
+matplotlib==3.4.3
+sqlite3==2.6.0

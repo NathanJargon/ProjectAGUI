@@ -13,7 +13,7 @@ class GraphGenerator:
         self.background_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
         self.title_frame = CTkFrame(self.background_frame, fg_color="black")
         self.title_frame.pack(padx=10, pady=5)
-        self.label_name = CTkLabel(self.title_frame, text="Graphical Representation", font=("Oswald", 25))
+        self.label_name = CTkLabel(self.title_frame, text="Graphical Representation", font=("Oswald", 25, "underline"))
         self.label_name.grid(row=0, column=0, padx=0, pady=10)
 
     def create_graph(self):

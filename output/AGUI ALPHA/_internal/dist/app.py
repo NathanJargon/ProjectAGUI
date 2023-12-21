@@ -1,12 +1,6 @@
 import tkinter as tk
-from tkinter import messagebox, Frame, Canvas, Button, Scrollbar, StringVar
-import sqlite3
-from PIL import Image, ImageTk
 from customtkinter import *
-from database import WaterBillDatabase
 from sidebar import Sidebar
-import history
-from register import Register
 
 root = CTk()
 root.title("AGUI")

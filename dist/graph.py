@@ -13,7 +13,7 @@ class GraphGenerator:
         self.background_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
         self.title_frame = CTkFrame(self.background_frame, fg_color="black")
         self.title_frame.pack(padx=10, pady=5)
-        self.label_name = CTkLabel(self.title_frame, text="Graphical Representation", font=("Oswald", 25))
+        self.label_name = CTkLabel(self.title_frame, text="Graphical Representation", font=("Oswald", 25, "underline"))
         self.label_name.grid(row=0, column=0, padx=0, pady=10)
 
     def create_graph(self):
@@ -50,6 +50,9 @@ class GraphGenerator:
 
         fig, ax = plt.subplots()
         ax.set_ylim([0, 250])
+        
+        ax.set_xlabel('Customer Names')
+        ax.set_ylabel('Total Bill Amount')
 
         for customer_name in customer_names:
             cursor.execute("SELECT * FROM water_bills WHERE customer_name = ?", (customer_name,))

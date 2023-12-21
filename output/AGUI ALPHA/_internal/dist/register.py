@@ -13,6 +13,8 @@ class Register(result.Result):
 
         self.service_info_var = StringVar()
         self.billing_summary_var = StringVar()
+        self.title_service = StringVar()
+        self.title_billing = StringVar()
         
         self.background_frame = CTkFrame(root, fg_color="gray12", corner_radius=0)
         self.background_frame.place(relx=.18, rely=0, relwidth=.9, relheight=1, anchor='nw')
@@ -232,10 +234,11 @@ class Register(result.Result):
                 consumption, meter_consumption, bill_amount_php, message)
             
             self.db.fetch_data()
-            
+
+            title1 = ""
+            title1 += f"SERVICE INFORMATION\n"
+           
             service_info = ""
-            service_info += f"SERVICE INFORMATION\n"
-            service_info += f"________________________\n"
             service_info += f"Customer Name: {customer_name}\n"
             service_info += f"Address: {address}\n"
             service_info += f"Account Number: {account}\n"
@@ -243,31 +246,34 @@ class Register(result.Result):
             service_info += f"Reference Number: {reference}\n"
             service_info += f"Rate per Cubic Meter: {rate}\n"
             service_info += f"Charges/Dues: {charges}"
-            
+
+            title2 = ""
+            title2 += f"BILLING SUMMARY\n"
+        
             billing_summary = ""
-            billing_summary += f"BILLING SUMMARY:\n"
-            billing_summary += f"________________________\n"     
             billing_summary += f"Billing Date: {bill_date}\n"
             billing_summary += f"Billing Period: {bill_period}\n"
             billing_summary += f"SOA Number: {soa}\n"
             billing_summary += f"Billing Number: {bill}\n"
-            billing_summary += f"Reading Date/Time: {rdg_date_time}\n"
+            billing_summary += f"Rdg Date/Time: {rdg_date_time}\n"
             billing_summary += f"Current Reading: {current_reading}\n"
             billing_summary += f"Previous Reading: {previous_reading}\n"
             billing_summary += f"Consumption: {consumption}\n"
             billing_summary += f"Meter Consumption: {meter_consumption} gallons\n\n"
-            billing_summary += f"TOTAL AMOUNT\n"
-            billing_summary += f"________________________\n" 
-            billing_summary += f"Total Bill Amount (in PHP): ₱{bill_amount_php:.2f}\n\n"
+            billing_summary += f"Total Bill Amount (in PHP): ₱{bill_amount_php:.2f}\n"
             billing_summary += f"Message: {message}"
             
             for widget in self.background_frame.winfo_children():
                 widget.destroy()
 
+            self.title_service.set(title1)
+            self.title_billing.set(title2)
+
             self.service_info_var.set(service_info)
             self.billing_summary_var.set(billing_summary)
 
-            result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var)
+            result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var, self.title_service, self.title_billing)
+
             
         except ValueError as e:
             match str(e): # Switch for more efficient use-case
