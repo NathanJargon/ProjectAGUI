@@ -50,6 +50,9 @@ class GraphGenerator:
 
         fig, ax = plt.subplots()
         ax.set_ylim([0, 250])
+        
+        ax.set_xlabel('Customer Names')
+        ax.set_ylabel('Total Bill Amount')
 
         for customer_name in customer_names:
             cursor.execute("SELECT * FROM water_bills WHERE customer_name = ?", (customer_name,))

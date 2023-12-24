@@ -1,8 +1,28 @@
 import tkinter as tk
+from tkinter import messagebox
 from customtkinter import *
 import ast
+import csv
+import sqlite3
 
 class Result:
+    def export_to_csv(self):
+        conn = sqlite3.connect('_internal/db/water_bill_database.db')
+        #conn = sqlite3.connect('db/water_bill_database.db')
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM water_bills")
+        rows = cursor.fetchall()
+
+        if rows:
+            #filename = f"csv/{rows[0][1]}.csv"
+            filename = f"_internal/csv/{rows[0][1]}.csv"
+            with open(filename, 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerows(rows)
+            messagebox.showinfo("Success", f"Successfully exported to {filename}")
+        conn.close()
+        
     def __init__(self, root, service_info_var, billing_summary_var, title_service, title_billing):
         self.root = root
         self.service_info_var = service_info_var
@@ -34,15 +54,14 @@ class Result:
         #self.label_name = CTkLabel(self.title_frame, text="Information", font=("Oswald", 25))
         #self.label_name.grid(row=0, column=0, padx=0, pady=10)
 
-        # Create the frames with a specified width and height
         self.service_frame = tk.Frame(self.root, width=500, height=300, bg="gray12")
         self.billing_frame = tk.Frame(self.root, width=500, height=300, bg="gray12")
 
-        # Place the frames side by side
         self.service_frame.place(x=255, y=90, width=300, height=300)
         self.billing_frame.place(x=575, y=90, width=500, height=700)
         
-        # Create labels for service and billing information
+        self.export_button = CTkButton(self.service_frame, text="Export to CSV", command=self.export_to_csv)
+
         self.service_info_label = CTkLabel(self.service_frame, textvariable=self.service_info_var, justify=tk.LEFT, font=("Oswald", 15), 
                                            bg_color="gray12", 
                                            fg_color="gray12")
@@ -55,9 +74,10 @@ class Result:
         self.title_billing_label = CTkLabel(self.title_frame, textvariable=self.title_billing, justify=tk.LEFT, font=("Oswald", 25, "underline"), 
                                            bg_color="gray12", 
                                            fg_color="gray12")
-        # Pack the labels into their respective frames
+
         self.service_info_label.pack(padx=10, pady=10)
         self.billing_info_label.pack(padx=10, pady=10)
+        self.export_button.pack(pady=10)
         # Use grid instead of pack for title_service_label and title_billing_label
         # Pack the title_frame with fill and expand parameters
         self.title_frame.pack(fill=tk.BOTH, expand=True)
