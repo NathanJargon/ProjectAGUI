@@ -19,7 +19,15 @@ class Result:
             filename = f"_internal/csv/{rows[0][1]}.csv"
             with open(filename, 'w', newline='') as file:
                 writer = csv.writer(file)
-                writer.writerows(rows)
+
+                # Write column headers
+                column_names = [description[0] for description in cursor.description]
+                writer.writerow(column_names)
+
+                # Write rows
+                for row in rows:
+                    writer.writerow(row)
+
             messagebox.showinfo("Success", f"Successfully exported to {filename}")
         conn.close()
         
