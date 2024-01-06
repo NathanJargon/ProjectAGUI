@@ -1,4 +1,6 @@
 import sqlite3
+import warnings
+warnings.filterwarnings("ignore")
 
 class WaterBillDatabase:
     def __init__(self, db_path="_internal/db/water_bill_database.db"): #add _internal/ if build

@@ -6,6 +6,8 @@ import time
 import sys
 import os
 import subprocess
+import warnings
+warnings.filterwarnings("ignore")
 
 if getattr(sys, 'frozen', False):
     import pyi_splash

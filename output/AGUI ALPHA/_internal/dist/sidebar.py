@@ -1,6 +1,10 @@
 import sys
 import os
 import importlib
+from tkinter import messagebox
+import ast
+import csv
+import sqlite3
 import tkinter as tk
 import customtkinter as ctk
 from tkinter import PhotoImage
@@ -8,8 +12,36 @@ import history
 import register
 import subprocess
 import graph
+import warnings
+warnings.filterwarnings("ignore")
+
 
 class Sidebar(ctk.CTkFrame):
+    def export_to_csv(self):
+        conn = sqlite3.connect('_internal/db/water_bill_database.db')
+        #conn = sqlite3.connect('db/water_bill_database.db')
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM water_bills")
+        rows = cursor.fetchall()
+
+        if rows:
+            #filename = f"csv/CSV.csv"
+            filename = f"_internal/csv/CSV.csv"
+            with open(filename, 'w', newline='') as file:
+                writer = csv.writer(file)
+
+                # Write column headers
+                column_names = [description[0] for description in cursor.description]
+                writer.writerow(column_names)
+
+                # Write rows
+                for row in rows:
+                    writer.writerow(row)
+
+            messagebox.showinfo("Success", f"Successfully exported to CSV file")
+        conn.close()
+        
     def __init__(self, root, master=None, **kwargs):
         super().__init__(master, **kwargs) # Takes all attributes from CTkFrame
         self.root = root
@@ -34,16 +66,19 @@ class Sidebar(ctk.CTkFrame):
         button_frame.pack(fill=tk.BOTH, expand=True)
                 
         button1 = ctk.CTkButton(button_frame, text="Register\nInformation", command=self.register_information, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
-        button1.pack(pady=(20,5), padx=10)
+        button1.pack(pady=(15,5), padx=10)
 
         button2 = ctk.CTkButton(button_frame, text="Histories\nRegistered", command=self.histories_registered, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
-        button2.pack(pady=(20,5), padx=10)
+        button2.pack(pady=(15,5), padx=10)
 
         button3 = ctk.CTkButton(button_frame, text="Graphical\nPresentation", command=self.graphical_presentation, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
-        button3.pack(pady=(20,5), padx=10)
+        button3.pack(pady=(15,5), padx=10)
+    
+        button4 = ctk.CTkButton(button_frame, text="Export Result \nto CSV", command=self.export_to_csv, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button4.pack(pady=(15,5), padx=10)
 
-        button4 = ctk.CTkButton(button_frame, text="Log out", command=self.login_button, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
-        button4.pack(pady=(95,5), padx=10)
+        button5 = ctk.CTkButton(button_frame, text="Log out", command=self.login_button, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button5.pack(pady=(60,5), padx=10)
         
     def register_information(self):
         register_window = register.Register(self.root)

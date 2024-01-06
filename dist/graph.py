@@ -5,6 +5,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import sqlite3
 import matplotlib.style as style
 import sidebar
+import warnings
+warnings.filterwarnings("ignore")
 
 class GraphGenerator:
     def __init__(self, root):

@@ -1,36 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
 from customtkinter import *
-import ast
-import csv
-import sqlite3
+import warnings
+warnings.filterwarnings("ignore")
+
 
 class Result:
-    def export_to_csv(self):
-        conn = sqlite3.connect('_internal/db/water_bill_database.db')
-        #conn = sqlite3.connect('db/water_bill_database.db')
-        cursor = conn.cursor()
-
-        cursor.execute("SELECT * FROM water_bills")
-        rows = cursor.fetchall()
-
-        if rows:
-            #filename = f"csv/{rows[0][1]}.csv"
-            filename = f"_internal/csv/{rows[0][1]}.csv"
-            with open(filename, 'w', newline='') as file:
-                writer = csv.writer(file)
-
-                # Write column headers
-                column_names = [description[0] for description in cursor.description]
-                writer.writerow(column_names)
-
-                # Write rows
-                for row in rows:
-                    writer.writerow(row)
-
-            messagebox.showinfo("Success", f"Successfully exported to {filename}")
-        conn.close()
-        
     def __init__(self, root, service_info_var, billing_summary_var, title_service, title_billing):
         self.root = root
         self.service_info_var = service_info_var
@@ -67,8 +42,6 @@ class Result:
 
         self.service_frame.place(x=255, y=90, width=300, height=300)
         self.billing_frame.place(x=575, y=90, width=500, height=700)
-        
-        self.export_button = CTkButton(self.service_frame, text="Export to CSV", command=self.export_to_csv)
 
         self.service_info_label = CTkLabel(self.service_frame, textvariable=self.service_info_var, justify=tk.LEFT, font=("Oswald", 15), 
                                            bg_color="gray12", 
@@ -83,9 +56,9 @@ class Result:
                                            bg_color="gray12", 
                                            fg_color="gray12")
 
-        self.service_info_label.pack(padx=10, pady=10)
-        self.billing_info_label.pack(padx=10, pady=10)
-        self.export_button.pack(pady=10)
+        self.service_info_label.pack(padx=(10, 50), pady=10)
+        self.billing_info_label.pack(padx=(35, 10), pady=10)
+
         # Use grid instead of pack for title_service_label and title_billing_label
         # Pack the title_frame with fill and expand parameters
         self.title_frame.pack(fill=tk.BOTH, expand=True)

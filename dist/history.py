@@ -3,6 +3,8 @@ from tkinter import messagebox, Frame, Canvas, Button, Scrollbar, StringVar
 from customtkinter import *
 from database import WaterBillDatabase
 import result
+import warnings
+warnings.filterwarnings("ignore")
 
 class History(result.Result):
     def __init__(self, root, details_frame):
