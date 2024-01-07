@@ -297,6 +297,8 @@ class Register(result.Result):
             else:
                 messagebox.showerror("Error", "Please enter valid numeric values for consumption and meter readings.")
             """
+
+"""
 if __name__ == "__main__":
     root = CTk()
     set_appearance_mode("dark")
@@ -314,3 +316,4 @@ if __name__ == "__main__":
 
     register = Register(root)
     root.mainloop()
+"""

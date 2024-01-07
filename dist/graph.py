@@ -70,7 +70,8 @@ class GraphGenerator:
         canvas = FigureCanvasTkAgg(fig, master=self.background_frame)
         canvas.draw()
         canvas.get_tk_widget().pack(fill=tk.BOTH, expand=1)  # Change this line
-        
+
+"""
 if __name__ == "__main__":
     root = CTk()
     set_appearance_mode("dark")
@@ -89,3 +90,4 @@ if __name__ == "__main__":
     history = GraphGenerator(root)
     history.create_graph()
     root.mainloop()
+"""

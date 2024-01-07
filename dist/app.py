@@ -1,6 +1,8 @@
 import tkinter as tk
 from customtkinter import *
 from sidebar import Sidebar
+import warnings
+warnings.filterwarnings("ignore")
 
 root = CTk()
 root.title("AGUI")

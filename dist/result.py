@@ -66,7 +66,8 @@ class Result:
         # Use grid instead of pack for title_service_label and title_billing_label
         self.title_service_label.grid(row=0, column=0, padx=65, pady=0, sticky="w")
         self.title_billing_label.grid(row=0, column=1, padx=(45, 0), pady=0, sticky="e")
-        
+
+"""
 if __name__ == "__main__":
     root = CTk()
     set_appearance_mode("dark")
@@ -85,3 +86,4 @@ if __name__ == "__main__":
     bill_details_var = tk.StringVar()
     result = Result(root, bill_details_var)
     root.mainloop()
+"""

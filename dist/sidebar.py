@@ -106,6 +106,7 @@ class MainApplication(ctk.CTkFrame):
         main_label = ctk.CTkLabel(self, text="You have accessed\nthe application!", font=("Arial", 40), bg_color="gray12", fg_color="gray12")
         main_label.pack(pady=150)
 
+"""
 if __name__ == "__main__":
     root = ctk.CTk()
     root.title("Sidebar")
@@ -126,3 +127,4 @@ if __name__ == "__main__":
     sidebar.pack(side=tk.LEFT, fill=tk.Y)
 
     root.mainloop()
+"""

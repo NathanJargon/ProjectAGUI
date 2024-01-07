@@ -4,4 +4,4 @@ login.py (img, sidebar)
 
 auto-py-to-exe
 
-pyinstaller --noconfirm --onedir --windowed --icon "C:/Nash/Projects Folder/water-bill/img/Huh!.ico" --name "AGUI" --hide-console "minimize-early" --add-data "C:/Nash/Projects Folder/water-bill/db;db/" --add-data "C:/Nash/Projects Folder/water-bill/dist;dist/" --add-data "C:/Nash/Projects Folder/water-bill/img;img/"  "C:/Nash/Projects Folder/water-bill/main.py"
+pyinstaller --noconfirm --onedir --windowed --icon "C:/Nash/Projects Folder/AGUI/img/Huh!.ico" --name "AGUI" --add-data "C:/Nash/Projects Folder/AGUI/csv;csv/" --add-data "C:/Nash/Projects Folder/AGUI/db;db/" --add-data "C:/Nash/Projects Folder/AGUI/dist;dist/" --add-data "C:/Nash/Projects Folder/AGUI/img;img/"  "C:/Nash/Projects Folder/AGUI/main.py"

@@ -124,7 +124,7 @@ class History(result.Result):
 
         result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var, self.title_service, self.title_billing)
 
-
+"""
 if __name__ == "__main__":
     root = CTk()
     set_appearance_mode("dark")
@@ -143,3 +143,4 @@ if __name__ == "__main__":
     details_frame = CTkFrame(root, fg_color="gray12", corner_radius=0)
     history = History(root, details_frame)
     root.mainloop()
+"""
