@@ -1,6 +1,13 @@
 # Water Bill Calculator
 
-This application is a comprehensive water bill management system, designed to calculate and track water consumption for multiple customers. It features a user-friendly GUI built with Tkinter, allowing for easy input and management of customer data. The application integrates with an SQLite database, providing robust data persistence and retrieval capabilities. Key features include the ability to calculate individual customer water bills based on consumption data, display billing history, and generate visualizations for consumption trends. This makes it an ideal tool for small to medium-sized water utilities or property management entities looking for a simple, yet effective, water bill tracking solution.
+This application is a comprehensive water bill management system, designed to calculate and track water consumption for multiple customers. It features a user-friendly GUI built with Tkinter, allowing for easy input and management of customer data. The application integrates with an SQLite database, providing robust data persistence and retrieval capabilities. 
+
+Key features include: 
+- the ability to calculate individual customer water bills based on consumption data, 
+- display billing history, 
+- and generate visualizations for consumption trends. 
+
+This makes it an ideal tool for small to medium-sized water utilities or property management entities looking for a simple, yet effective, water bill tracking solution.
 
 # Visual Information
 
@@ -32,14 +39,17 @@ This application is a comprehensive water bill management system, designed to ca
 
 ### Result
 
+![result](img/result.png)
+
 ## How to Use
 
-1. pip install -r requirements.txt.
-2. python main.py / output/AGUI/AGUI ALPHA.exe.
+1. run "pip install -r requirements.txt" in terminal.
+2. "python main.py" from terminal or run Build/AGUI/AGUI.exe.
 3. Input details that exist in your receipt.
 4. Click "Calculate Bill" to see the results.
 5. Click "Histories Registered" to view saved water bill data.
 6. Click "Graphical Representation" to view the spendings of all customers.
+7. Click "Convert to CSV" to convert all data to CSV format.
 
 # License
 

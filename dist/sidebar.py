@@ -96,6 +96,7 @@ class Sidebar(ctk.CTkFrame):
         #login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'login.py')
         subprocess.run(['python', login_path])
 
+"""
 class MainApplication(ctk.CTkFrame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
@@ -105,7 +106,6 @@ class MainApplication(ctk.CTkFrame):
         main_label = ctk.CTkLabel(self, text="You have accessed\nthe application!", font=("Arial", 40), bg_color="gray12", fg_color="gray12")
         main_label.pack(pady=150)
 
-"""
 if __name__ == "__main__":
     root = ctk.CTk()
     root.title("Sidebar")
