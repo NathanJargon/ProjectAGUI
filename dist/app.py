@@ -1,6 +1,6 @@
-import tkinter as tk
 from customtkinter import *
 from sidebar import Sidebar
+import tkinter as tk
 import warnings
 warnings.filterwarnings("ignore")
 

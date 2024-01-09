@@ -1,13 +1,12 @@
+from tkinter import PhotoImage, messagebox
 import sys
 import os
 import importlib
-from tkinter import messagebox
 import ast
 import csv
 import sqlite3
 import tkinter as tk
 import customtkinter as ctk
-from tkinter import PhotoImage
 import history
 import register
 import subprocess

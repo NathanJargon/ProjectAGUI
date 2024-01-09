@@ -1,7 +1,7 @@
 from tkinter import messagebox, PhotoImage, Button
-import tkinter as tk
 from PIL import Image, ImageTk
 from customtkinter import *
+import tkinter as tk
 import time
 import sys
 import os

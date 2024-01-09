@@ -17,7 +17,7 @@ This application is a comprehensive water bill management system, designed to ca
 
 ## UML Diagram
 
-![UML Image](img/uml.png)
+![UML Image](img/history.png)
 
 ## How to Use
 

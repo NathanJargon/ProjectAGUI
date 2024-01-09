@@ -1,6 +1,6 @@
-import tkinter as tk
 from tkinter import messagebox
 from customtkinter import *
+import tkinter as tk
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -13,7 +13,7 @@ class Result:
         self.title_service = title_service
         self.title_billing = title_billing
 
-        #ToDo: customize each label of the informations
+        #ToDo: customize each label of the informations (Done)
         """
         service_info_converted = self.service_info_var.encode("utf-8")
         billing_summary_converted = self.billing_summary_var.encode("utf-8")

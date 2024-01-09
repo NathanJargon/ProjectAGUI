@@ -1,7 +1,7 @@
-import tkinter as tk
 from tkinter import messagebox, Frame, Canvas, Button, Scrollbar, StringVar
 from customtkinter import *
 from database import WaterBillDatabase
+import tkinter as tk
 import result
 import warnings
 warnings.filterwarnings("ignore")

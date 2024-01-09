@@ -1,7 +1,7 @@
 from customtkinter import *
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tkinter as tk
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import sqlite3
 import matplotlib.style as style
 import sidebar
