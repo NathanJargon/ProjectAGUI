@@ -2,11 +2,7 @@
 
 This application is a comprehensive water bill management system, designed to calculate and track water consumption for multiple customers. It features a user-friendly GUI built with Tkinter, allowing for easy input and management of customer data. The application integrates with an SQLite database, providing robust data persistence and retrieval capabilities. Key features include the ability to calculate individual customer water bills based on consumption data, display billing history, and generate visualizations for consumption trends. This makes it an ideal tool for small to medium-sized water utilities or property management entities looking for a simple, yet effective, water bill tracking solution.
 
-## Overview
-
-# Images
-
-## Documentation
+# Visual Information
 
 ![Image 1](img/a1.png)
 ![Image 2](img/a.png)
@@ -17,7 +13,24 @@ This application is a comprehensive water bill management system, designed to ca
 
 ## UML Diagram
 
-![UML Image](img/history.png)
+### Login
+
+### Sidebar
+
+![sidebar](img/sidebar.png)
+
+### Register
+
+### Database
+
+
+### History
+
+![history](img/history.png)
+
+### Graph
+
+### Result
 
 ## How to Use
 

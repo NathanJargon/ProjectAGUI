@@ -76,7 +76,7 @@ class Sidebar(ctk.CTkFrame):
         button4 = ctk.CTkButton(button_frame, text="Export Result \nto CSV", command=self.export_to_csv, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button4.pack(pady=(15,5), padx=10)
 
-        button5 = ctk.CTkButton(button_frame, text="Log out", command=self.login_button, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button5 = ctk.CTkButton(button_frame, text="Log out", command=self.logout_button, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button5.pack(pady=(60,5), padx=10)
         
     def register_information(self):
@@ -90,7 +90,7 @@ class Sidebar(ctk.CTkFrame):
         self.background_frame = graph.GraphGenerator(self.root)
         self.background_frame.create_graph()
 
-    def login_button(self):
+    def logout_button(self):
         self.root.destroy()
         login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'login.py')
         #login_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'login.py')
