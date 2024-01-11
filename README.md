@@ -11,8 +11,8 @@ This makes it an ideal tool for small to medium-sized water utilities or propert
 
 # Visual Information
 
-![Image 1](img/a1.png)
-![Image 2](img/a.png)
+![Image 1](img/a3.png)
+![Image 2](img/a2.png)
 
 ## Flowchart
 
