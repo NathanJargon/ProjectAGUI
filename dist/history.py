@@ -1,6 +1,6 @@
 from tkinter import messagebox, Frame, Canvas, Button, Scrollbar, StringVar
 from customtkinter import *
-from database import WaterBillDatabase
+from database import Database
 import tkinter as tk
 import result
 import warnings
@@ -13,7 +13,7 @@ class History(result.Result):
         self.bill_details_var = StringVar()
         #self.db_path = "db/water_bill_database.db"
         self.db_path = "_internal/db/water_bill_database.db"
-        self.db = WaterBillDatabase(self.db_path)
+        self.db = Database(self.db_path)
         self.background_frame = CTkFrame(self.root, fg_color="gray12", corner_radius=0)
         self.background_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
         self.title_frame = CTkFrame(self.background_frame, fg_color="gray12")

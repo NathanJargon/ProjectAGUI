@@ -8,7 +8,7 @@ import sidebar
 import warnings
 warnings.filterwarnings("ignore")
 
-class GraphGenerator:
+class Graph:
     def __init__(self, root):
         self.root = root
         self.background_frame = CTkFrame(self.root, fg_color="black", corner_radius=0)

@@ -26,7 +26,7 @@ def new_win():
     subprocess.run(['python', app_path])
 
 Frame(w, width=427, height=250, bg='#272727').place(x=0,y=0)
-label1=Label(w, text=' WATER BILL', fg='white', bg='#272727') #decorate it 
+label1=Label(w, text='     AGUI', fg='white', bg='#272727') #decorate it 
 label1.configure(font=("Game Of Squids", 24, "bold"))   #You need to install this font in your PC or try another one
 label1.place(x=80,y=90)
 

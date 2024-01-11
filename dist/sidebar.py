@@ -30,11 +30,9 @@ class Sidebar(ctk.CTkFrame):
             with open(filename, 'w', newline='') as file:
                 writer = csv.writer(file)
 
-                # Write column headers
                 column_names = [description[0] for description in cursor.description]
                 writer.writerow(column_names)
 
-                # Write rows
                 for row in rows:
                     writer.writerow(row)
 
@@ -87,7 +85,7 @@ class Sidebar(ctk.CTkFrame):
 
     def graphical_presentation(self):
         # Now create a new graph frame
-        self.background_frame = graph.GraphGenerator(self.root)
+        self.background_frame = graph.Graph(self.root)
         self.background_frame.create_graph()
 
     def logout_button(self):

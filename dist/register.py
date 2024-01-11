@@ -1,6 +1,6 @@
 from tkinter import messagebox, StringVar
 from customtkinter import *
-from database import WaterBillDatabase
+from database import Database
 import tkinter as tk
 import result
 import warnings
@@ -12,7 +12,7 @@ class Register(result.Result):
         self.root = root
         #self.db_path = "db/water_bill_database.db"
         self.db_path = "_internal/db/water_bill_database.db"
-        self.db = WaterBillDatabase(self.db_path)
+        self.db = Database(self.db_path)
 
         self.service_info_var = StringVar()
         self.billing_summary_var = StringVar()

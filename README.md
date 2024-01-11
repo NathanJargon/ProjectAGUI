@@ -20,26 +20,7 @@ This makes it an ideal tool for small to medium-sized water utilities or propert
 
 ## UML Diagram
 
-### Login
-
-### Sidebar
-
-![sidebar](img/sidebar.png)
-
-### Register
-
-### Database
-
-
-### History
-
-![history](img/history.png)
-
-### Graph
-
-### Result
-
-![result](img/result.png)
+![umldiagram](img/umldiagram.png)
 
 ## How to Use
 

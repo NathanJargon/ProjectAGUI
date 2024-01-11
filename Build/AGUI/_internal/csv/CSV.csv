@@ -1,4 +1,0 @@
-id,customer_name,address,account,meter,reference,rate,charges,bill_date,bill_period,soa,bill,rdg_date_time,current_reading,previous_reading,consumption,meter_consumption,bill_amount_php,message,messages
-1,Jason,CD,123,123,123,10.0,500.0,YYYY-MM-DD,YYYY-MM-DD to YYYY-MM-DD,123,123,YYYY-MM-DD 00:00:00 UTC,100.0,50.0,10.0,50.0,125.0,You're using a moderate amount of water. Consider more water-saving habits.,
-2,123,123,123,123,123,12.0,123.0,YYYY-MM-DD,YYYY-MM-DD to YYYY-MM-DD,12,312312,YYYY-MM-DD 00:00:00 UTC,12.0,12.0,123.0,0.0,0.0,"Great job on conserving water! Keep it up.
-",
