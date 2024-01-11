@@ -37,15 +37,15 @@ class Result:
         #self.label_name = CTkLabel(self.title_frame, text="Information", font=("Oswald", 25))
         #self.label_name.grid(row=0, column=0, padx=0, pady=10)
 
-        self.service_frame = tk.Frame(self.root, width=500, height=300, bg="gray12")
+        self.service_frame = tk.Frame(self.root, width=500, height=300, bg="gray11")
         self.billing_frame = tk.Frame(self.root, width=500, height=300, bg="gray12")
 
-        self.service_frame.place(x=255, y=90, width=300, height=300)
+        self.service_frame.place(x=255, y=90, width=400, height=300)
         self.billing_frame.place(x=575, y=90, width=500, height=700)
 
         self.service_info_label = CTkLabel(self.service_frame, textvariable=self.service_info_var, justify=tk.LEFT, font=("Oswald", 15), 
                                            bg_color="gray12", 
-                                           fg_color="gray12")
+                                           fg_color="gray12", wraplength=250)
         self.billing_info_label = CTkLabel(self.billing_frame, textvariable=self.billing_summary_var, justify=tk.LEFT, font=("Oswald", 15), 
                                            bg_color="gray12", 
                                            fg_color="gray12", wraplength=250)
@@ -56,7 +56,7 @@ class Result:
                                            bg_color="gray12", 
                                            fg_color="gray12")
 
-        self.service_info_label.pack(padx=(10, 50), pady=10)
+        self.service_info_label.pack(padx=(10, 70), pady=10)
         self.billing_info_label.pack(padx=(35, 10), pady=10)
 
         # Use grid instead of pack for title_service_label and title_billing_label

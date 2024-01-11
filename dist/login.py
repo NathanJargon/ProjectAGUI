@@ -24,9 +24,8 @@ class Login:
 
         x = (ws/2) - (w/2)
         y = (hs/2) - (h/2)
-
         self.root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
-
+        self.root.resizable(False, False)
         self.create_widgets()
 
     def login(self):
@@ -47,14 +46,16 @@ class Login:
         event.widget.config(fg="red")
         self.root.after(500, self.turn_gray, event.widget)  # 500 milliseconds = 0.5 seconds
         return "break"
-
+        
     def create_widgets(self):
         background_frame = CTkFrame(self.root, fg_color="gray12")
         background_frame.place(relx=0.56, rely=0, relwidth=0.5, relheight=1, anchor='nw')
+    
 
-        title = Button(self.root, text="Welcome!", font=("Oswald", 45), fg="white", bg="gray12", bd=0)
+        title = Button(self.root, text="Welcome!", font=("Oswald", 45), 
+                       fg="white", bg="gray12", bd=0, activebackground="gray12", activeforeground="white",)
         title.place(relx=0.79, rely=0.2, anchor='center')
-
+        
         label_username = CTkLabel(self.root, text="Username", fg_color="gray12", font=("Oswald", 15))
         label_username.place(relx=0.76, rely=0.32, anchor='e')
         label_password = CTkLabel(self.root, text="Password", fg_color="gray12", font=("Oswald", 15))

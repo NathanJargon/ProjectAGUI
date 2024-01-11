@@ -49,19 +49,21 @@ class Register(result.Result):
 
         self.label_address = CTkLabel(self.address_frame, text="Address:", font=("Oswald", 14))
         self.label_address.grid(row=0, column=0, padx=(10, 85), pady=5)
-
+        
         self.entry_address = CTkEntry(self.address_frame, width=150)
         self.entry_address.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_address.insert(0, "Bldg/Rm/Flr")
         
         self.account_frame = CTkFrame(self.service_frame)
         self.account_frame.grid(row=3, column=0, padx=10, pady=5)
 
         self.label_account = CTkLabel(self.account_frame, text="Account Number:", font=("Oswald", 14))
         self.label_account.grid(row=0, column=0, padx=(10, 38), pady=5)
-
+        
         self.entry_account = CTkEntry(self.account_frame, width=150)
         self.entry_account.grid(row=0, column=1, padx=10, pady=5)
-
+        self.entry_account.insert(0, "N/A if None")
+        
         self.meter_frame = CTkFrame(self.service_frame)
         self.meter_frame.grid(row=4, column=0, padx=10, pady=5)
 
@@ -88,6 +90,7 @@ class Register(result.Result):
 
         self.entry_rate = CTkEntry(self.rate_frame, width=150)
         self.entry_rate.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_rate.insert(0, "0 if None")
 
         self.charges_frame = CTkFrame(self.service_frame)
         self.charges_frame.grid(row=7, column=0, padx=10, pady=5)
@@ -97,6 +100,7 @@ class Register(result.Result):
 
         self.entry_charges = CTkEntry(self.charges_frame, width=150)
         self.entry_charges.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_charges.insert(0, "0")
         
         # BUTTON
         
@@ -171,6 +175,7 @@ class Register(result.Result):
 
         self.entry_current_reading = CTkEntry(self.label_current_reading_frame, width=100)
         self.entry_current_reading.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_current_reading.insert(0, "0")
 
         self.label_previous_reading_frame = CTkFrame(self.billing_frame)
         self.label_previous_reading_frame.grid(row=9, column=0, padx=5, pady=5)
@@ -180,6 +185,7 @@ class Register(result.Result):
 
         self.entry_previous_reading = CTkEntry(self.label_previous_reading_frame, width=100)
         self.entry_previous_reading.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_previous_reading.insert(0, "0")
 
         self.consumption_frame = CTkFrame(self.billing_frame)
         self.consumption_frame.grid(row=10, column=0, padx=5, pady=5)
@@ -189,11 +195,12 @@ class Register(result.Result):
 
         self.entry_consumption = CTkEntry(self.consumption_frame, width=100)
         self.entry_consumption.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_consumption.insert(0, "0")
         
     def calculate_bill(self):
         try:
             customer_name = self.entry_name.get()[:11] if ' ' not in self.entry_name.get() else self.entry_name.get().split(' ')[0]
-            address = self.entry_address.get()
+            address = self.entry_address.get()[:30] if len(self.entry_address) > 30 else self.entry_address.get()
             account = self.entry_account.get()
             meter = self.entry_meter.get()
             reference = self.entry_reference.get()
@@ -210,9 +217,7 @@ class Register(result.Result):
             meter_consumption = current_reading - previous_reading
             message = ""
             
-            
-            
-            bill_amount_php = meter_consumption * 2.5
+            bill_amount_php = (charges + consumption) + (meter_consumption * 2.5)
 
             if meter_consumption < 0:
                 raise ValueError("Invalid meter consumption")
