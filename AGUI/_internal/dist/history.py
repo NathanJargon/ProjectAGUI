@@ -33,10 +33,10 @@ class History(result.Result):
         self.title_billing = StringVar()
         self.fetch_data()
 
-    def save_to_database(self, customer_name, address, account, meter, reference, rate, charges, bill_date, 
+    def save_to_database(self, customer_name, address, account, meter, reference, rate, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
                 consumption, meter_consumption, bill_amount_php, message):
-        self.db.save_to_database(customer_name, address, account, meter, reference, rate, charges, bill_date, 
+        self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
                 consumption, meter_consumption, bill_amount_php, message)
 
@@ -101,23 +101,22 @@ class History(result.Result):
         service_info += f"Meter Number: {row[4]}\n"
         service_info += f"Reference Number: {row[5]}\n"
         service_info += f"Rate per Cubic Meter: {row[6]}\n"
-        service_info += f"Charges/Dues: {row[7]}"
 
         title2 = ""
         title2 += f"BILLING SUMMARY\n"
                 
         billing_summary = ""      
-        billing_summary += f"Billing Date: {row[8]}\n"
-        billing_summary += f"Billing Period: {row[9]}\n"
-        billing_summary += f"SOA Number: {row[10]}\n"
-        billing_summary += f"Billing Number: {row[11]}\n"
-        billing_summary += f"Rdg Date/Time: {row[12]}\n"
-        billing_summary += f"Current Reading: {row[13]}\n"
-        billing_summary += f"Previous Reading: {row[14]}\n"
-        billing_summary += f"Consumption: {row[15]}\n"
-        billing_summary += f"Meter Consumption: {row[16]} gallons\n\n"
-        billing_summary += f"Total Bill Amount (in PHP): ₱{row[17]:.2f}\n"
-        billing_summary += f"Message: {row[18]}"
+        billing_summary += f"Billing Date: {row[7]}\n"
+        billing_summary += f"Billing Period: {row[8]}\n"
+        billing_summary += f"SOA Number: {row[9]}\n"
+        billing_summary += f"Billing Number: {row[10]}\n"
+        billing_summary += f"Rdg Date/Time: {row[11]}\n"
+        billing_summary += f"Current Reading: {row[12]}\n"
+        billing_summary += f"Previous Reading: {row[13]}\n"
+        billing_summary += f"Consumption: {row[14]}\n"
+        billing_summary += f"Meter Consumption: {row[15]} gallons\n\n"
+        billing_summary += f"Total Bill Amount (in PHP): ₱{row[16]:.2f}\n"
+        billing_summary += f"Message: {row[17]}"
 
         for widget in self.background_frame.winfo_children():
             widget.destroy()

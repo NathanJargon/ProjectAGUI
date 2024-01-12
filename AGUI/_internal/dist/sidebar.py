@@ -1,4 +1,5 @@
 from tkinter import PhotoImage, messagebox
+from PIL import Image, ImageTk
 import sys
 import os
 import importlib
@@ -51,10 +52,11 @@ class Sidebar(ctk.CTkFrame):
         title_frame = ctk.CTkFrame(self, bg_color="gray12", fg_color="gray12", height=50)
         title_frame.pack(fill=tk.X)
 
-        image = PhotoImage(file="_internal/img/logo.png")
-        #image = PhotoImage(file="img/logo.png")
-        image = image.subsample(3, 3)
-        title_label = ctk.CTkButton(title_frame, image=image, text="", bg_color="gray12", 
+        image = Image.open("_internal/img/logo.png")
+        #image = Image.open("img/logo.png")
+        image = image.resize((270, 270), Image.BICUBIC)
+        photo = ImageTk.PhotoImage(image)
+        title_label = ctk.CTkButton(title_frame, image=photo, text="", bg_color="gray12", 
                                     fg_color="gray12", hover_color="gray12")
         title_label.image = image
         title_label.pack(pady=(0,0))
@@ -62,20 +64,20 @@ class Sidebar(ctk.CTkFrame):
         button_frame = ctk.CTkFrame(self, bg_color="gray12", fg_color="gray12")
         button_frame.pack(fill=tk.BOTH, expand=True)
                 
-        button1 = ctk.CTkButton(button_frame, text="Register\nInformation", command=self.register_information, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button1 = ctk.CTkButton(button_frame, text="Register\nInformation", command=self.register_information, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black", font=("Oswald", 16), width=150, height=30)
         button1.pack(pady=(15,5), padx=10)
 
-        button2 = ctk.CTkButton(button_frame, text="Histories\nRegistered", command=self.histories_registered, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button2 = ctk.CTkButton(button_frame, text="Histories\nRegistered", command=self.histories_registered, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black", font=("Oswald", 16), width=150, height=30)
         button2.pack(pady=(15,5), padx=10)
 
-        button3 = ctk.CTkButton(button_frame, text="Graphical\nPresentation", command=self.graphical_presentation, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button3 = ctk.CTkButton(button_frame, text="Graphical\nPresentation", command=self.graphical_presentation, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black", font=("Oswald", 16), width=150, height=30)
         button3.pack(pady=(15,5), padx=10)
     
-        button4 = ctk.CTkButton(button_frame, text="Export Database \nto CSV", command=self.export_to_csv, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button4 = ctk.CTkButton(button_frame, text="Export Database \nto CSV", command=self.export_to_csv, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black", font=("Oswald", 16), width=150, height=30)
         button4.pack(pady=(15,5), padx=10)
 
-        button5 = ctk.CTkButton(button_frame, text="Log out", command=self.logout_button, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
-        button5.pack(pady=(60,5), padx=10)
+        button5 = ctk.CTkButton(button_frame, text="Log out", command=self.logout_button, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black", font=("Oswald", 18), width=150, height=10)
+        button5.pack(pady=(65,5), padx=10)
         
     def register_information(self):
         register_window = register.Register(self.root)
