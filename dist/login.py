@@ -16,8 +16,8 @@ class Login:
         self.root.title("AGUI")
         set_appearance_mode("dark")
 
-        w = 854
-        h = 480
+        w = 1280
+        h = 720
 
         ws = self.root.winfo_screenwidth()
         hs = self.root.winfo_screenheight()
@@ -52,42 +52,42 @@ class Login:
         background_frame.place(relx=0.56, rely=0, relwidth=0.5, relheight=1, anchor='nw')
     
 
-        title = Button(self.root, text="Welcome!", font=("Oswald", 45), 
+        title = Button(self.root, text="Welcome!", font=("Oswald", 65), 
                        fg="white", bg="gray12", bd=0, activebackground="gray12", activeforeground="white",)
-        title.place(relx=0.79, rely=0.2, anchor='center')
+        title.place(relx=0.80, rely=0.2, anchor='center')
         
-        label_username = CTkLabel(self.root, text="Username", fg_color="gray12", font=("Oswald", 15))
+        label_username = CTkLabel(self.root, text="Username", fg_color="gray12", font=("Oswald", 24))
         label_username.place(relx=0.76, rely=0.32, anchor='e')
-        label_password = CTkLabel(self.root, text="Password", fg_color="gray12", font=("Oswald", 15))
+        label_password = CTkLabel(self.root, text="Password", fg_color="gray12", font=("Oswald", 24))
         label_password.place(relx=0.76, rely=0.52, anchor='e')
 
-        self.entry_username = CTkEntry(self.root, width=150, height=35, fg_color="gray12", font=("Oswald", 12))
+        self.entry_username = CTkEntry(self.root, width=200, height=50, fg_color="gray12", font=("Oswald", 15))
         self.entry_username.place(relx=0.885, rely=0.4, anchor='e')
         self.entry_username.insert(0, "admin")
         self.entry_username.bind('<space>', self.on_space)
 
-        self.entry_password = CTkEntry(self.root, show="*", width=150, height=35, fg_color="gray12", font=("Oswald", 12))
+        self.entry_password = CTkEntry(self.root, show="*", width=200, height=50, fg_color="gray12", font=("Oswald", 15))
         self.entry_password.place(relx=0.885, rely=0.6, anchor='e')
         self.entry_password.insert(0, "admin")
         self.entry_password.bind('<space>', self.on_space)
 
         #image = Image.open("img/png/logo-no-background.png")
         image = Image.open("_internal/img/png/logo-no-background.png")
-        new_size = (500, 200)
+        new_size = (850, 350)
         image = image.resize(new_size, Image.LANCZOS)
         photo = ImageTk.PhotoImage(image)
 
         image_label = CTkLabel(self.root, image=photo, text="")
-        image_label.place(relx=0.30, rely=0.5, anchor='center')
+        image_label.place(relx=0.285, rely=0.5, anchor='center')
 
         image_label.image = photo
 
-        label = CTkLabel(self.root, text="Synochrina © 2023", font=("Nanum Pen", 15))
-        label.place(relx=0.09, rely=.96, anchor='center')
+        label = CTkLabel(self.root, text="Synochrina © 2023", font=("Nanum Pen", 16))
+        label.place(relx=0.06, rely=.96, anchor='center')
 
-        histories_button = CTkButton(self.root, text="Access", font=("Oswald", 15), command=self.login, corner_radius=32, fg_color="#008000",
+        histories_button = CTkButton(self.root, text="Access", font=("Oswald", 25), command=self.login, corner_radius=32, fg_color="#008000",
                                     hover_color="#4158D0",)
-        histories_button.place(relx=0.88, rely=0.75, anchor="e")
+        histories_button.place(relx=0.865, rely=0.75, anchor="e")
 
         if getattr(sys, 'frozen', False):
             pyi_splash.close()

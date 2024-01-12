@@ -18,7 +18,7 @@ class History(result.Result):
         self.background_frame.place(relx=.18, rely=0, relwidth=0.9, relheight=1, anchor='nw')
         self.title_frame = CTkFrame(self.background_frame, fg_color="gray12")
         self.title_frame.pack(padx=10, pady=5)
-        self.label_name = CTkLabel(self.title_frame, text="Histories", font=("Oswald", 25, "underline"))
+        self.label_name = CTkLabel(self.title_frame, text="Histories", font=("Oswald", 35))
         self.label_name.grid(row=0, column=0, padx=0, pady=10)
         self.canvas = Canvas(self.background_frame, bg="gray12", highlightthickness=0)
         self.scrollbar = Scrollbar(self.background_frame, orient="vertical", command=self.canvas.yview)
@@ -35,10 +35,10 @@ class History(result.Result):
 
     def save_to_database(self, customer_name, address, account, meter, reference, rate, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message):
+                consumption, meter_consumption, bill_amount_php, message, current_charges, vat, dues, others):
         self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message)
+                consumption, meter_consumption, bill_amount_php, message, current_charges, vat, dues, others)
 
     def fetch_data(self):
         for widget in self.button_frame.winfo_children():
@@ -46,51 +46,36 @@ class History(result.Result):
 
         data = self.db.fetch_data()
 
-        for i, row in enumerate(data):
+        total_width = 0
+        frame_width = 1000
+        row = 0
+        column = 0
+
+        for i, row_data in enumerate(data):
+            button_width = 70
+
+            if total_width + button_width > frame_width:
+                row += 1
+                column = 0
+                total_width = 0
+
             button_pair_frame = Frame(self.button_frame, bg="gray12")
-            button_pair_frame.grid(row=0, column=i, padx=10, pady=5)
+            button_pair_frame.grid(row=row, column=column, padx=(50, 10), pady=5)
 
-            bill_button = CTkButton(button_pair_frame, text=f"Customer: {row[1].lower().title().split()[-1]}", command=lambda row=row: self.show_details(row))
-            bill_button.pack(side='left')
+            bill_button = CTkButton(button_pair_frame, text=f"Customer: {row_data[1].lower().title().split()[-1]}", command=lambda row=row_data: self.show_details(row), font=("Oswald", 18), height=40, width=70)
+            bill_button.pack(side='left', padx=(0, 5))
 
-            delete_button = CTkButton(button_pair_frame, text="X", command=lambda id=row[0]: self.delete_and_clear(id), width=2)
+            delete_button = CTkButton(button_pair_frame, text="X", command=lambda id=row_data[0]: self.delete_and_clear(id), font=("Oswald", 17), width=10, height=20)
             delete_button.pack(side='left')
+
+            total_width += button_width
+            column += 1
         
     def delete_and_clear(self, id):
         self.db.delete_and_clear(id)
         self.fetch_data()
 
     def show_details(self, row):
-        """
-        bill_details = ""
-        bill_details += f"SERVICE INFORMATION\n\n"
-        bill_details += f"Customer Name: {row[0]}\n"
-        bill_details += f"Address: {row[1]}\n"
-        bill_details += f"Account Number: {row[2]}\n"
-        bill_details += f"Meter Number: {row[3]}\n"
-        bill_details += f"Reference Number: {row[4]}\n"
-        bill_details += f"Rate per Cubic Meter: {row[5]}\n\n"
-        bill_details += f"BILLING SUMMARY:\n\n"
-        bill_details += f"Consumption: {row[6]} gallons\n"
-        bill_details += f"Billing Date: {row[7]}\n"
-        bill_details += f"Billing Period: {row[8]}\n"
-        bill_details += f"Reading Date/Time: {row[9]}\n"
-        bill_details += f"Current Reading: {row[10]}\n"
-        bill_details += f"Previous Reading: {row[11]}\n"
-        bill_details += f"Meter Consumption: {row[12]} gallons\n\n"
-        bill_details += f"BILLING SUMMARY\n"
-        bill_details += f"Total Bill Amount (in PHP): ₱{row[13]:.2f}\n\n"
-        bill_details += f"Message: {row[14]}"
-        
-        for widget in self.background_frame.winfo_children():
-            widget.destroy()
-
-        self.bill_details_var.set(bill_details)
-        result_screen = result.Result(self.background_frame, self.bill_details_var)
-
-        result_screen.details_frame.pack()
-        """
-        
         title1 = ""
         title1 += f"SERVICE INFORMATION\n"
         
@@ -129,14 +114,13 @@ class History(result.Result):
 
         result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var, self.title_service, self.title_billing)
 
-"""
 if __name__ == "__main__":
     root = CTk()
     set_appearance_mode("dark")
 
-    w = 854
-    h = 480
-
+    w = 1280
+    h = 720
+    
     ws = root.winfo_screenwidth()
     hs = root.winfo_screenheight()
 
@@ -145,7 +129,6 @@ if __name__ == "__main__":
 
     root.geometry(f"{w}x{h}+{int(x)}+{int(y)}")
 
-    details_frame = CTkFrame(root, fg_color="gray12", corner_radius=0)
+    details_frame = CTkFrame(root, fg_color="gray11", corner_radius=0)
     history = History(root, details_frame)
     root.mainloop()
-"""

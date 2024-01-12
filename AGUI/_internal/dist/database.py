@@ -29,7 +29,11 @@ class Database:
                 consumption REAL,
                 meter_consumption REAL,
                 bill_amount_php REAL,
-                message TEXT
+                message TEXT,
+                current_charges REAL,
+                vat REAL,
+                dues REAL,
+                others REAL
             )
         ''')
 
@@ -42,7 +46,7 @@ class Database:
 
     def save_to_database(self, customer_name, address, account, meter, reference, rate, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message):
+                consumption, meter_consumption, bill_amount_php, message, current_charges, vat, dues, others):
         self.cursor.execute('''
             INSERT INTO water_bills (
                 customer_name,
@@ -61,11 +65,15 @@ class Database:
                 consumption,
                 meter_consumption,
                 bill_amount_php,
-                message
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                message,
+                current_charges,
+                vat,
+                dues,
+                others
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (customer_name, address, account, meter, reference, rate, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message))
+                consumption, meter_consumption, bill_amount_php, message, current_charges, vat, dues, others))
 
         self.conn.commit()
 

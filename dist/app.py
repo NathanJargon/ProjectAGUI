@@ -8,8 +8,9 @@ root = CTk()
 root.title("AGUI")
 set_appearance_mode("dark")
 
-w = 854
-h = 480
+w = 1280
+h = 720
+
 
 ws = root.winfo_screenwidth()
 hs = root.winfo_screenheight()

@@ -19,7 +19,7 @@ class Register(result.Result):
         self.title_service = StringVar()
         self.title_billing = StringVar()
         
-        self.background_frame = CTkFrame(root, fg_color="gray12", corner_radius=0)
+        self.background_frame = CTkFrame(root, fg_color="gray11", corner_radius=0)
         self.background_frame.place(relx=.18, rely=0, relwidth=.9, relheight=1, anchor='nw')
         self.background_frame.grid_rowconfigure(1, weight=1)
         self.background_frame.grid_columnconfigure(1, weight=1)
@@ -134,10 +134,10 @@ class Register(result.Result):
         
         # BUTTON
 
-        self.button_frame = CTkFrame(self.background_frame, bg_color="gray12", corner_radius=22, fg_color="gray12")
+        self.button_frame = CTkFrame(self.background_frame, bg_color="gray11", corner_radius=22, fg_color="gray11")
         self.button_frame.grid(row=0, column=1, sticky='e', padx=(0,120), pady=(645, 0))
 
-        self.calculate_button = CTkButton(self.button_frame, text="Calculate Bill", bg_color="gray12", fg_color="#D16002", hover_color="#DD571C", corner_radius=22, command=self.calculate_bill, font=("Oswald", 24))
+        self.calculate_button = CTkButton(self.button_frame, text="Calculate Bill", bg_color="gray11", fg_color="#D16002", hover_color="#DD571C", corner_radius=22, command=self.calculate_bill, font=("Oswald", 24))
         self.calculate_button.grid(row=0, column=0, padx=10, pady=5)
 
 
@@ -282,7 +282,7 @@ class Register(result.Result):
 
             self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message)
+                consumption, meter_consumption, bill_amount_php, message, current_charges, vat, dues, others)
             
             self.db.fetch_data()
 
@@ -345,7 +345,7 @@ class Register(result.Result):
                 messagebox.showerror("Error", "Please enter valid numeric values for consumption and meter readings.")
             """
 
-
+"""
 if __name__ == "__main__":
     root = CTk()
     set_appearance_mode("dark")
@@ -363,3 +363,4 @@ if __name__ == "__main__":
 
     register = Register(root)
     root.mainloop()
+"""

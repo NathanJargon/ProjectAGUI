@@ -19,193 +19,232 @@ class Register(result.Result):
         self.title_service = StringVar()
         self.title_billing = StringVar()
         
-        self.background_frame = CTkFrame(root, fg_color="gray12", corner_radius=0)
+        self.background_frame = CTkFrame(root, fg_color="gray11", corner_radius=0)
         self.background_frame.place(relx=.18, rely=0, relwidth=.9, relheight=1, anchor='nw')
+        self.background_frame.grid_rowconfigure(1, weight=1)
+        self.background_frame.grid_columnconfigure(1, weight=1)
 
         # Service Information
         # Problem #1: Grid and pack will conflict each other.
         # Solution: Use grid instead of pack.
         
-        self.service_frame = CTkFrame(self.background_frame, fg_color="gray12")
-        self.service_frame.grid(row=0, column=0, sticky='w', padx=(10, 0), pady=25)
+        self.service_frame = CTkFrame(self.background_frame, fg_color="gray11")
+        self.service_frame.grid(row=0, column=0, sticky='w', padx=(100, 10), pady=(25, 325))
 
         self.title_frame = CTkFrame(self.background_frame, fg_color="gray12")
         self.title_frame.grid(row=1, column=0, padx=0, pady=5)
 
-        self.label_name1 = CTkLabel(self.service_frame, text="Service Information", font=("Oswald", 20))
-        self.label_name1.grid(row=0, column=0, padx=0, pady=(0, 10))
+        self.label_name1 = CTkLabel(self.service_frame, text="Service Information", font=("Oswald", 24))
+        self.label_name1.grid(row=0, column=0, padx=0, pady=(10, 20))
 
         self.name_frame = CTkFrame(self.service_frame)
         self.name_frame.grid(row=1, column=0, padx=10, pady=5)
 
-        self.label_name = CTkLabel(self.name_frame, text="Customer Name:", font=("Oswald", 14))
+        self.label_name = CTkLabel(self.name_frame, text="Customer Name:", font=("Oswald", 18))
         self.label_name.grid(row=0, column=0, padx=(10, 40), pady=5)
 
-        self.entry_name = CTkEntry(self.name_frame, width=150)
+        self.entry_name = CTkEntry(self.name_frame, width=200, height=35)
         self.entry_name.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_name.insert(0, "Lastname, Firstname")
 
         self.address_frame = CTkFrame(self.service_frame)
         self.address_frame.grid(row=2, column=0, padx=5, pady=5)
 
-        self.label_address = CTkLabel(self.address_frame, text="Address:", font=("Oswald", 14))
-        self.label_address.grid(row=0, column=0, padx=(10, 85), pady=5)
+        self.label_address = CTkLabel(self.address_frame, text="Address:", font=("Oswald", 18))
+        self.label_address.grid(row=0, column=0, padx=(10, 90), pady=5)
         
-        self.entry_address = CTkEntry(self.address_frame, width=150)
+        self.entry_address = CTkEntry(self.address_frame, width=200, height=35)
         self.entry_address.grid(row=0, column=1, padx=10, pady=5)
         self.entry_address.insert(0, "Bldg/Rm/Flr")
         
         self.account_frame = CTkFrame(self.service_frame)
         self.account_frame.grid(row=3, column=0, padx=10, pady=5)
 
-        self.label_account = CTkLabel(self.account_frame, text="Account Number:", font=("Oswald", 14))
-        self.label_account.grid(row=0, column=0, padx=(10, 38), pady=5)
+        self.label_account = CTkLabel(self.account_frame, text="Account Number:", font=("Oswald", 18))
+        self.label_account.grid(row=0, column=0, padx=(10, 36), pady=5)
         
-        self.entry_account = CTkEntry(self.account_frame, width=150)
+        self.entry_account = CTkEntry(self.account_frame, width=200, height=35)
         self.entry_account.grid(row=0, column=1, padx=10, pady=5)
         self.entry_account.insert(0, "N/A if None")
         
         self.meter_frame = CTkFrame(self.service_frame)
         self.meter_frame.grid(row=4, column=0, padx=10, pady=5)
 
-        self.label_meter = CTkLabel(self.meter_frame, text="Meter Number:", font=("Oswald", 14))
+        self.label_meter = CTkLabel(self.meter_frame, text="Meter Number:", font=("Oswald", 18))
         self.label_meter.grid(row=0, column=0, padx=(10, 48), pady=5)
 
-        self.entry_meter = CTkEntry(self.meter_frame, width=150)
+        self.entry_meter = CTkEntry(self.meter_frame, width=200, height=35)
         self.entry_meter.grid(row=0, column=1, padx=10, pady=5)
 
         self.reference_frame = CTkFrame(self.service_frame)
-        self.reference_frame.grid(row=5, column=0, padx=10, pady=5)
+        self.reference_frame.grid(row=5, column=0, padx=10, pady=(5, 10))
 
-        self.label_reference = CTkLabel(self.reference_frame, text="Reference Number:", font=("Oswald", 14))
+        self.label_reference = CTkLabel(self.reference_frame, text="Reference Number:", font=("Oswald", 18))
         self.label_reference.grid(row=0, column=0, padx=(10, 25), pady=5)
 
-        self.entry_reference = CTkEntry(self.reference_frame, width=150)
+        self.entry_reference = CTkEntry(self.reference_frame, width=200, height=35)
         self.entry_reference.grid(row=0, column=1, padx=10, pady=5)
+        
+        # Current Charges
+        self.current_charges_frame = CTkFrame(self.background_frame, fg_color="gray11")
+        self.current_charges_frame.grid(row=0, column=0, sticky='w', padx=(100, 10), pady=(350, 10))
 
-        self.rate_frame = CTkFrame(self.service_frame)
-        self.rate_frame.grid(row=6, column=0, padx=10, pady=5)
+        self.cc_name = CTkLabel(self.current_charges_frame, text="Current Charges", font=("Oswald", 24))
+        self.cc_name.grid(row=0, column=0, padx=0, pady=(10, 20))
 
-        self.label_rate = CTkLabel(self.rate_frame, text="Rate Per Cubic Meter:", font=("Oswald", 14))
-        self.label_rate.grid(row=0, column=0, padx=10, pady=5)
+        self.currentCharges_frame = CTkFrame(self.current_charges_frame)
+        self.currentCharges_frame.grid(row=1, column=0, padx=10, pady=(5, 10))
 
-        self.entry_rate = CTkEntry(self.rate_frame, width=150)
-        self.entry_rate.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_rate.insert(0, "0 if None")
+        self.label_currentCharges = CTkLabel(self.currentCharges_frame, text="Water Charge:", font=("Oswald", 18))
+        self.label_currentCharges.grid(row=0, column=0, padx=(10, 55), pady=5)
 
-        self.charges_frame = CTkFrame(self.service_frame)
-        self.charges_frame.grid(row=7, column=0, padx=10, pady=5)
+        self.entry_currentCharges = CTkEntry(self.currentCharges_frame, width=200, height=35)
+        self.entry_currentCharges.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_currentCharges.insert(0, "0")
+        
+        self.vat_frame = CTkFrame(self.current_charges_frame)
+        self.vat_frame.grid(row=2, column=0, padx=10, pady=(5, 10))
 
-        self.label_charges = CTkLabel(self.charges_frame, text="Charges/Dues:", font=("Oswald", 14))
-        self.label_charges.grid(row=0, column=0, padx=(10, 50), pady=5)
+        self.label_vat = CTkLabel(self.vat_frame, text="Value-Added Tax:", font=("Oswald", 18))
+        self.label_vat.grid(row=0, column=0, padx=(10, 35), pady=5)
 
-        self.entry_charges = CTkEntry(self.charges_frame, width=150)
-        self.entry_charges.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_charges.insert(0, "0")
+        self.entry_vat = CTkEntry(self.vat_frame, width=200, height=35)
+        self.entry_vat.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_vat.insert(0, "0")
+        
+        self.dues_frame = CTkFrame(self.current_charges_frame)
+        self.dues_frame.grid(row=3, column=0, padx=10, pady=(5, 10))
+
+        self.label_dues = CTkLabel(self.dues_frame, text="Dues:", font=("Oswald", 18))
+        self.label_dues.grid(row=0, column=0, padx=(10, 110), pady=5)
+
+        self.entry_dues = CTkEntry(self.dues_frame, width=200, height=35)
+        self.entry_dues.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_dues.insert(0, "0")
+
+        self.others_frame = CTkFrame(self.current_charges_frame)
+        self.others_frame.grid(row=4, column=0, padx=10, pady=(5, 10))
+
+        self.label_others = CTkLabel(self.others_frame, text="Others:", font=("Oswald", 18))
+        self.label_others.grid(row=0, column=0, padx=(10, 100), pady=5)
+
+        self.entry_others = CTkEntry(self.others_frame, width=200, height=35)
+        self.entry_others.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_others.insert(0, "0")
         
         # BUTTON
-        
-        self.buttom_frame = CTkFrame(self.service_frame, fg_color="gray12")
-        self.buttom_frame.grid(row=8, column=0, padx=0, pady=15)
 
-        self.calculate_button = CTkButton(self.buttom_frame, text="Calculate Bill", command=self.calculate_bill, font=("Oswald", 15))
+        self.button_frame = CTkFrame(self.background_frame, bg_color="gray11", corner_radius=22, fg_color="gray11")
+        self.button_frame.grid(row=0, column=1, sticky='e', padx=(0,120), pady=(645, 0))
+
+        self.calculate_button = CTkButton(self.button_frame, text="Calculate Bill", bg_color="gray11", fg_color="#D16002", hover_color="#DD571C", corner_radius=22, command=self.calculate_bill, font=("Oswald", 24))
         self.calculate_button.grid(row=0, column=0, padx=10, pady=5)
 
 
         # Billing Summary
         
-        self.billing_frame = CTkFrame(self.background_frame, fg_color="gray12")
-        self.billing_frame.grid(row=0, column=1, sticky='w', pady=(10, 47))
+        self.billing_frame = CTkFrame(self.background_frame, fg_color="gray11")
+        self.billing_frame.grid(row=0, column=1, sticky='e', padx=(10, 200), pady=(10, 10))
 
-        self.label_name2 = CTkLabel(self.billing_frame, text="Billing Summary", font=("Oswald", 20))
-        self.label_name2.grid(row=0, column=0, padx=0, pady=(10, 10))
-    
+        self.label_name2 = CTkLabel(self.billing_frame, text="Billing Information", font=("Oswald", 24))
+        self.label_name2.grid(row=0, column=0, padx=0, pady=(10, 20))
+
+        self.soa_frame = CTkFrame(self.billing_frame)
+        self.soa_frame.grid(row=1, column=0, padx=5, pady=5)
+
+        self.label_soa= CTkLabel(self.soa_frame, text="SOA Number:", font=("Oswald", 18))
+        self.label_soa.grid(row=0, column=0, padx=(10, 95), pady=5)
+
+        self.entry_soa = CTkEntry(self.soa_frame, width=200, height=35)
+        self.entry_soa.grid(row=0, column=1, padx=10, pady=5)
+        
+        self.bill_frame = CTkFrame(self.billing_frame)
+        self.bill_frame.grid(row=2, column=0, padx=5, pady=5)
+
+        self.label_bill= CTkLabel(self.bill_frame, text="Bill Number:", font=("Oswald", 18))
+        self.label_bill.grid(row=0, column=0, padx=(10, 100), pady=5)
+
+        self.entry_bill = CTkEntry(self.bill_frame, width=200, height=35)
+        self.entry_bill.grid(row=0, column=1, padx=10, pady=5)
+        
         self.billdate_frame = CTkFrame(self.billing_frame)
-        self.billdate_frame.grid(row=2, column=0, padx=5, pady=5)
+        self.billdate_frame.grid(row=3, column=0, padx=5, pady=5)
 
-        self.label_billdate = CTkLabel(self.billdate_frame, text="Billing Date:", font=("Oswald", 14))
-        self.label_billdate.grid(row=0, column=0, padx=(10, 68), pady=5)
+        self.label_billdate = CTkLabel(self.billdate_frame, text="Billing Date:", font=("Oswald", 18))
+        self.label_billdate.grid(row=0, column=0, padx=(10, 100), pady=5)
 
-        self.entry_billdate = CTkEntry(self.billdate_frame, width=150)
+        self.entry_billdate = CTkEntry(self.billdate_frame, width=200, height=35)
         self.entry_billdate.grid(row=0, column=1, padx=10, pady=5)
         self.entry_billdate.insert(0, "YYYY-MM-DD")
 
         self.billperiod_frame = CTkFrame(self.billing_frame)
-        self.billperiod_frame.grid(row=3, column=0, padx=5, pady=5)
+        self.billperiod_frame.grid(row=4, column=0, padx=5, pady=5)
 
-        self.label_billperiod= CTkLabel(self.billperiod_frame, text="Billing Period:", font=("Oswald", 14))
-        self.label_billperiod.grid(row=0, column=0, padx=10, pady=5)
+        self.label_billperiod= CTkLabel(self.billperiod_frame, text="Billing Period:", font=("Oswald", 18))
+        self.label_billperiod.grid(row=0, column=0, padx=(10, 90), pady=5)
 
-        self.entry_billperiod = CTkEntry(self.billperiod_frame, width=200)
+        self.entry_billperiod = CTkEntry(self.billperiod_frame, width=200, height=35)
         self.entry_billperiod.grid(row=0, column=1, padx=10, pady=5)
         self.entry_billperiod.insert(0, "YYYY-MM-DD to YYYY-MM-DD")
-
-        self.soa_frame = CTkFrame(self.billing_frame)
-        self.soa_frame.grid(row=5, column=0, padx=5, pady=5)
-
-        self.label_soa= CTkLabel(self.soa_frame, text="SOA Number:", font=("Oswald", 14))
-        self.label_soa.grid(row=0, column=0, padx=(10, 63), pady=5)
-
-        self.entry_soa = CTkEntry(self.soa_frame, width=150)
-        self.entry_soa.grid(row=0, column=1, padx=10, pady=5)
-
-        self.bill_frame = CTkFrame(self.billing_frame)
-        self.bill_frame.grid(row=6, column=0, padx=5, pady=5)
-
-        self.label_bill= CTkLabel(self.bill_frame, text="Bill Number:", font=("Oswald", 14))
-        self.label_bill.grid(row=0, column=0, padx=(10, 68), pady=5)
-
-        self.entry_bill = CTkEntry(self.bill_frame, width=150)
-        self.entry_bill.grid(row=0, column=1, padx=10, pady=5)
-
+        
         self.rdg_frame = CTkFrame(self.billing_frame)
-        self.rdg_frame.grid(row=7, column=0, padx=5, pady=5)
+        self.rdg_frame.grid(row=5, column=0, padx=5, pady=5)
 
-        self.label_rdg = CTkLabel(self.rdg_frame, text="Rdg Date/Time:", font=("Oswald", 14))
-        self.label_rdg.grid(row=0, column=0, padx=(10, 20), pady=5)
+        self.label_rdg = CTkLabel(self.rdg_frame, text="Rdg Date/Time:", font=("Oswald", 18))
+        self.label_rdg.grid(row=0, column=0, padx=(10, 82), pady=5)
 
-        self.entry_rdg = CTkEntry(self.rdg_frame, width=180)
+        self.entry_rdg = CTkEntry(self.rdg_frame, width=200, height=35)
         self.entry_rdg.grid(row=0, column=1, padx=10, pady=5) 
         self.entry_rdg.insert(0, "YYYY-MM-DD 00:00:00 UTC")
         
+        self.rate_frame = CTkFrame(self.billing_frame)
+        self.rate_frame.grid(row=6, column=0, padx=10, pady=5)
+
+        self.label_rate = CTkLabel(self.rate_frame, text="Rate Per Cubic Meter:", font=("Oswald", 18))
+        self.label_rate.grid(row=0, column=0, padx=(10, 40), pady=5)
+
+        self.entry_rate = CTkEntry(self.rate_frame, width=200, height=35)
+        self.entry_rate.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_rate.insert(0, "0 if None")
+        
         self.label_current_reading_frame = CTkFrame(self.billing_frame)
-        self.label_current_reading_frame.grid(row=8, column=0, padx=5, pady=5)
+        self.label_current_reading_frame.grid(row=7, column=0, padx=5, pady=5)
 
-        self.label_current_reading = CTkLabel(self.label_current_reading_frame, text="Pres Reading (cms):", font=("Oswald", 14))
-        self.label_current_reading.grid(row=0, column=0, padx=(10, 76), pady=5)
+        self.label_current_reading = CTkLabel(self.label_current_reading_frame, text="Pres Reading (cms):", font=("Oswald", 18))
+        self.label_current_reading.grid(row=0, column=0, padx=(10, 52), pady=5)
 
-        self.entry_current_reading = CTkEntry(self.label_current_reading_frame, width=100)
+        self.entry_current_reading = CTkEntry(self.label_current_reading_frame, width=200, height=35)
         self.entry_current_reading.grid(row=0, column=1, padx=10, pady=5)
         self.entry_current_reading.insert(0, "0")
 
         self.label_previous_reading_frame = CTkFrame(self.billing_frame)
-        self.label_previous_reading_frame.grid(row=9, column=0, padx=5, pady=5)
+        self.label_previous_reading_frame.grid(row=8, column=0, padx=5, pady=5)
 
-        self.label_previous_reading = CTkLabel(self.label_previous_reading_frame, text="Prev Reading (cms):", font=("Oswald", 14))
-        self.label_previous_reading.grid(row=0, column=0, padx=(10, 76), pady=5)
+        self.label_previous_reading = CTkLabel(self.label_previous_reading_frame, text="Prev Reading (cms):", font=("Oswald", 18))
+        self.label_previous_reading.grid(row=0, column=0, padx=(10, 52), pady=5)
 
-        self.entry_previous_reading = CTkEntry(self.label_previous_reading_frame, width=100)
+        self.entry_previous_reading = CTkEntry(self.label_previous_reading_frame, width=200, height=35)
         self.entry_previous_reading.grid(row=0, column=1, padx=10, pady=5)
         self.entry_previous_reading.insert(0, "0")
 
         self.consumption_frame = CTkFrame(self.billing_frame)
-        self.consumption_frame.grid(row=10, column=0, padx=5, pady=5)
+        self.consumption_frame.grid(row=9, column=0, padx=5, pady=(5, 10))
 
-        self.label_consumption = CTkLabel(self.consumption_frame, text="Consumption:", font=("Oswald", 14))
-        self.label_consumption.grid(row=0, column=0, padx=(10, 110), pady=5)
+        self.label_consumption = CTkLabel(self.consumption_frame, text="Consumption:", font=("Oswald", 18))
+        self.label_consumption.grid(row=0, column=0, padx=(10, 90), pady=5)
 
-        self.entry_consumption = CTkEntry(self.consumption_frame, width=100)
+        self.entry_consumption = CTkEntry(self.consumption_frame, width=200, height=35)
         self.entry_consumption.grid(row=0, column=1, padx=10, pady=5)
         self.entry_consumption.insert(0, "0")
         
     def calculate_bill(self):
         try:
-            customer_name = self.entry_name.get()[:11] if ' ' not in self.entry_name.get() else self.entry_name.get().split(' ')[0]
-            address = self.entry_address.get()[:30] if len(self.entry_address) > 30 else self.entry_address.get()
+            customer_name = self.entry_name.get()[:30] if len(self.entry_name.get()) > 30 else self.entry_name.get()
+            address = self.entry_address.get()[:30] if len(self.entry_address.get()) > 30 else self.entry_address.get()
             account = self.entry_account.get()
             meter = self.entry_meter.get()
             reference = self.entry_reference.get()
             rate = float(self.entry_rate.get())
-            charges = float(self.entry_charges.get())
             bill_date = self.entry_billdate.get()
             bill_period = self.entry_billperiod.get()
             soa = self.entry_soa.get()
@@ -214,10 +253,14 @@ class Register(result.Result):
             current_reading = float(self.entry_current_reading.get())
             previous_reading = float(self.entry_previous_reading.get())
             consumption = float(self.entry_consumption.get())
+            current_charges = float(self.entry_current_charges.get())
+            vat = float(self.entry_vat.get())
+            dues = float(self.entry_dues.get())
+            others = float(self.entry_others.get())
             meter_consumption = current_reading - previous_reading
             message = ""
             
-            bill_amount_php = (charges + consumption) + (meter_consumption * 2.5)
+            bill_amount_php = (consumption + current_charges + vat + dues + others) + (meter_consumption * 2.5)
 
             if meter_consumption < 0:
                 raise ValueError("Invalid meter consumption")
@@ -237,9 +280,9 @@ class Register(result.Result):
 
             #print(customer_name, address, account, meter, reference, rate, consumption, bill_date, bill_period, rdg_date_time, current_reading, previous_reading, meter_consumption, bill_amount_php, message)
 
-            self.db.save_to_database(customer_name, address, account, meter, reference, rate, charges, bill_date, 
+            self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message)
+                consumption, meter_consumption, bill_amount_php, message, current_charges, vat, dues, others)
             
             self.db.fetch_data()
 
@@ -253,7 +296,6 @@ class Register(result.Result):
             service_info += f"Meter Number: {meter}\n"
             service_info += f"Reference Number: {reference}\n"
             service_info += f"Rate per Cubic Meter: {rate}\n"
-            service_info += f"Charges/Dues: {charges}"
 
             title2 = ""
             title2 += f"BILLING SUMMARY\n"
@@ -308,8 +350,8 @@ if __name__ == "__main__":
     root = CTk()
     set_appearance_mode("dark")
 
-    w = 854
-    h = 480
+    w = 1280
+    h = 720
 
     ws = root.winfo_screenwidth()
     hs = root.winfo_screenheight()
