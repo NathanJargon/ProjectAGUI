@@ -13,7 +13,6 @@ class Result:
         self.title_service = title_service
         self.title_billing = title_billing
 
-        #ToDo: customize each label of the informations (Done)
         """
         service_info_converted = self.service_info_var.encode("utf-8")
         billing_summary_converted = self.billing_summary_var.encode("utf-8")
@@ -37,7 +36,7 @@ class Result:
         #self.label_name = CTkLabel(self.title_frame, text="Information", font=("Oswald", 25))
         #self.label_name.grid(row=0, column=0, padx=0, pady=10)
 
-        self.service_frame = tk.Frame(self.root, width=500, height=300, bg="gray11")
+        self.service_frame = tk.Frame(self.root, width=500, height=300, bg="gray12")
         self.billing_frame = tk.Frame(self.root, width=500, height=300, bg="gray12")
 
         self.service_frame.place(x=255, y=90, width=400, height=300)

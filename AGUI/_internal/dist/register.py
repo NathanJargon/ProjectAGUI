@@ -43,6 +43,7 @@ class Register(result.Result):
 
         self.entry_name = CTkEntry(self.name_frame, width=150)
         self.entry_name.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_name.insert(0, "Lastname, Firstname")
 
         self.address_frame = CTkFrame(self.service_frame)
         self.address_frame.grid(row=2, column=0, padx=5, pady=5)
@@ -199,8 +200,8 @@ class Register(result.Result):
         
     def calculate_bill(self):
         try:
-            customer_name = self.entry_name.get()[:11] if ' ' not in self.entry_name.get() else self.entry_name.get().split(' ')[0]
-            address = self.entry_address.get()[:30] if len(self.entry_address) > 30 else self.entry_address.get()
+            customer_name = self.entry_name.get()[:30] if len(self.entry_name.get()) > 30 else self.entry_name.get()
+            address = self.entry_address.get()[:30] if len(self.entry_address.get()) > 30 else self.entry_address.get()
             account = self.entry_account.get()
             meter = self.entry_meter.get()
             reference = self.entry_reference.get()

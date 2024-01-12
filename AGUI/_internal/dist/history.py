@@ -47,8 +47,14 @@ class History(result.Result):
         data = self.db.fetch_data()
 
         for i, row in enumerate(data):
-            bill_button = CTkButton(self.button_frame, text=f"Customer: {row[1]}", command=lambda row=row: self.show_details(row))
-            bill_button.grid(row=0, column=i, padx=10, pady=5)
+            button_pair_frame = Frame(self.button_frame, bg="gray12")
+            button_pair_frame.grid(row=0, column=i, padx=10, pady=5)
+
+            bill_button = CTkButton(button_pair_frame, text=f"Customer: {row[1].lower().title().split()[-1]}", command=lambda row=row: self.show_details(row))
+            bill_button.pack(side='left')
+
+            delete_button = CTkButton(button_pair_frame, text="X", command=lambda id=row[0]: self.delete_and_clear(id), width=2)
+            delete_button.pack(side='left')
         
     def delete_and_clear(self, id):
         self.db.delete_and_clear(id)

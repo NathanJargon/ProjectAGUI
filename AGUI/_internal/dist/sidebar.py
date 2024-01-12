@@ -71,7 +71,7 @@ class Sidebar(ctk.CTkFrame):
         button3 = ctk.CTkButton(button_frame, text="Graphical\nPresentation", command=self.graphical_presentation, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button3.pack(pady=(15,5), padx=10)
     
-        button4 = ctk.CTkButton(button_frame, text="Export Result \nto CSV", command=self.export_to_csv, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
+        button4 = ctk.CTkButton(button_frame, text="Export Database \nto CSV", command=self.export_to_csv, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
         button4.pack(pady=(15,5), padx=10)
 
         button5 = ctk.CTkButton(button_frame, text="Log out", command=self.logout_button, bg_color="gray12", fg_color="gray10", corner_radius=22, hover_color="black")
