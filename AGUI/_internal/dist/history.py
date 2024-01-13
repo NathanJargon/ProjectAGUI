@@ -112,7 +112,7 @@ class History(result.Result):
         current_charges = ""
         current_charges += f"Water Charge           : {row[18]}\n"
         current_charges += f"Value-added Tax       : {row[19]}\n"
-        current_charges += f"Dues                           : ₱{row[20]:.2f}\n"        
+        current_charges += f"Dues                           : {row[20]}\n"        
         current_charges += f"Others                        : {row[21]}\n"
         current_charges += f"Consumption             : {row[14]}\n"
         current_charges += f"Meter Consumption  : {row[15]} gallons\n"

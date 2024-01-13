@@ -314,7 +314,7 @@ class Register(result.Result):
             current_charges = ""
             current_charges += f"Water Charge           : {water_charges}\n"
             current_charges += f"Value-added Tax       : {vat}\n"
-            current_charges += f"Dues                           : ₱{dues}\n"        
+            current_charges += f"Dues                           : {dues}\n"        
             current_charges += f"Others                        : {others}\n"
             current_charges += f"Consumption             : {consumption}\n"
             current_charges += f"Meter Consumption  : {meter_consumption} gallons\n"
