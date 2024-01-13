@@ -61,7 +61,7 @@ class Graph:
             rows = cursor.fetchall()
 
             x_data = [row[1] for row in rows]
-            y_data = [row[17] for row in rows]
+            y_data = [row[16] for row in rows]
 
             ax.bar(x_data, y_data, label=f'{customer_name}')
 

@@ -16,6 +16,8 @@ class Register(result.Result):
 
         self.service_info_var = StringVar()
         self.billing_summary_var = StringVar()
+        self.current_charges_var = StringVar()
+        self.current_charges_var2 = StringVar()
         self.title_service = StringVar()
         self.title_billing = StringVar()
         
@@ -92,15 +94,15 @@ class Register(result.Result):
         self.cc_name = CTkLabel(self.current_charges_frame, text="Current Charges", font=("Oswald", 24))
         self.cc_name.grid(row=0, column=0, padx=0, pady=(10, 20))
 
-        self.currentCharges_frame = CTkFrame(self.current_charges_frame)
-        self.currentCharges_frame.grid(row=1, column=0, padx=10, pady=(5, 10))
+        self.waterCharges_frame = CTkFrame(self.current_charges_frame)
+        self.waterCharges_frame.grid(row=1, column=0, padx=10, pady=(5, 10))
 
-        self.label_currentCharges = CTkLabel(self.currentCharges_frame, text="Water Charge:", font=("Oswald", 18))
-        self.label_currentCharges.grid(row=0, column=0, padx=(10, 55), pady=5)
+        self.label_waterCharges = CTkLabel(self.waterCharges_frame, text="Water Charge:", font=("Oswald", 18))
+        self.label_waterCharges.grid(row=0, column=0, padx=(10, 55), pady=5)
 
-        self.entry_currentCharges = CTkEntry(self.currentCharges_frame, width=200, height=35)
-        self.entry_currentCharges.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_currentCharges.insert(0, "0")
+        self.entry_waterCharges = CTkEntry(self.waterCharges_frame, width=200, height=35)
+        self.entry_waterCharges.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_waterCharges.insert(0, "0")
         
         self.vat_frame = CTkFrame(self.current_charges_frame)
         self.vat_frame.grid(row=2, column=0, padx=10, pady=(5, 10))
@@ -253,14 +255,14 @@ class Register(result.Result):
             current_reading = float(self.entry_current_reading.get())
             previous_reading = float(self.entry_previous_reading.get())
             consumption = float(self.entry_consumption.get())
-            current_charges = float(self.entry_current_charges.get())
+            water_charges = float(self.entry_waterCharges.get())
             vat = float(self.entry_vat.get())
             dues = float(self.entry_dues.get())
             others = float(self.entry_others.get())
             meter_consumption = current_reading - previous_reading
             message = ""
             
-            bill_amount_php = (consumption + current_charges + vat + dues + others) + (meter_consumption * 2.5)
+            bill_amount_php = (consumption + water_charges + vat + dues + others) + (meter_consumption * 2.5)
 
             if meter_consumption < 0:
                 raise ValueError("Invalid meter consumption")
@@ -282,36 +284,45 @@ class Register(result.Result):
 
             self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message, current_charges, vat, dues, others)
+                consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others)
             
             self.db.fetch_data()
 
             title1 = ""
-            title1 += f"SERVICE INFORMATION\n"
-           
+            title1 += f"SERVICE INFORMATION"
+            
             service_info = ""
-            service_info += f"Customer Name: {customer_name}\n"
-            service_info += f"Address: {address}\n"
-            service_info += f"Account Number: {account}\n"
-            service_info += f"Meter Number: {meter}\n"
-            service_info += f"Reference Number: {reference}\n"
-            service_info += f"Rate per Cubic Meter: {rate}\n"
+            service_info += f"Customer Name            :   {customer_name}\n"
+            service_info += f"Address                          :   {address}\n"
+            service_info += f"Account Number           :   {account}\n"
+            service_info += f"Meter Number              :   {meter}\n"
+            service_info += f"Reference Number       :   {reference}\n"
+            service_info += f"Rate per Cubic Meter  :   {rate}"
 
             title2 = ""
-            title2 += f"BILLING SUMMARY\n"
-        
-            billing_summary = ""
-            billing_summary += f"Billing Date: {bill_date}\n"
-            billing_summary += f"Billing Period: {bill_period}\n"
-            billing_summary += f"SOA Number: {soa}\n"
-            billing_summary += f"Billing Number: {bill}\n"
-            billing_summary += f"Rdg Date/Time: {rdg_date_time}\n"
-            billing_summary += f"Current Reading: {current_reading}\n"
-            billing_summary += f"Previous Reading: {previous_reading}\n"
-            billing_summary += f"Consumption: {consumption}\n"
-            billing_summary += f"Meter Consumption: {meter_consumption} gallons\n\n"
-            billing_summary += f"Total Bill Amount (in PHP): ₱{bill_amount_php:.2f}\n"
-            billing_summary += f"Message: {message}"
+            title2 += f"BILLING SUMMARY"
+                    
+            billing_summary = ""      
+            billing_summary += f"Billing Date            :   {bill_date}\n"
+            billing_summary += f"Billing Period         :   {bill_period}\n"
+            billing_summary += f"SOA Number          :   {soa}\n"
+            billing_summary += f"Billing Number       :   {bill}\n"
+            billing_summary += f"Rdg Date/Time      :   {rdg_date_time}\n"
+            billing_summary += f"Current Reading    :   {current_reading}\n"
+            billing_summary += f"Previous Reading   :   {previous_reading}\n"
+            
+            current_charges = ""
+            current_charges += f"Water Charge           : {water_charges}\n"
+            current_charges += f"Value-added Tax       : {vat}\n"
+            current_charges += f"Dues                           : ₱{dues}\n"        
+            current_charges += f"Others                        : {others}\n"
+            current_charges += f"Consumption             : {consumption}\n"
+            current_charges += f"Meter Consumption  : {meter_consumption} gallons\n"
+            
+            current_charges2 = "" 
+            current_charges2 += f"AMT BEFORE DUE DATE  : ₱{bill_amount_php:.2f}\n"
+            current_charges2 += f"AMT AFTER DUE DATE     : ₱{bill_amount_php + bill_amount_php*0.1:.2f}\n"
+            current_charges2 += f"Message                           : {message}"
             
             for widget in self.background_frame.winfo_children():
                 widget.destroy()
@@ -321,8 +332,11 @@ class Register(result.Result):
 
             self.service_info_var.set(service_info)
             self.billing_summary_var.set(billing_summary)
+            self.current_charges_var.set(current_charges)
+            self.current_charges_var2.set(current_charges2)
 
-            result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var, self.title_service, self.title_billing)
+            result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var, 
+                                        self.current_charges_var, self.current_charges_var2, self.title_service, self.title_billing)
 
             
         except ValueError as e:
