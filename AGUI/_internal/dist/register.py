@@ -112,7 +112,7 @@ class Register(result.Result):
 
         self.entry_vat = CTkEntry(self.vat_frame, width=200, height=35)
         self.entry_vat.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_vat.insert(0, "0")
+        self.entry_vat.insert(0, "0%")
         
         self.dues_frame = CTkFrame(self.current_charges_frame)
         self.dues_frame.grid(row=3, column=0, padx=10, pady=(5, 10))
@@ -256,13 +256,14 @@ class Register(result.Result):
             previous_reading = float(self.entry_previous_reading.get())
             consumption = float(self.entry_consumption.get())
             water_charges = float(self.entry_waterCharges.get())
-            vat = float(self.entry_vat.get())
+            vat = float(self.entry_vat.get().split('%')[0]) / 100
             dues = float(self.entry_dues.get())
             others = float(self.entry_others.get())
             meter_consumption = current_reading - previous_reading
             message = ""
             
-            bill_amount_php = (consumption + water_charges + vat + dues + others) + (meter_consumption * 2.5)
+            vat_amount = (consumption + water_charges + dues + others) * vat
+            bill_amount_php = (consumption + water_charges + dues + others) + vat_amount + (meter_consumption * 2.5)
 
             if meter_consumption < 0:
                 raise ValueError("Invalid meter consumption")

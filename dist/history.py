@@ -64,7 +64,7 @@ class History(result.Result):
             button_pair_frame = Frame(self.button_frame, bg="gray12")
             button_pair_frame.grid(row=row, column=column, padx=(50, 10), pady=5)
 
-            bill_button = CTkButton(button_pair_frame, text=f"Customer: {row_data[1].lower().title().split()[-1]}", command=lambda row=row_data: self.show_details(row), font=("Oswald", 18), height=40, width=70)
+            bill_button = CTkButton(button_pair_frame, text=f"Customer: {row_data[1].lower().title().split(', ')[-1]}", command=lambda row=row_data: self.show_details(row), font=("Oswald", 18), height=40, width=70)
             bill_button.pack(side='left', padx=(0, 5))
 
             delete_button = CTkButton(button_pair_frame, text="X", command=lambda id=row_data[0]: self.delete_and_clear(id), font=("Oswald", 17), width=10, height=20)
@@ -110,9 +110,10 @@ class History(result.Result):
         billing_summary += f"Previous Reading   :   {row[13]}\n"
         
         current_charges = ""
-        current_charges += f"Water Charge           : {row[18]}\n"
-        current_charges += f"Value-added Tax       : {row[19]}\n"
-        current_charges += f"Dues                           : ₱{row[20]:.2f}\n"        
+        current_charges += f"Water Charge            : {row[18]}\n"
+        vat_percentage = str(row[19] * 100) + "%"
+        current_charges += f"Value-added Tax       : {vat_percentage}\n"
+        current_charges += f"Dues                           : {row[20]}\n"        
         current_charges += f"Others                        : {row[21]}\n"
         current_charges += f"Consumption             : {row[14]}\n"
         current_charges += f"Meter Consumption  : {row[15]} gallons\n"
@@ -135,6 +136,7 @@ class History(result.Result):
 
         result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var, 
                                     self.current_charges_var, self.current_charges_var2, self.title_service, self.title_billing)
+
 
 """
 if __name__ == "__main__":
