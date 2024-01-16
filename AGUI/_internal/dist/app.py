@@ -23,6 +23,11 @@ root.resizable(False, False)
 
 ############################################# Sidebar
 
+root.attributes('-alpha', 0.0)
+
+for i in range(1, 101):
+    root.after(i * 10, lambda i=i: root.attributes('-alpha', i / 100.0))
+            
 sidebar = Sidebar(root, width=200, bg_color="gray12", fg_color="gray12")
 sidebar.pack(side=tk.LEFT, fill=tk.Y)
 

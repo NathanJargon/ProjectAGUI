@@ -28,6 +28,11 @@ class Login:
         self.root.resizable(False, False)
         self.create_widgets()
 
+        self.root.attributes('-alpha', 0.0)
+
+        for i in range(1, 101):
+            self.root.after(i * 50, lambda i=i: self.root.attributes('-alpha', i / 100.0))
+
     def login(self):
         username = self.entry_username.get()
         password = self.entry_password.get()
