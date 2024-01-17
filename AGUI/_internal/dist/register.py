@@ -112,7 +112,7 @@ class Register(result.Result):
 
         self.entry_vat = CTkEntry(self.vat_frame, width=200, height=35)
         self.entry_vat.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_vat.insert(0, "0%")
+        self.entry_vat.insert(0, "0")
         
         self.dues_frame = CTkFrame(self.current_charges_frame)
         self.dues_frame.grid(row=3, column=0, padx=10, pady=(5, 10))
@@ -199,15 +199,15 @@ class Register(result.Result):
         self.entry_rdg.grid(row=0, column=1, padx=10, pady=5) 
         self.entry_rdg.insert(0, "YYYY-MM-DD 00:00:00 UTC")
         
-        self.rate_frame = CTkFrame(self.billing_frame)
-        self.rate_frame.grid(row=6, column=0, padx=10, pady=5)
+        self.due_frame = CTkFrame(self.billing_frame)
+        self.due_frame.grid(row=6, column=0, padx=10, pady=5)
 
-        self.label_rate = CTkLabel(self.rate_frame, text="Rate Per Cubic Meter:", font=("Oswald", 18))
-        self.label_rate.grid(row=0, column=0, padx=(10, 40), pady=5)
+        self.label_due = CTkLabel(self.due_frame, text="Due Date:", font=("Oswald", 18))
+        self.label_due.grid(row=0, column=0, padx=(10, 120), pady=5)
 
-        self.entry_rate = CTkEntry(self.rate_frame, width=200, height=35)
-        self.entry_rate.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_rate.insert(0, "0 if None")
+        self.entry_due = CTkEntry(self.due_frame, width=200, height=35)
+        self.entry_due.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_due.insert(0, "YYYY-MM-DD")
         
         self.label_current_reading_frame = CTkFrame(self.billing_frame)
         self.label_current_reading_frame.grid(row=7, column=0, padx=5, pady=5)
@@ -217,7 +217,7 @@ class Register(result.Result):
 
         self.entry_current_reading = CTkEntry(self.label_current_reading_frame, width=200, height=35)
         self.entry_current_reading.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_current_reading.insert(0, "0")
+        self.entry_current_reading.insert(0, "0 if None")
 
         self.label_previous_reading_frame = CTkFrame(self.billing_frame)
         self.label_previous_reading_frame.grid(row=8, column=0, padx=5, pady=5)
@@ -246,7 +246,7 @@ class Register(result.Result):
             account = self.entry_account.get()
             meter = self.entry_meter.get()
             reference = self.entry_reference.get()
-            rate = float(self.entry_rate.get())
+            due = self.entry_due.get()
             bill_date = self.entry_billdate.get()
             bill_period = self.entry_billperiod.get()
             soa = self.entry_soa.get()
@@ -256,20 +256,19 @@ class Register(result.Result):
             previous_reading = float(self.entry_previous_reading.get())
             consumption = float(self.entry_consumption.get())
             water_charges = float(self.entry_waterCharges.get())
-            vat = float(self.entry_vat.get().split('%')[0]) / 100
+            vat = float(self.entry_vat.get())
             dues = float(self.entry_dues.get())
             others = float(self.entry_others.get())
             meter_consumption = current_reading - previous_reading
             message = ""
             
-            vat_amount = (consumption + water_charges + dues + others) * vat
-            bill_amount_php = (consumption + water_charges + dues + others) + vat_amount + (meter_consumption * 2.5)
+            bill_amount_php = (consumption + water_charges + dues + others) + vat + (meter_consumption * 2.5)
 
             if meter_consumption < 0:
                 raise ValueError("Invalid meter consumption")
             
-            if len(bill_date) != 10:
-                raise ValueError("Invalid bill date")
+            if len(bill_date) != 10 or len(due) != 10:
+                raise ValueError("Invalid date")
             
             if len(bill_period) != 24:
                 raise ValueError("Invalid bill period")
@@ -283,7 +282,7 @@ class Register(result.Result):
 
             #print(customer_name, address, account, meter, reference, rate, consumption, bill_date, bill_period, rdg_date_time, current_reading, previous_reading, meter_consumption, bill_amount_php, message)
 
-            self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
+            self.db.save_to_database(customer_name, address, account, meter, reference, due, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
                 consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others)
             
@@ -298,7 +297,7 @@ class Register(result.Result):
             service_info += f"Account Number           :   {account}\n"
             service_info += f"Meter Number              :   {meter}\n"
             service_info += f"Reference Number       :   {reference}\n"
-            service_info += f"Rate per Cubic Meter  :   {rate}"
+            service_info += f"Due Date                       :   {due}"
 
             title2 = ""
             title2 += f"BILLING SUMMARY"

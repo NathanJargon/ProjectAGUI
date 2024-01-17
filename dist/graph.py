@@ -51,7 +51,7 @@ class Graph:
         customer_names = [row[0] for row in cursor.fetchall()]
 
         fig, ax = plt.subplots()
-        ax.set_ylim([0, 500])
+        ax.set_ylim([0, 1000])
         
         ax.set_xlabel('Customer Names')
         ax.set_ylabel('Total Bill Amount')

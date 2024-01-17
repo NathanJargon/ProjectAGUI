@@ -35,10 +35,10 @@ class History(result.Result):
         self.title_billing = StringVar()
         self.fetch_data()
 
-    def save_to_database(self, customer_name, address, account, meter, reference, rate, bill_date, 
+    def save_to_database(self, customer_name, address, account, meter, reference, due, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
                 consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others):
-        self.db.save_to_database(customer_name, address, account, meter, reference, rate, bill_date, 
+        self.db.save_to_database(customer_name, address, account, meter, reference, due, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
                 consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others)
 
@@ -49,7 +49,7 @@ class History(result.Result):
         data = self.db.fetch_data()
 
         total_width = 0
-        frame_width = 1000
+        frame_width = 300
         row = 0
         column = 0
 
@@ -95,7 +95,7 @@ class History(result.Result):
         service_info += f"Account Number           :   {row[3]}\n"
         service_info += f"Meter Number              :   {row[4]}\n"
         service_info += f"Reference Number       :   {row[5]}\n"
-        service_info += f"Rate per Cubic Meter  :   {row[6]}"
+        service_info += f"Due Date                       :   {row[6]}"
 
         title2 = ""
         title2 += f"BILLING SUMMARY"
@@ -111,8 +111,7 @@ class History(result.Result):
         
         current_charges = ""
         current_charges += f"Water Charge            : {row[18]}\n"
-        vat_percentage = str(row[19] * 100) + "%"
-        current_charges += f"Value-added Tax       : {vat_percentage}\n"
+        current_charges += f"Value-added Tax       : {row[19]}\n"
         current_charges += f"Dues                           : {row[20]}\n"        
         current_charges += f"Others                        : {row[21]}\n"
         current_charges += f"Consumption             : {row[14]}\n"

@@ -18,7 +18,7 @@ class Database:
                 account TEXT,
                 meter TEXT,
                 reference TEXT,
-                rate REAL,
+                due TEXT,
                 bill_date TEXT,
                 bill_period TEXT,
                 soa TEXT,
@@ -44,7 +44,7 @@ class Database:
 
         self.conn.commit()
 
-    def save_to_database(self, customer_name, address, account, meter, reference, rate, bill_date, 
+    def save_to_database(self, customer_name, address, account, meter, reference, due, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
                 consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others):
         self.cursor.execute('''
@@ -54,7 +54,7 @@ class Database:
                 account,
                 meter,
                 reference,
-                rate,
+                due,
                 bill_date,
                 bill_period,
                 soa,
@@ -71,7 +71,7 @@ class Database:
                 dues,
                 others
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (customer_name, address, account, meter, reference, rate, bill_date, 
+        ''', (customer_name, address, account, meter, reference, due, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
                 consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others))
 
