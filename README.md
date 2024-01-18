@@ -24,8 +24,8 @@ This makes it an ideal tool for small to medium-sized water utilities or propert
 
 ## How to Use
 
-1. run "pip install -r requirements.txt" in terminal.
-2. "python main.py" from terminal or run Build/AGUI/AGUI.exe.
+1. run "pip install -r requirements.txt" if you want to run through IDE.
+2. Don't forget to download "Game of Squids", "Oswald", and "Nanum Pen" fonts to avoid problems.
 3. Input details that exist in your receipt.
 4. Click "Calculate Bill" to see the results.
 5. Click "Histories Registered" to view saved water bill data.
