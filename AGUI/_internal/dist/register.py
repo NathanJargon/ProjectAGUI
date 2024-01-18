@@ -1,4 +1,4 @@
-from tkinter import messagebox, StringVar
+from tkinter import messagebox, StringVar, Tk, Button, PhotoImage
 from customtkinter import *
 from database import Database
 import tkinter as tk
@@ -26,12 +26,8 @@ class Register(result.Result):
         self.background_frame.grid_rowconfigure(1, weight=1)
         self.background_frame.grid_columnconfigure(1, weight=1)
 
-        # Service Information
-        # Problem #1: Grid and pack will conflict each other.
-        # Solution: Use grid instead of pack.
-        
         self.service_frame = CTkFrame(self.background_frame, fg_color="gray11")
-        self.service_frame.grid(row=0, column=0, sticky='w', padx=(100, 10), pady=(25, 325))
+        self.service_frame.grid(row=0, column=0, sticky='w', padx=(100, 10), pady=(25, 373))
 
         self.title_frame = CTkFrame(self.background_frame, fg_color="gray12")
         self.title_frame.grid(row=1, column=0, padx=0, pady=5)
@@ -88,8 +84,9 @@ class Register(result.Result):
         self.entry_reference.grid(row=0, column=1, padx=10, pady=5)
         
         # Current Charges
+        
         self.current_charges_frame = CTkFrame(self.background_frame, fg_color="gray11")
-        self.current_charges_frame.grid(row=0, column=0, sticky='w', padx=(100, 10), pady=(350, 10))
+        self.current_charges_frame.grid(row=0, column=0, sticky='w', padx=(100, 10), pady=(320, 10))
 
         self.cc_name = CTkLabel(self.current_charges_frame, text="Current Charges", font=("Oswald", 24))
         self.cc_name.grid(row=0, column=0, padx=0, pady=(10, 20))
@@ -122,7 +119,7 @@ class Register(result.Result):
 
         self.entry_dues = CTkEntry(self.dues_frame, width=200, height=35)
         self.entry_dues.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_dues.insert(0, "0")
+        self.entry_dues.insert(0, "Includes: Arrears")
 
         self.others_frame = CTkFrame(self.current_charges_frame)
         self.others_frame.grid(row=4, column=0, padx=10, pady=(5, 10))
@@ -132,21 +129,12 @@ class Register(result.Result):
 
         self.entry_others = CTkEntry(self.others_frame, width=200, height=35)
         self.entry_others.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_others.insert(0, "0")
-        
-        # BUTTON
-
-        self.button_frame = CTkFrame(self.background_frame, bg_color="gray11", corner_radius=22, fg_color="gray11")
-        self.button_frame.grid(row=0, column=1, sticky='e', padx=(0,120), pady=(645, 0))
-
-        self.calculate_button = CTkButton(self.button_frame, text="Calculate Bill", bg_color="gray11", fg_color="#D16002", hover_color="#DD571C", corner_radius=22, command=self.calculate_bill, font=("Oswald", 24))
-        self.calculate_button.grid(row=0, column=0, padx=10, pady=5)
-
+        self.entry_others.insert(0, "Includes: Penalty (-11.65)")
 
         # Billing Summary
         
         self.billing_frame = CTkFrame(self.background_frame, fg_color="gray11")
-        self.billing_frame.grid(row=0, column=1, sticky='e', padx=(10, 200), pady=(10, 10))
+        self.billing_frame.grid(row=0, column=1, sticky='e', padx=(10, 200), pady=(10, 45))
 
         self.label_name2 = CTkLabel(self.billing_frame, text="Billing Information", font=("Oswald", 24))
         self.label_name2.grid(row=0, column=0, padx=0, pady=(10, 20))
@@ -209,8 +197,18 @@ class Register(result.Result):
         self.entry_due.grid(row=0, column=1, padx=10, pady=5)
         self.entry_due.insert(0, "YYYY-MM-DD")
         
+        self.type_frame = CTkFrame(self.billing_frame)
+        self.type_frame.grid(row=7, column=0, padx=5, pady=5)
+
+        self.type_label = CTkLabel(self.type_frame, text="Customer Type:", font=("Oswald", 18))
+        self.type_label.grid(row=0, column=0, padx=(10, 80), pady=5)
+
+        self.type_entry = CTkEntry(self.type_frame, width=200, height=35)
+        self.type_entry.grid(row=0, column=1, padx=10, pady=5)
+        self.type_entry.insert(0, "Residential, Semi-Business, Business Group I/II")
+        
         self.label_current_reading_frame = CTkFrame(self.billing_frame)
-        self.label_current_reading_frame.grid(row=7, column=0, padx=5, pady=5)
+        self.label_current_reading_frame.grid(row=8, column=0, padx=5, pady=5)
 
         self.label_current_reading = CTkLabel(self.label_current_reading_frame, text="Pres Reading (cms):", font=("Oswald", 18))
         self.label_current_reading.grid(row=0, column=0, padx=(10, 52), pady=5)
@@ -220,7 +218,7 @@ class Register(result.Result):
         self.entry_current_reading.insert(0, "0 if None")
 
         self.label_previous_reading_frame = CTkFrame(self.billing_frame)
-        self.label_previous_reading_frame.grid(row=8, column=0, padx=5, pady=5)
+        self.label_previous_reading_frame.grid(row=9, column=0, padx=5, pady=5)
 
         self.label_previous_reading = CTkLabel(self.label_previous_reading_frame, text="Prev Reading (cms):", font=("Oswald", 18))
         self.label_previous_reading.grid(row=0, column=0, padx=(10, 52), pady=5)
@@ -228,17 +226,16 @@ class Register(result.Result):
         self.entry_previous_reading = CTkEntry(self.label_previous_reading_frame, width=200, height=35)
         self.entry_previous_reading.grid(row=0, column=1, padx=10, pady=5)
         self.entry_previous_reading.insert(0, "0")
-
-        self.consumption_frame = CTkFrame(self.billing_frame)
-        self.consumption_frame.grid(row=9, column=0, padx=5, pady=(5, 10))
-
-        self.label_consumption = CTkLabel(self.consumption_frame, text="Consumption:", font=("Oswald", 18))
-        self.label_consumption.grid(row=0, column=0, padx=(10, 90), pady=5)
-
-        self.entry_consumption = CTkEntry(self.consumption_frame, width=200, height=35)
-        self.entry_consumption.grid(row=0, column=1, padx=10, pady=5)
-        self.entry_consumption.insert(0, "0")
         
+        # BUTTON
+
+        photo = PhotoImage(file="_internal/img/button1.png")
+        photo = photo.subsample(3, 3)
+
+        self.calculate_button = CTkButton(self.billing_frame, image=photo, text="", corner_radius= 50, command=self.calculate_bill, hover_color="gray11", bg_color="gray11", fg_color="gray11")
+        self.calculate_button.grid(row=10, column=0, padx=(0, 0), pady=(10, 0))
+
+
     def calculate_bill(self):
         try:
             customer_name = self.entry_name.get()[:30] if len(self.entry_name.get()) > 30 else self.entry_name.get()
@@ -254,7 +251,9 @@ class Register(result.Result):
             rdg_date_time = self.entry_rdg.get()
             current_reading = float(self.entry_current_reading.get())
             previous_reading = float(self.entry_previous_reading.get())
-            consumption = float(self.entry_consumption.get())
+            type = self.type_entry.get()
+            if ',' in type:
+                type = type.split(',')[0]
             water_charges = float(self.entry_waterCharges.get())
             vat = float(self.entry_vat.get())
             dues = float(self.entry_dues.get())
@@ -262,10 +261,10 @@ class Register(result.Result):
             meter_consumption = current_reading - previous_reading
             message = ""
             
-            bill_amount_php = (consumption + water_charges + dues + others) + vat + (meter_consumption * 2.5)
+            bill_amount_php = (water_charges + dues + others) + vat
 
             if meter_consumption < 0:
-                raise ValueError("Invalid meter consumption")
+                meter_consumption = 0
             
             if len(bill_date) != 10 or len(due) != 10:
                 raise ValueError("Invalid date")
@@ -284,7 +283,7 @@ class Register(result.Result):
 
             self.db.save_to_database(customer_name, address, account, meter, reference, due, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others)
+                type, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others)
             
             self.db.fetch_data()
 
@@ -297,8 +296,9 @@ class Register(result.Result):
             service_info += f"Account Number           :   {account}\n"
             service_info += f"Meter Number              :   {meter}\n"
             service_info += f"Reference Number       :   {reference}\n"
-            service_info += f"Due Date                       :   {due}"
-
+            service_info += f"Due Date                       :   {due}\n"
+            service_info += f"Customer Type             :   {type}"
+            
             title2 = ""
             title2 += f"BILLING SUMMARY"
                     
@@ -309,18 +309,18 @@ class Register(result.Result):
             billing_summary += f"Billing Number       :   {bill}\n"
             billing_summary += f"Rdg Date/Time      :   {rdg_date_time}\n"
             billing_summary += f"Current Reading    :   {current_reading}\n"
-            billing_summary += f"Previous Reading   :   {previous_reading}\n"
+            billing_summary += f"Previous Reading   :   {previous_reading}"
             
             current_charges = ""
             current_charges += f"Water Charge           : {water_charges}\n"
             current_charges += f"Value-added Tax       : {vat}\n"
             current_charges += f"Dues                           : {dues}\n"        
             current_charges += f"Others                        : {others}\n"
-            current_charges += f"Consumption             : {consumption}\n"
-            current_charges += f"Meter Consumption  : {meter_consumption} gallons\n"
+            current_charges += f"Meter Consumption  : {meter_consumption} gallons"
             
             current_charges2 = "" 
             current_charges2 += f"AMT BEFORE DUE DATE  : ₱{bill_amount_php:.2f}\n"
+            current_charges2 += f"Penalty                             : {bill_amount_php*0.1:.2f}\n"
             current_charges2 += f"AMT AFTER DUE DATE     : ₱{bill_amount_php + bill_amount_php*0.1:.2f}\n"
             current_charges2 += f"Message                           : {message}"
             
@@ -341,8 +341,6 @@ class Register(result.Result):
             
         except ValueError as e:
             match str(e): # Switch for more efficient use-case
-                case "Invalid meter consumption":
-                    messagebox.showerror("Error", "Please enter a valid pres and prev reading!")
                 case "Invalid bill date":
                     messagebox.showerror("Error", "Please enter a valid bill date!")
                 case "Invalid bill period":

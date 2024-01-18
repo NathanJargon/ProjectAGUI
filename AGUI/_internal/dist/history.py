@@ -37,10 +37,10 @@ class History(result.Result):
 
     def save_to_database(self, customer_name, address, account, meter, reference, due, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others):
+                type, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others):
         self.db.save_to_database(customer_name, address, account, meter, reference, due, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others)
+                type, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others)
 
     def fetch_data(self):
         for widget in self.button_frame.winfo_children():
@@ -66,7 +66,7 @@ class History(result.Result):
 
             bill_button = CTkButton(button_pair_frame, text=f"Customer: {row_data[1].lower().title().split(', ')[-1]}", command=lambda row=row_data: self.show_details(row), font=("Oswald", 18), height=40, width=70)
             bill_button.pack(side='left', padx=(0, 5))
-
+                             
             delete_button = CTkButton(button_pair_frame, text="X", command=lambda id=row_data[0]: self.delete_and_clear(id), font=("Oswald", 17), width=10, height=20)
             delete_button.pack(side='left')
 
@@ -95,8 +95,9 @@ class History(result.Result):
         service_info += f"Account Number           :   {row[3]}\n"
         service_info += f"Meter Number              :   {row[4]}\n"
         service_info += f"Reference Number       :   {row[5]}\n"
-        service_info += f"Due Date                       :   {row[6]}"
-
+        service_info += f"Due Date                       :   {row[6]}\n"
+        service_info += f"Customer Type             :   {row[14]}"
+        
         title2 = ""
         title2 += f"BILLING SUMMARY"
                 
@@ -107,18 +108,18 @@ class History(result.Result):
         billing_summary += f"Billing Number       :   {row[10]}\n"
         billing_summary += f"Rdg Date/Time      :   {row[11]}\n"
         billing_summary += f"Current Reading    :   {row[12]}\n"
-        billing_summary += f"Previous Reading   :   {row[13]}\n"
+        billing_summary += f"Previous Reading   :   {row[13]}"
         
         current_charges = ""
         current_charges += f"Water Charge            : {row[18]}\n"
         current_charges += f"Value-added Tax       : {row[19]}\n"
         current_charges += f"Dues                           : {row[20]}\n"        
         current_charges += f"Others                        : {row[21]}\n"
-        current_charges += f"Consumption             : {row[14]}\n"
-        current_charges += f"Meter Consumption  : {row[15]} gallons\n"
+        current_charges += f"Meter Consumption  : {row[15]} gallons"
         
         current_charges2 = "" 
         current_charges2 += f"AMT BEFORE DUE DATE  : ₱{row[16]:.2f}\n"
+        current_charges2 += f"Penalty                             : {row[16]*0.1:.2f}\n"
         current_charges2 += f"AMT AFTER DUE DATE     : ₱{row[16] + row[16]*0.1:.2f}\n"
         current_charges2 += f"Message                           : {row[17]}"
 
@@ -134,8 +135,7 @@ class History(result.Result):
         self.current_charges_var2.set(current_charges2)
 
         result_info = result.Result(self.root, self.service_info_var, self.billing_summary_var, 
-                                    self.current_charges_var, self.current_charges_var2, self.title_service, self.title_billing)
-
+                                    self.current_charges_var, self.current_charges_var2, self.title_service, self.title_billing, row[0])
 
 """
 if __name__ == "__main__":

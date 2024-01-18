@@ -63,8 +63,11 @@ class Graph:
             x_data = [row[1] for row in rows]
             y_data = [row[16] for row in rows]
 
-            ax.bar(x_data, y_data, label=f'{customer_name}')
+            bars = ax.bar(x_data, y_data, label=f'{customer_name}')
 
+            for bar, height in zip(bars, y_data):
+                ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height(), "{:.2f}".format(height), ha='center', va='bottom')
+                
         ax.legend()
 
         canvas = FigureCanvasTkAgg(fig, master=self.background_frame)

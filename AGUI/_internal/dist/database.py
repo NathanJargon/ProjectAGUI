@@ -26,7 +26,7 @@ class Database:
                 rdg_date_time TEXT,
                 current_reading REAL,
                 previous_reading REAL,
-                consumption REAL,
+                type TEXT,
                 meter_consumption REAL,
                 bill_amount_php REAL,
                 message TEXT,
@@ -46,7 +46,7 @@ class Database:
 
     def save_to_database(self, customer_name, address, account, meter, reference, due, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others):
+                type, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others):
         self.cursor.execute('''
             INSERT INTO water_bills (
                 customer_name,
@@ -62,7 +62,7 @@ class Database:
                 rdg_date_time,
                 current_reading,
                 previous_reading,
-                consumption,
+                type,
                 meter_consumption,
                 bill_amount_php,
                 message,
@@ -73,7 +73,7 @@ class Database:
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (customer_name, address, account, meter, reference, due, bill_date, 
                 bill_period, soa, bill, rdg_date_time, current_reading, previous_reading, 
-                consumption, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others))
+                type, meter_consumption, bill_amount_php, message, water_charges, vat, dues, others))
 
         self.conn.commit()
 
@@ -84,4 +84,57 @@ class Database:
 
     def delete_and_clear(self, id):
         self.cursor.execute("DELETE FROM water_bills WHERE id = ?", (id,))
+        self.conn.commit()
+
+    def update_user_details(self, user_id, updated_user_details):
+        self.cursor.execute('''
+            UPDATE water_bills
+            SET 
+                customer_name = ?,
+                address = ?,
+                account = ?,
+                meter = ?,
+                reference = ?,
+                due = ?,
+                bill_date = ?,
+                bill_period = ?,
+                soa = ?,
+                bill = ?,
+                rdg_date_time = ?,
+                current_reading = ?,
+                previous_reading = ?,
+                type = ?,
+                meter_consumption = ?,
+                bill_amount_php = ?,
+                message = ?,
+                water_charges = ?,
+                vat = ?,
+                dues = ?,
+                others = ?
+            WHERE id = ?
+        ''', (
+            updated_user_details['Customer Name'],
+            updated_user_details['Address'],
+            updated_user_details['Account Number'],
+            updated_user_details['Meter Number'],
+            updated_user_details['Reference Number'],
+            updated_user_details['Due Date'],
+            updated_user_details['Bill Date'],
+            updated_user_details['Bill Period'],
+            updated_user_details['SOA Number'],
+            updated_user_details['Bill Number'],
+            updated_user_details['Rdg Date/Time'],
+            updated_user_details['Current Reading'],
+            updated_user_details['Previous Reading'],
+            updated_user_details['Customer Type'],
+            updated_user_details['Meter Consumption'],
+            updated_user_details['Bill Amount PHP'],
+            updated_user_details['Message'],
+            updated_user_details['Water Charges'],
+            updated_user_details['Value-added Tax'],
+            updated_user_details['Dues'],
+            updated_user_details['Others'],
+            user_id
+        ))
+
         self.conn.commit()
