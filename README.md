@@ -20,7 +20,7 @@ This makes it an ideal tool for small to medium-sized water utilities or propert
 
 ## UML Diagram
 
-![umldiagram](img/umldiagram1.png)
+![umldiagram](img/umldiagramfinal.png)
 
 ## How to Use
 
