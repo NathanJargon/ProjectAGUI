@@ -16,11 +16,11 @@ This makes it an ideal tool for small to medium-sized water utilities or propert
 
 ## Flowchart
 
-![flowchart](img/flowchart.png)
+![flowchart](img/flowchart1.png)
 
 ## UML Diagram
 
-![umldiagram](img/umldiagramfinal.png)
+![umldiagram](img/umldiagram1.png)
 
 ## How to Use
 
