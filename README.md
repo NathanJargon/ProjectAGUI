@@ -12,7 +12,7 @@ This makes it an ideal tool for small to medium-sized water utilities or propert
 # Visual Information
 
 ![Image 1](img/sample2.png)
-![Image 2](img/sample1.png)
+![Image 2](img/sample3.png)
 
 ## Flowchart
 
@@ -20,7 +20,7 @@ This makes it an ideal tool for small to medium-sized water utilities or propert
 
 ## UML Diagram
 
-![umldiagram](img/umldiagram1.png)
+![umldiagram](img/umldiagramfinal.png)
 
 ## How to Use
 
