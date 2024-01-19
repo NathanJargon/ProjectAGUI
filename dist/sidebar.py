@@ -18,16 +18,16 @@ warnings.filterwarnings("ignore")
 
 class Sidebar(ctk.CTkFrame):
     def export_to_csv(self):
-        conn = sqlite3.connect('_internal/db/water_bill_database.db')
-        #conn = sqlite3.connect('db/water_bill_database.db')
+        #conn = sqlite3.connect('_internal/db/water_bill_database.db')
+        conn = sqlite3.connect('db/water_bill_database.db')
         cursor = conn.cursor()
 
         cursor.execute("SELECT * FROM water_bills")
         rows = cursor.fetchall()
 
         if rows:
-            #filename = f"csv/CSV.csv"
-            filename = f"_internal/csv/CSV.csv"
+            filename = f"csv/CSV.csv"
+            #filename = f"_internal/csv/CSV.csv"
             with open(filename, 'w', newline='') as file:
                 writer = csv.writer(file)
 
@@ -52,8 +52,8 @@ class Sidebar(ctk.CTkFrame):
         title_frame = ctk.CTkFrame(self, bg_color="gray12", fg_color="gray12", height=50)
         title_frame.pack(fill=tk.X)
 
-        image = Image.open("_internal/img/logo.png")
-        #image = Image.open("img/logo.png")
+        #image = Image.open("_internal/img/logo.png")
+        image = Image.open("img/logo.png")
         image = image.resize((270, 270), Image.BICUBIC)
         photo = ImageTk.PhotoImage(image)
         title_label = ctk.CTkButton(title_frame, image=photo, text="", bg_color="gray12", 

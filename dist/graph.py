@@ -43,8 +43,8 @@ class Graph:
         set_appearance_mode("dark")
 
         style.use('dark_background')
-        #conn = sqlite3.connect('db/water_bill_database.db')
-        conn = sqlite3.connect('_internal/db/water_bill_database.db')
+        conn = sqlite3.connect('db/water_bill_database.db')
+        #conn = sqlite3.connect('_internal/db/water_bill_database.db')
         cursor = conn.cursor()
 
         cursor.execute("SELECT DISTINCT customer_name FROM water_bills")

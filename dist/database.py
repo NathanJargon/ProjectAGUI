@@ -3,7 +3,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 class Database:
-    def __init__(self, db_path="_internal/db/water_bill_database.db"): #add _internal/ if build
+    def __init__(self, db_path="db/water_bill_database.db"): #add _internal/ if build
         self.db_path = db_path
         self.conn = sqlite3.connect(db_path)
         self.cursor = self.conn.cursor()

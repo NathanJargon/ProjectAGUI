@@ -76,8 +76,8 @@ class Login:
         self.entry_password.insert(0, "admin")
         self.entry_password.bind('<space>', self.on_space)
 
-        #image = Image.open("img/png/logo-no-background.png")
-        image = Image.open("_internal/img/png/logo-no-background.png")
+        image = Image.open("img/png/logo-no-background.png")
+        #image = Image.open("_internal/img/png/logo-no-background.png")
         new_size = (850, 350)
         image = image.resize(new_size, Image.LANCZOS)
         photo = ImageTk.PhotoImage(image)

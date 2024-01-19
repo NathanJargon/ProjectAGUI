@@ -19,7 +19,8 @@ class Result:
         self.title_billing = title_billing
         self.current_charges_var = current_charges_var
         self.current_charges_var2 = current_charges_var2
-        self.db_path = "_internal/db/water_bill_database.db"
+        #self.db_path = "_internal/db/water_bill_database.db"
+        self.db_path = "db/water_bill_database.db"
         self.conn = sqlite3.connect(self.db_path)
         self.cursor = self.conn.cursor()
         self.currentId = 0 if None else id
@@ -58,8 +59,8 @@ class Result:
         self.title_frame = CTkFrame(self.details_frame, fg_color="gray12")
         self.title_frame.grid(padx=10, pady=(20, 0))
 
-        image = Image.open("_internal/img/logo.png")
-        #image = Image.open("img/logo.png")
+        #image = Image.open("_internal/img/logo.png")
+        image = Image.open("img/logo.png")
         image = image.resize((150, 150), Image.BICUBIC)
         photo = ImageTk.PhotoImage(image)
         title_label = ctk.CTkButton(self.title_frame, image=photo, text="AGUI WATER DISTRICT CO.\n  Grand Garden Office, Harlson Street\nCagayan de Oro, Philippines 9000\n      VAT Reg. TIN: 002-152-512-412-000", 
@@ -68,7 +69,8 @@ class Result:
         title_label.grid(padx=(175, 0), pady=(0,0), sticky='nsew')
         
         if self.currentId:
-            edit_image = Image.open("_internal/img/button2.png") 
+            #edit_image = Image.open("_internal/img/button2.png") 
+            edit_image = Image.open("img/button2.png")
             edit_image = edit_image.resize((50, 50), Image.BICUBIC)
             edit_photo = ImageTk.PhotoImage(edit_image)
             

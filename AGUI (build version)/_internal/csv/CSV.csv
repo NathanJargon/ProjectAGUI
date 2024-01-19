@@ -1,0 +1,13 @@
+id,customer_name,address,account,meter,reference,due,bill_date,bill_period,soa,bill,rdg_date_time,current_reading,previous_reading,type,meter_consumption,bill_amount_php,message,water_charges,vat,dues,others,messages
+1,"Dumagon, Fedia",SAV-BL20-L029,10004918,306840,CP00000003193,2023-09-15,2023-08-31,2023-08-01 to 2023-08-31,R230000031684,202309,2023-09-05 10:42:49 AM,2137.0,2132.0,Residential,5.0,249.5,Great job on conserving water! Keep it up.,211.61,25.39,0.0,0.0,
+4,"Army, Stan",Bldg/Rm/Flr,N/A,123,123,YYYY-MM-DD,YYYY-MM-DD,YYYY-MM-DD to YYYY-MM-DD,123,123,YYYY-MM-DD 00:00:00 UTC,10.0,5.0,Residential,5.0,21.0,Great job on conserving water! Keep it up.,5.0,1.0,10.0,-1.0,
+5,"Jester, Kolman",Bldg/Rm/Flr,N/A,N/A,N/A,YYYY-MM-DD,YYYY-MM-DD,YYYY-MM-DD to YYYY-MM-DD,N/A,N/A,YYYY-MM-DD 00:00:00 UTC,200.0,185.0,Bldg/Rm/Flr,15.0,681.9200000000001,"Great job on conserving water! Keep it up.
+",152.59,11.48,550.0,-32.15,
+6,"Rayley, Mestiso","Sayawan, Zone 10",N/A,N/A,N/A,YYYY-MM-DD,YYYY-MM-DD,YYYY-MM-DD to YYYY-MM-DD,N/A,N/A,YYYY-MM-DD 00:00:00 UTC,425.0,410.0,"Residential, Semi-Business, Bu",15.0,93.55999999999999,"Great job on conserving water! Keep it up.
+",100.0,5.21,0.0,-11.65,
+7,Bsby ko si kolot,Bldg/Rm/Flr,N/A if None,123,123,YYYY-MM-DD,YYYY-MM-DD,YYYY-MM-DD to YYYY-MM-DD,123,123,YYYY-MM-DD 00:00:00 UTC,1.0,12.0,Residential,0.0,6.0,Great job on conserving water! Keep it up.,2.0,2.0,1.0,1.0,
+9,"Sanaol, Siya ug Ako",Bldg/Rm/Flr,N/A if None,,,YYYY-MM-DD,YYYY-MM-DD,YYYY-MM-DD to YYYY-MM-DD,,,YYYY-MM-DD 00:00:00 UTC,1.0,2.0,Residential,0.0,3.0,"Great job on conserving water! Keep it up.
+",0.0,0.0,1.0,2.0,
+12,baboy,nn,123456,12,12,YYYY-MM-DD,YYYY-MM-DD,YYYY-MM-DD to YYYY-MM-DD,12346795,2658497,YYYY-MM-DD 00:00:00 UTC,12.0,10.0,Residential,2.0,58.0,Great job on conserving water! Keep it up.,22.0,12.0,12.0,12.0,
+13,"Lastname, Firstname",Bldg/Rm/Flr,N/A if None,,,YYYY-MM-DD,YYYY-MM-DD,YYYY-MM-DD to YYYY-MM-DD,,,YYYY-MM-DD 00:00:00 UTC,9023.0,9000.0,Residential,23.0,2.0,"Great job on conserving water! Keep it up.
+",0.0,0.0,1.0,1.0,

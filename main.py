@@ -36,10 +36,10 @@ label2.place(x=10,y=215)
 
 # 2. Animation Window
 
-#image_a=ImageTk.PhotoImage(Image.open('img/c2.png'))
-#image_b=ImageTk.PhotoImage(Image.open('img/c1.png'))
-image_a=ImageTk.PhotoImage(Image.open('_internal/img/c2.png'))
-image_b=ImageTk.PhotoImage(Image.open('_internal/img/c1.png'))
+image_a=ImageTk.PhotoImage(Image.open('img/c2.png'))
+image_b=ImageTk.PhotoImage(Image.open('img/c1.png'))
+#image_a=ImageTk.PhotoImage(Image.open('_internal/img/c2.png'))
+#image_b=ImageTk.PhotoImage(Image.open('_internal/img/c1.png'))
 
 
 for i in range(3): # 3 Loops at 0.3 delay

@@ -10,8 +10,8 @@ warnings.filterwarnings("ignore")
 class Register(result.Result):
     def __init__(self, root):
         self.root = root
-        #self.db_path = "db/water_bill_database.db"
-        self.db_path = "_internal/db/water_bill_database.db"
+        self.db_path = "db/water_bill_database.db"
+        #self.db_path = "_internal/db/water_bill_database.db"
         self.db = Database(self.db_path)
 
         self.service_info_var = StringVar()
@@ -229,7 +229,8 @@ class Register(result.Result):
         
         # BUTTON
 
-        photo = PhotoImage(file="_internal/img/button1.png")
+        #photo = PhotoImage(file="_internal/img/button1.png")
+        photo = PhotoImage(file="img/button1.png")
         photo = photo.subsample(3, 3)
 
         self.calculate_button = CTkButton(self.billing_frame, image=photo, text="", corner_radius= 50, command=self.calculate_bill, hover_color="gray11", bg_color="gray11", fg_color="gray11")
