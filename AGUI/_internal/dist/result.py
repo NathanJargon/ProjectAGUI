@@ -67,14 +67,14 @@ class Result:
         title_label.image = image
         title_label.grid(padx=(175, 0), pady=(0,0), sticky='nsew')
         
-        
-        edit_image = Image.open("_internal/img/button2.png") 
-        edit_image = edit_image.resize((50, 50), Image.BICUBIC)
-        edit_photo = ImageTk.PhotoImage(edit_image)
-        
-        edit_button = CTkButton(self.root, image=edit_photo, text="Edit", font=("Oswald", 15, "bold"), text_color="black", fg_color="gray12", bg_color="gray12", hover_color="gray12", command=lambda: self.edit_user_details(self.currentId))
-        edit_button.image = edit_photo
-        edit_button.place(x=1150, y=0)
+        if self.currentId:
+            edit_image = Image.open("_internal/img/button2.png") 
+            edit_image = edit_image.resize((50, 50), Image.BICUBIC)
+            edit_photo = ImageTk.PhotoImage(edit_image)
+            
+            edit_button = CTkButton(self.root, image=edit_photo, text="Edit", font=("Oswald", 15, "bold"), text_color="white", fg_color="gray12", bg_color="gray12", hover_color="gray12", command=lambda: self.edit_user_details(self.currentId))
+            edit_button.image = edit_photo
+            edit_button.place(x=1150, y=0)
 
 
         self.service_info_label = CTkLabel(self.service_frame, textvariable=self.service_info_var, justify=tk.LEFT, font=("Oswald", 15), 
