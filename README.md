@@ -16,7 +16,7 @@ This makes it an ideal tool for small to medium-sized water utilities or propert
 
 ## Flowchart
 
-![flowchart](img/flowchart1.png)
+![flowchart](img/flowchart.png)
 
 ## UML Diagram
 
